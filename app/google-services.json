@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "27657195672",
+    "firebase_url": "https://amwe-bokbytarapp.firebaseio.com",
+    "project_id": "amwe-bokbytarapp",
+    "storage_bucket": "amwe-bokbytarapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27657195672:android:aa40b1b51d9ef2a34400ed",
+        "android_client_info": {
+          "package_name": "com.example.amwe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27657195672-d9b7ipkpprj6940ab5he5gkr0td6tbtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeYDgvyPywMCjUmW5n_YLgv5MH1xL45FI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27657195672-d9b7ipkpprj6940ab5he5gkr0td6tbtc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
