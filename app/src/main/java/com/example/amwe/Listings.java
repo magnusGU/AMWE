@@ -12,4 +12,6 @@ public class Listings {
     private Image bookImage;
     private double price;
     private User seller;
+
+    
 }
