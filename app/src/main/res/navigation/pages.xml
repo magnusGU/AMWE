@@ -6,17 +6,17 @@
     app:startDestination="@id/searchPage">
     <fragment
         android:id="@+id/searchPage"
-        android:name="com.example.amwe.searchPage"
+        android:name="com.example.amwe.view.searchPage"
         android:label="fragment_search_page"
         tools:layout="@layout/fragment_search_page" />
     <fragment
         android:id="@+id/messagesPage"
-        android:name="com.example.amwe.messagesPage"
+        android:name="com.example.amwe.view.messagesPage"
         android:label="fragment_messages_page"
         tools:layout="@layout/fragment_messages_page" />
     <fragment
         android:id="@+id/accountPage"
-        android:name="com.example.amwe.accountPage"
+        android:name="com.example.amwe.view.accountPage"
         android:label="fragment_account_page"
         tools:layout="@layout/fragment_account_page" />
 </navigation>

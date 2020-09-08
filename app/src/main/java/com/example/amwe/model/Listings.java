@@ -1,4 +1,4 @@
-package com.example.amwe;
+package com.example.amwe.model;
 
 import android.media.Image;
 
