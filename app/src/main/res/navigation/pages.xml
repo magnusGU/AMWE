@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pages"
+    app:startDestination="@id/searchPage">
+    <fragment
+        android:id="@+id/searchPage"
+        android:name="com.example.amwe.searchPage"
+        android:label="fragment_search_page"
+        tools:layout="@layout/fragment_search_page" />
+    <fragment
+        android:id="@+id/messagesPage"
+        android:name="com.example.amwe.messagesPage"
+        android:label="fragment_messages_page"
+        tools:layout="@layout/fragment_messages_page" />
+    <fragment
+        android:id="@+id/accountPage"
+        android:name="com.example.amwe.accountPage"
+        android:label="fragment_account_page"
+        tools:layout="@layout/fragment_account_page" />
+</navigation>
