@@ -17,7 +17,10 @@ import com.example.amwe.R;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.util.Log;
 
+import com.example.amwe.R;
+import com.example.amwe.model.Database;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,11 +34,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
 
-        myRef.setValue("Elias Test");
+        Database db = new Database();
+        db.getListings();
+
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
         bottomNavigation.setOnNavigationItemSelectedListener(navListner);
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new searchPage()).commit();
@@ -61,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void initializeList() {
-
-
 
     }
 
