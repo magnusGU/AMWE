@@ -9,11 +9,11 @@ public class Listing {
     private String author;
     private int isbn;
     private String description;
-    private Image bookImage;
+    private int bookImage;
     private double price;
     private User seller;
 
-    public Listing (int id, String title, String edition,String author,int isbn,String description, Image bookImage,double price,User seller){
+    public Listing (int id, String title, String edition,String author,int isbn,String description, int bookImage,double price,User seller){
         this.id=id;
         this.title=title;
         this.edition=edition;
@@ -51,7 +51,7 @@ public class Listing {
         return description;
     }
 
-    public Image getBookImage() {
+    public int getBookImage() {
         return bookImage;
     }
 
