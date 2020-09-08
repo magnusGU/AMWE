@@ -63,4 +63,5 @@ public class searchPage extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_page, container, false);
     }
+
 }
