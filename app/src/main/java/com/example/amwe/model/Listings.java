@@ -14,7 +14,7 @@ public class Listings {
     private String description;
     private Image bookImage;
     private double price;
-    private String seller; //Temporary string instead of User
+    private User seller; //Temporary string instead of User
 
     public Listings() {
     }
@@ -30,9 +30,9 @@ public class Listings {
         this.description = description;
         this.bookImage = bookImage;
         this.price = price;
-        this.seller = seller;
+        this.seller = new User(seller);
     }
-
+    //String seller, String bookImage, int isbn,  String author,  double price, String description, String edition, int id, String title
     @Override
     public String toString() {
         return "Listings{" +
@@ -112,12 +112,12 @@ public class Listings {
         this.price = price;
     }
 
-    public String getSeller() {
+    public User getSeller() {
         return seller;
     }
 
     public void setSeller(String seller) {
-        this.seller = seller;
+        this.seller = new User(seller);
     }
 
 }
