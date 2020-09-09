@@ -2,12 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/search_page"
         android:icon="@drawable/ic_search"
         android:title="Sök" />
     <item
+        android:id="@+id/message_page"
         android:icon="@drawable/ic_message"
         android:title="Meddelanden" />
     <item
+        android:id="@+id/account_page"
         android:icon="@drawable/ic_account"
         android:title="Profil" />
 </menu>
