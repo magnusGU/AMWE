@@ -10,10 +10,7 @@ android:
 before_install:
   - yes | sdkmanager "platforms;android-30"
   - yes | sdkmanager "build-tools;30.0.2"
-<<<<<<< HEAD
 
 script:
   - ./gradlew clean build
   - ./gradlew test
-=======
->>>>>>> Update .travis.yml
