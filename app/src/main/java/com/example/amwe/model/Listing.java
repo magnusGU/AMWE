@@ -3,17 +3,33 @@ package com.example.amwe.model;
 import android.media.Image;
 
 public class Listing {
+
     private int id;
     private String title;
     private String edition;
     private String author;
-    private int isbn;
+    private long isbn;
     private String description;
     private int bookImage;
     private double price;
     private User seller;
 
-    public Listing (int id, String title, String edition,String author,int isbn,String description, int bookImage,double price,User seller){
+    public Listing (){
+    }
+
+    public Listing (int id, String title, String edition,String author,long isbn,String description, int bookImage,double price,String seller){
+        this.id=id;
+        this.title=title;
+        this.edition=edition;
+        this.author=author;
+        this.isbn=isbn;
+        this.description=description;
+        this.bookImage=bookImage;
+        this.price=price;
+        this.seller=new User(seller);
+    }
+
+    /*public Listing (int id, String title, String edition,String author,long isbn,String description, int bookImage,double price,User seller){
         this.id=id;
         this.title=title;
         this.edition=edition;
@@ -23,8 +39,23 @@ public class Listing {
         this.bookImage=bookImage;
         this.price=price;
         this.seller=seller;
+    }*/
 
 
+
+    @Override
+    public String toString() {
+        return "Listing{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", edition='" + edition + '\'' +
+                ", author='" + author + '\'' +
+                ", isbn=" + isbn +
+                ", description='" + description + '\'' +
+                ", bookImage=" + bookImage +
+                ", price=" + price +
+                ", seller=" + seller +
+                '}';
     }
 
     public int getId() {
@@ -43,7 +74,7 @@ public class Listing {
         return author;
     }
 
-    public int getIsbn() {
+    public long getIsbn() {
         return isbn;
     }
 
@@ -61,5 +92,41 @@ public class Listing {
 
     public User getSeller() {
         return seller;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setIsbn(long isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setBookImage(int bookImage) {
+        this.bookImage = bookImage;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = new User(seller);
     }
 }
