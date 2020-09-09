@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,6 +18,8 @@ import com.example.amwe.R;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+=======
+>>>>>>> ba0bed686630755ecbfcbf7fe27fbce457f32aa7
 import android.util.Log;
 
 import com.example.amwe.R;
@@ -41,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navListner);
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new searchPage()).commit();
         createList();
-
 
 
     }
