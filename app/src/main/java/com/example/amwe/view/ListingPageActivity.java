@@ -11,6 +11,8 @@ public class ListingPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        System.out.println(getIntent().getStringExtra("Title"));
         setContentView(R.layout.listing_page);
     }
 }

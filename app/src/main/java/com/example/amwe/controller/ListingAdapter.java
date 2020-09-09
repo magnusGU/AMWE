@@ -31,15 +31,18 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     private Database db;
 
     public static class ViewHold extends ViewHolder {
-        final private ImageView mImageView;
-        private TextView mTextView;
+        final private ImageView bookImage;
+        private TextView textViewDate;
         private View view;
+        private TextView textViewTitle;
+
 
 
         public ViewHold(@NonNull View itemView) {
             super(itemView);
-            mImageView=itemView.findViewById(R.id.listing_card_image);
-            mTextView=itemView.findViewById(R.id.listing_card_date);
+            bookImage=itemView.findViewById(R.id.listing_card_image);
+            textViewDate=itemView.findViewById(R.id.listing_card_date);
+            textViewTitle=itemView.findViewById(R.id.listing_);
             this.view=itemView;
         }
 
@@ -87,14 +90,18 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHold holder, int position) {
-        Listing currentListing=listingList.get(position);
-        holder.mImageView.setImageResource(currentListing.getBookImage());
-        holder.mTextView.setText(currentListing.getTitle());
+    public void onBindViewHolder(@NonNull final ViewHold holder, final int position) {
+        final Listing currentListing=listingList.get(position);
+        holder.bookImage.setImageResource(currentListing.getBookImage());
+        holder.textViewTitle.setText(currentListing.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, ListingPageActivity.class));
+                Intent intent = new Intent(context,ListingPageActivity.class);
+                intent.putExtra("Title",currentListing.getTitle());
+                intent.putExtra("Image",currentListing.getBookImage());
+                context.startActivity(intent);
+
             }
         });
             }
