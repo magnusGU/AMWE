@@ -28,6 +28,7 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 returnListings.clear();
                 for (DataSnapshot item: snapshot.getChildren()) {
+                    Log.d("HERE", item.getValue().toString());
                     returnListings.add(item.getValue(Listings.class));
                 }
                 Log.d("HERE", returnListings.toString());
