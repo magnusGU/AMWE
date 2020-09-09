@@ -1,7 +1,8 @@
-package com.example.amwe.view;
+package com.example.amwe.controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.example.amwe.R;
+import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
+import com.example.amwe.view.ListingPageActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -21,9 +28,10 @@ import java.util.ArrayList;
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> {
     private ArrayList <Listing> listingList;
     private Context context;
+    private Database db;
 
     public static class ViewHold extends ViewHolder {
-        private ImageView mImageView;
+        final private ImageView mImageView;
         private TextView mTextView;
         private View view;
 
@@ -36,9 +44,33 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         }
 
     }
-    public ListingAdapter(ArrayList<Listing> listingList) {
-    this.listingList=listingList;
+    public ListingAdapter(final ArrayList<Listing> listingList) {
+        this.listingList = listingList;
+        db = new Database();
 
+        //create database listener that will update recyclerView
+        //if the data in the database is changed
+        DatabaseReference listings = db.getListings();
+        ValueEventListener listingsListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listingList.clear();
+                for (DataSnapshot item: snapshot.getChildren()) {
+                    Log.d("HERE", item.getValue().toString());
+                    listingList.add(item.getValue(Listing.class));
+                }
+                Log.d("HERE", listingList.toString());
+                //This line is what updated the view
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("HERE", "onCancelled");
+            }
+        };
+        //this listener is assigned to the databasereference
+        listings.addValueEventListener(listingsListener);
 
     }
 
@@ -62,7 +94,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context,ListingPageActivity.class));
+                context.startActivity(new Intent(context, ListingPageActivity.class));
             }
         });
             }
