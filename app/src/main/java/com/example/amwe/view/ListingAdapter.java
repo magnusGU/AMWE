@@ -44,7 +44,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     @NonNull
     @Override
     public ViewHold onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //Temporary
+        //Temporary should have a reference to card
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_search_page,parent,false);
         ViewHold vh = new ViewHold(v);
         return vh;
