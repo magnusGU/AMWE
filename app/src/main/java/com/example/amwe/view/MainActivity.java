@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,14 +46,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
     /*Not the right place for it because of weird references to model but it will have to do for now*/
-    public  void createList(){
+    private  void createList(){
         this.currentListings= new ArrayList<>();
-        currentListings.add(new Listing(1,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.lostbook,300,new User()));
-        currentListings.add(new Listing(2,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.lostbook,400,new User()));
-        currentListings.add(new Listing(3,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.lostbook,500,new User()));
+        currentListings.add(new Listing(1,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.ikonbok,300,new User()));
+        currentListings.add(new Listing(2,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.ikonbok,400,new User()));
+        currentListings.add(new Listing(3,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.ikonbok,500,new User()));
+        currentListings.add(new Listing(3,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.ikonbok,500,new User()));
+        currentListings.add(new Listing(3,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.ikonbok,500,new User()));
+        currentListings.add(new Listing(3,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.ikonbok,500,new User()));
+        currentListings.add(new Listing(3,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.ikonbok,500,new User()));
+        currentListings.add(new Listing(3,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.ikonbok,500,new User()));
         RecyclerView recyclerView = findViewById(R.id.RecycleView);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
+        //sketchy but we will have to discuss this
         ListingAdapter adapter=new ListingAdapter(currentListings);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     private void initializeList() {
 
 
