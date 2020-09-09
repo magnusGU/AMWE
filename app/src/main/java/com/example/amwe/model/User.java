@@ -8,12 +8,13 @@ public class User {
     private ArrayList<Integer> watchlist;
     private ArrayList<Integer> favourites;
 
+    public User() {
+    }
+
     public User(String name) {
         this.name = name;
     }
-    public User(User newUser) {
-        this.name = newUser.getName();
-    }
+
 
     @Override
     public String toString() {

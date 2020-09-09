@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.view.MenuItem;
 import android.view.View;
 
@@ -18,8 +17,6 @@ import com.example.amwe.R;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-=======
->>>>>>> ba0bed686630755ecbfcbf7fe27fbce457f32aa7
 import android.util.Log;
 
 import com.example.amwe.R;
@@ -52,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         this.currentListings= new ArrayList<>();
         currentListings.add(new Listing(1,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.lostbook,300,new User()));
         currentListings.add(new Listing(2,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.lostbook,400,new User()));
-        currentListings.add(new Listing(3,"Testbok","Third","Testsson",123456789,"Denna bok är hårdkodad",R.drawable.lostbook,500,new User()));
         RecyclerView recyclerView = findViewById(R.id.RecycleView);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
