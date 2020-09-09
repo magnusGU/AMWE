@@ -11,8 +11,14 @@
         android:id="@+id/pages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="810dp">
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="132dp">
 
+        <fragment
+            android:id="@+id/fragment"
+            android:name="com.example.amwe.view.searchPage"
+            android:layout_width="match_parent"
+            android:layout_height="670dp" />
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

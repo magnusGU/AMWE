@@ -7,12 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".view.searchPage">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="409dp"
         android:layout_height="48dp"
         android:background="@color/colorWhite"
         android:elevation="2dp"
+>>>>>>> fb5658a06409ac88999db33d4f154da022f10a58
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,6 +41,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecycleView"
         android:layout_width="409dp"
         android:layout_height="681dp"
         app:layout_constraintBottom_toBottomOf="parent"
