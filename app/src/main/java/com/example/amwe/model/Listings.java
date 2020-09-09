@@ -10,7 +10,7 @@ public class Listings {
     private String title;
     private String edition;
     private String author;
-    private int isbn;
+    private long isbn;
     private String description;
     private Image bookImage;
     private double price;
@@ -19,7 +19,7 @@ public class Listings {
     public Listings() {
     }
 
-    public Listings(int id, String title, String edition, String author, int isbn,
+    public Listings(int id, String title, String edition, String author, long isbn,
                     String description, Image bookImage, double price, String seller) {
 
         this.id = id;
@@ -80,11 +80,11 @@ public class Listings {
         this.author = author;
     }
 
-    public int getIsbn() {
+    public long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(int isbn) {
+    public void setIsbn(long isbn) {
         this.isbn = isbn;
     }
 
