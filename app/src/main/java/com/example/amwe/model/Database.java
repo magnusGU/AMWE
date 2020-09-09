@@ -20,16 +20,22 @@ public class Database {
         this.database = FirebaseDatabase.getInstance();
     }
 
-    public ArrayList<Listings> getListings() {
+    public FirebaseDatabase getDatabase() {
+        return database;
+    }
+    public DatabaseReference getListings() {
+        return database.getReference().child("listings");
+    }
+    /*public ArrayList<Listing> getListings() {
         DatabaseReference listings = database.getReference().child("listings");
-        final ArrayList<Listings> returnListings = new ArrayList<Listings>();
+        final ArrayList<Listing> returnListings = new ArrayList<Listing>();
         ValueEventListener listingsListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 returnListings.clear();
                 for (DataSnapshot item: snapshot.getChildren()) {
                     Log.d("HERE", item.getValue().toString());
-                    returnListings.add(item.getValue(Listings.class));
+                    returnListings.add(item.getValue(Listing.class));
                 }
                 Log.d("HERE", returnListings.toString());
             }
@@ -42,6 +48,6 @@ public class Database {
 
         listings.addValueEventListener(listingsListener);
         //System.out.println(listings);
-        return null;
-    }
+        return returnListings;
+    }*/
 }

@@ -1,5 +1,6 @@
-package com.example.amwe.view;
+package com.example.amwe.controller;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.example.amwe.R;
+import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> {
-    private ArrayList <Listing> listingList;
+    final private ArrayList <Listing> listingList;
+    private Database db;
 
     public static class ViewHold extends ViewHolder {
         private ImageView mImageView;
@@ -31,8 +38,30 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         }
 
     }
-    public ListingAdapter(ArrayList<Listing> listingList) {
-    this.listingList=listingList;
+
+    public ListingAdapter(final ArrayList<Listing> listingList) {
+        this.listingList = listingList;
+        db = new Database();
+
+        DatabaseReference listings = db.getListings();
+        ValueEventListener listingsListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listingList.clear();
+                for (DataSnapshot item: snapshot.getChildren()) {
+                    Log.d("HERE", item.getValue().toString());
+                    listingList.add(item.getValue(Listing.class));
+                }
+                Log.d("HERE", listingList.toString());
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("HERE", "onCancelled");
+            }
+        };
+        listings.addValueEventListener(listingsListener);
 
     }
 
