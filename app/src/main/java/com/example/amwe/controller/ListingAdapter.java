@@ -38,6 +38,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         private TextView textViewDate;
         private View view;
         private TextView textViewTitle;
+        private TextView textViewPrice;
+        private TextView textViewCondition;
 
 
 
@@ -46,6 +48,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             bookImage=itemView.findViewById(R.id.listing_card_image);
             textViewDate=itemView.findViewById(R.id.listing_card_date);
             textViewTitle=itemView.findViewById(R.id.listing_);
+            textViewPrice = itemView.findViewById(R.id.listing_card_price);
+            textViewCondition = itemView.findViewById(R.id.listing_card_condition);
             this.view=itemView;
         }
 
@@ -103,8 +107,14 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,ListingPageActivity.class);
-                intent.putExtra("Title",currentListing.getTitle());
-                intent.putExtra("Image",currentListing.getBookImage());
+                intent.putExtra("Title", currentListing.getTitle());
+                intent.putExtra("Image", currentListing.getBookImage());
+                intent.putExtra("isbn", String.valueOf(currentListing.getIsbn()));
+                intent.putExtra("description", currentListing.getDescription());
+                intent.putExtra("price", currentListing.getPrice());
+                intent.putExtra("author", currentListing.getAuthor());
+                intent.putExtra("edition", currentListing.getEdition());
+                intent.putExtra("seller", currentListing.getSeller().toString());
                 context.startActivity(intent);
 
             }
