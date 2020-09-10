@@ -95,16 +95,20 @@
 
             <TextView
                 android:id="@+id/listing_page_author"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:gravity="right"
                 android:text="Robert A. Adams, Christopher Essex"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/listing_page_author_label"
                 app:layout_constraintTop_toBottomOf="@+id/listing_page_price" />
 
             <TextView
@@ -122,16 +126,20 @@
 
             <TextView
                 android:id="@+id/listing_page_edition"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
+                android:gravity="right"
                 android:text="9"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/listing_page_edition_label"
                 app:layout_constraintTop_toBottomOf="@+id/listing_page_author" />
 
             <TextView
@@ -149,16 +157,20 @@
 
             <TextView
                 android:id="@+id/listing_page_condition"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
+                android:gravity="right"
                 android:text="Nyskick"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/listing_page_condition_label"
                 app:layout_constraintTop_toBottomOf="@+id/listing_page_edition" />
 
             <TextView
@@ -176,16 +188,22 @@
 
             <TextView
                 android:id="@+id/listing_page_isbn"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
+                android:layout_marginBottom="32dp"
+                android:gravity="right"
                 android:text="9780134154367"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/listing_page_isbn_label"
                 app:layout_constraintTop_toBottomOf="@+id/listing_page_condition" />
 
             <View
