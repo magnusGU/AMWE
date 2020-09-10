@@ -29,7 +29,7 @@ import java.util.ArrayList;
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> implements Filterable{
     private ArrayList <Listing> listingList;
-    private ArrayList<Listing> listingListCopy;
+    private ArrayList<Listing> listingListCopy; //copy needed for search function
     private Context context;
     private Database db;
 
@@ -128,10 +128,10 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     @Override
     public Filter getFilter() {
-        return exampleFilter;
+        return searchFilter;
     }
 
-    private Filter exampleFilter = new Filter() {
+    private Filter searchFilter = new Filter() { //filters listings by the text written
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             ArrayList<Listing> filteredList = new ArrayList<>();
