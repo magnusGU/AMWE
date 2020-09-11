@@ -101,6 +101,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         holder.textViewTitle.setText(currentListing.getTitle());
         DecimalFormat df = new DecimalFormat("0.##");
         holder.textViewPrice.setText(df.format(currentListing.getPrice()) + " kr");
+        holder.textViewCondition.setText(currentListing.getCondition());
+        holder.textViewDate.setText(currentListing.getDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +114,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 intent.putExtra("price", currentListing.getPrice());
                 intent.putExtra("author", currentListing.getAuthor());
                 intent.putExtra("edition", currentListing.getEdition());
+                intent.putExtra("condition", currentListing.getCondition());
                 intent.putExtra("seller", currentListing.getSeller().toString());
                 context.startActivity(intent);
 

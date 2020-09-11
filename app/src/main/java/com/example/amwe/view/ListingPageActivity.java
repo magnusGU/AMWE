@@ -38,7 +38,9 @@ public class ListingPageActivity extends AppCompatActivity {
         TextView seller = findViewById(R.id.listing_page_seller);
         String newSeller = getIntent().getStringExtra("seller");
         seller.setText(newSeller);
-
+        TextView condition = findViewById(R.id.listing_page_condition);
+        String newCondition = getIntent().getStringExtra("condition");
+        condition.setText(newCondition);
 
     }
 }
