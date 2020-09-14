@@ -2,6 +2,7 @@ package com.example.amwe.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Layout;
@@ -73,4 +74,6 @@ public class searchPage extends Fragment {
 
 
     }
+
+
 }

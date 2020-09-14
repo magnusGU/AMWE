@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import com.example.amwe.R;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     }
     /*Not the right place for it because of weird references to model but it will have to do for now*/
     private  void createList(){
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         this.listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
     }
 
     private void initializeList() {
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 
     BottomNavigationView.OnNavigationItemSelectedListener navListner = new BottomNavigationView.OnNavigationItemSelectedListener() {

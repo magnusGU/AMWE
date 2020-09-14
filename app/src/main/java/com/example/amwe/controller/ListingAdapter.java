@@ -57,7 +57,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     }
     public ListingAdapter(final ArrayList<Listing> listingList){
         this.listingList = listingList;
-        listingListCopy = new ArrayList<>(listingList); //Simply an independent copy of listingList
+        //Simply an independent copy of listingList
         db = new Database();
 
         //create database listener that will update recyclerView
@@ -74,6 +74,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 Log.d("HERE", listingList.toString());
                 //This line is what updated the view
                 notifyDataSetChanged();
+                listingListCopy = new ArrayList<>(listingList);
+
             }
 
             @Override
@@ -137,19 +139,25 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         return searchFilter;
     }
 
-    private Filter searchFilter = new Filter() { //filters listings by the text written
+    private Filter searchFilter = new Filter() {
+        //filters listings by the text written
+
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             ArrayList<Listing> filteredList = new ArrayList<>();
 
             if (charSequence == null || charSequence.length() == 0) {
                 filteredList.addAll(listingListCopy);
+
+
             }else{
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
                 for (Listing l : listingListCopy) {
                     if (l.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(l);
+
+
                     }
                 }
             }
@@ -164,6 +172,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             listingList.clear();
             listingList.addAll((ArrayList) filterResults.values);
+
             notifyDataSetChanged();
         }
     };
