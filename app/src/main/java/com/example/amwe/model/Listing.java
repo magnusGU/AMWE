@@ -12,12 +12,15 @@ public class Listing {
     private String description;
     private int bookImage;
     private double price;
+    private String condition;
+    private String date;
     private User seller;
 
     public Listing (){
     }
 
-    public Listing (int id, String title, String edition,String author,long isbn,String description, int bookImage,double price,String seller){
+    public Listing (int id, String title, String edition,String author,long isbn,String description,
+                    int bookImage,double price,String seller,String condition, String date){
         this.id=id;
         this.title=title;
         this.edition=edition;
@@ -26,21 +29,10 @@ public class Listing {
         this.description=description;
         this.bookImage=bookImage;
         this.price=price;
+        this.condition=condition;
+        this.date=date;
         this.seller=new User(seller);
     }
-
-    /*public Listing (int id, String title, String edition,String author,long isbn,String description, int bookImage,double price,User seller){
-        this.id=id;
-        this.title=title;
-        this.edition=edition;
-        this.author=author;
-        this.isbn=isbn;
-        this.description=description;
-        this.bookImage=bookImage;
-        this.price=price;
-        this.seller=seller;
-    }*/
-
 
 
     @Override
@@ -90,6 +82,10 @@ public class Listing {
         return price;
     }
 
+    public String getCondition() {
+        return condition;
+    }
+
     public User getSeller() {
         return seller;
     }
@@ -122,6 +118,11 @@ public class Listing {
         this.bookImage = bookImage;
     }
 
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -129,4 +130,14 @@ public class Listing {
     public void setSeller(String seller) {
         this.seller = new User(seller);
     }
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
 }
