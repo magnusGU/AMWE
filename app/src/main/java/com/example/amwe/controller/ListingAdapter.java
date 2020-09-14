@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,8 +28,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
-public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> {
+public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> implements Filterable{
     private ArrayList <Listing> listingList;
+    private ArrayList<Listing> listingListCopy; //copy needed for search function
     private Context context;
     private Database db;
 
@@ -52,8 +55,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         }
 
     }
-    public ListingAdapter(final ArrayList<Listing> listingList) {
+    public ListingAdapter(final ArrayList<Listing> listingList){
         this.listingList = listingList;
+        listingListCopy = new ArrayList<>(listingList); //Simply an independent copy of listingList
         db = new Database();
 
         //create database listener that will update recyclerView
@@ -79,6 +83,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         };
         //this listener is assigned to the databasereference
         listings.addValueEventListener(listingsListener);
+
 
     }
 
@@ -127,5 +132,39 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         return listingList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return searchFilter;
+    }
 
+    private Filter searchFilter = new Filter() { //filters listings by the text written
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            ArrayList<Listing> filteredList = new ArrayList<>();
+
+            if (charSequence == null || charSequence.length() == 0) {
+                filteredList.addAll(listingListCopy);
+            }else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (Listing l : listingListCopy) {
+                    if (l.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(l);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            listingList.clear();
+            listingList.addAll((ArrayList) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 }

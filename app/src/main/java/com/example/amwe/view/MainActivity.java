@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.example.amwe.R;
 import com.example.amwe.controller.ListingAdapter;
@@ -24,11 +27,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Listing> currentListings;
+    ListingAdapter listingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //A SearchView might need to be created too
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
         bottomNavigation.setOnNavigationItemSelectedListener(navListner);
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new searchPage()).commit();
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
         //sketchy but we will have to discuss this
         ListingAdapter adapter = new ListingAdapter(currentListings);
+        this.listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
@@ -75,4 +81,26 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_function, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) { //for updating the search after filling in text completely and submitting it in search bar, not used since we want it updated in real time
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) { //updating search in real time as the user writes
+                listingAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
+        return true;
+    }
 }
