@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
@@ -98,6 +99,10 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         final Listing currentListing=listingList.get(position);
         holder.bookImage.setImageResource(currentListing.getBookImage());
         holder.textViewTitle.setText(currentListing.getTitle());
+        DecimalFormat df = new DecimalFormat("0.##");
+        holder.textViewPrice.setText(df.format(currentListing.getPrice()) + " kr");
+        holder.textViewCondition.setText(currentListing.getCondition());
+        holder.textViewDate.setText(currentListing.getDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +114,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 intent.putExtra("price", currentListing.getPrice());
                 intent.putExtra("author", currentListing.getAuthor());
                 intent.putExtra("edition", currentListing.getEdition());
+                intent.putExtra("condition", currentListing.getCondition());
                 intent.putExtra("seller", currentListing.getSeller().toString());
                 context.startActivity(intent);
 
