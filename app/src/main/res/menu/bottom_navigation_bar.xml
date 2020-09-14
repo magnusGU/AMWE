@@ -14,10 +14,4 @@
         android:id="@+id/account_page"
         android:icon="@drawable/ic_account"
         android:title="Profil" />
-    <item
-        android:id="@+id/search_function"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.widget.SearchView" />
 </menu>

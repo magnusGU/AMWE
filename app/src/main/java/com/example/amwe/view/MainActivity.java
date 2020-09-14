@@ -33,6 +33,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SearchView searchView = findViewById(R.id.action_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                System.out.println("TEXTEN HAR ÄNDRATS HÄR *********************************************************************************************************************");
+                listingAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
         bottomNavigation.setOnNavigationItemSelectedListener(navListner);
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new searchPage()).commit();
@@ -49,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
         //sketchy but we will have to discuss this
         ListingAdapter adapter = new ListingAdapter(currentListings);
+        this.listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
@@ -82,9 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        System.out.println("HEJ");
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bottom_navigation_bar, menu);
-        MenuItem searchItem = menu.findItem(R.id.search_function);
+        inflater.inflate(R.menu.search_function, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
