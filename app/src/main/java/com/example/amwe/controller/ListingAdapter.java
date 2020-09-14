@@ -2,6 +2,9 @@ package com.example.amwe.controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,10 +71,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listingList.clear();
                 for (DataSnapshot item: snapshot.getChildren()) {
-                    Log.d("HERE", item.getValue().toString());
                     listingList.add(item.getValue(Listing.class));
                 }
-                Log.d("HERE", listingList.toString());
                 //This line is what updated the view
                 notifyDataSetChanged();
                 listingListCopy = new ArrayList<>(listingList);
@@ -104,7 +105,16 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final ViewHold holder, final int position) {
         final Listing currentListing=listingList.get(position);
-        holder.bookImage.setImageResource(currentListing.getBookImage());
+
+        try{
+            byte[] decodedString = Base64.decode(currentListing.getBookImage(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            holder.bookImage.setImageBitmap(decodedByte);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         holder.textViewTitle.setText(currentListing.getTitle());
         DecimalFormat df = new DecimalFormat("0.##");
         holder.textViewPrice.setText(df.format(currentListing.getPrice()) + " kr");
@@ -118,7 +128,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 intent.putExtra("Image", currentListing.getBookImage());
                 intent.putExtra("isbn", String.valueOf(currentListing.getIsbn()));
                 intent.putExtra("description", currentListing.getDescription());
-                intent.putExtra("price", currentListing.getPrice());
+                intent.putExtra("price", String.valueOf(currentListing.getPrice()));
                 intent.putExtra("author", currentListing.getAuthor());
                 intent.putExtra("edition", currentListing.getEdition());
                 intent.putExtra("condition", currentListing.getCondition());

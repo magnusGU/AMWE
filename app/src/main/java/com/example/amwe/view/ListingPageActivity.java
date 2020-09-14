@@ -28,7 +28,7 @@ public class ListingPageActivity extends AppCompatActivity {
         description.setText(newDescription);
         TextView price = findViewById(R.id.listing_page_price);
         String newPrice = getIntent().getStringExtra("price");
-        price.setText(newPrice);
+        price.setText(newPrice + " kr");
         TextView author = findViewById(R.id.listing_page_author);
         String newAuthor = getIntent().getStringExtra("author");
         author.setText(newAuthor);
