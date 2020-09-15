@@ -22,5 +22,12 @@ public class EmailLogin extends AppCompatActivity {
                 startActivity(new Intent(EmailLogin.this, MainActivity.class));
             }
         });
+        Button registerButton = findViewById(R.id.button_register);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(EmailLogin.this, Register.class));
+            }
+        });
     }
 }
