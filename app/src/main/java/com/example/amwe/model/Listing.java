@@ -10,7 +10,7 @@ public class Listing {
     private String author;
     private long isbn;
     private String description;
-    private int bookImage;
+    private String bookImage;
     private double price;
     private String condition;
     private String date;
@@ -20,7 +20,7 @@ public class Listing {
     }
 
     public Listing (int id, String title, String edition,String author,long isbn,String description,
-                    int bookImage,double price,String seller,String condition, String date){
+                    String bookImage,double price,String seller,String condition, String date){
         this.id=id;
         this.title=title;
         this.edition=edition;
@@ -74,7 +74,7 @@ public class Listing {
         return description;
     }
 
-    public int getBookImage() {
+    public String getBookImage() {
         return bookImage;
     }
 
@@ -114,7 +114,7 @@ public class Listing {
         this.description = description;
     }
 
-    public void setBookImage(int bookImage) {
+    public void setBookImage(String bookImage) {
         this.bookImage = bookImage;
     }
 

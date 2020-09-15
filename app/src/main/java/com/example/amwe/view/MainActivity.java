@@ -8,21 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.SearchView;
 
 import com.example.amwe.R;
 import com.example.amwe.controller.ListingAdapter;
 import com.example.amwe.model.Listing;
-import com.example.amwe.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -40,11 +34,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navListner);
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new searchPage()).commit();
         createList();
-
-
-
-
     }
+
     /*Not the right place for it because of weird references to model but it will have to do for now*/
     private  void createList(){
         this.currentListings= new ArrayList<>();

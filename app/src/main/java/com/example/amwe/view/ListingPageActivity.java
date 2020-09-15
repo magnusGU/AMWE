@@ -1,6 +1,10 @@
 package com.example.amwe.view;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -17,6 +21,14 @@ public class ListingPageActivity extends AppCompatActivity {
         initUI();
     }
     private void initUI(){
+        try{
+            ImageView bookImage = findViewById(R.id.listing_page_image);
+            byte[] decodedString = Base64.decode(getIntent().getStringExtra("Image"), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            bookImage.setImageBitmap(decodedByte);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         TextView title= findViewById(R.id.textView3);
         String titleName=getIntent().getStringExtra("Title");
         title.setText(titleName);
@@ -28,7 +40,7 @@ public class ListingPageActivity extends AppCompatActivity {
         description.setText(newDescription);
         TextView price = findViewById(R.id.listing_page_price);
         String newPrice = getIntent().getStringExtra("price");
-        price.setText(newPrice);
+        price.setText(newPrice + " kr");
         TextView author = findViewById(R.id.listing_page_author);
         String newAuthor = getIntent().getStringExtra("author");
         author.setText(newAuthor);
