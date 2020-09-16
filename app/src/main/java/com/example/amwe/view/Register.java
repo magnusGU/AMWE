@@ -62,7 +62,7 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-                if (password1.length() < 6){
+                if (password1.length() <= 6){
                     mPassword1.setError("Lösenord måste vara mer än 6 tecken");
                     return;
                 }
@@ -72,7 +72,8 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         System.out.println("Registered");
                         if (task.isSuccessful()){
-                            startActivity(new Intent(Register.this, MainActivity.class));
+                            startActivity(new Intent(Register.this, EmailLogin.class));
+                            fAuth.signOut();
                         }
                         else {
                             Toast.makeText(Register.this, "Failed", Toast.LENGTH_SHORT);

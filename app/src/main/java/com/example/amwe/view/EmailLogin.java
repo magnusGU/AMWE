@@ -6,10 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.amwe.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class EmailLogin extends AppCompatActivity {
+
+    EditText mEmail, mPassword;
+    Button mConfirm;
+    private FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +28,8 @@ public class EmailLogin extends AppCompatActivity {
                 startActivity(new Intent(EmailLogin.this, MainActivity.class));
             }
         });
-        Button registerButton = findViewById(R.id.button_register);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        mConfirm = findViewById(R.id.button_register);
+        mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(EmailLogin.this, Register.class));
