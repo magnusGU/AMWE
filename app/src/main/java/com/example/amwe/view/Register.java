@@ -19,8 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
 
-    EditText mName, mEmail, mPassword1, mPassword2;
-    Button mConfirm;
+    private EditText mName, mEmail, mPassword1, mPassword2;
+    private Button mConfirm;
     private FirebaseAuth fAuth;
 
     @Override
@@ -35,37 +35,18 @@ public class Register extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
 
-        mConfirm.setOnClickListener(new View.OnClickListener() {
+        mConfirm.setOnClickListener(register());
+    }
+
+    private View.OnClickListener register() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = mEmail.getText().toString().trim();
                 String password1 = mPassword1.getText().toString().trim();;
                 String password2 = mPassword2.getText().toString().trim();;
 
-                if (TextUtils.isEmpty(email)){
-                    mEmail.setError("E-post är obligatoriskt");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password1)){
-                    mPassword1.setError("Lösenord är obligatoriskt");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password2)){
-                    mPassword2.setError("Lösenord är obligatoriskt");
-                    return;
-                }
-
-                if (!password1.equals(password2)){
-                    mPassword2.setError("Lösenord ej samma");
-                    return;
-                }
-
-                if (password1.length() <= 6){
-                    mPassword1.setError("Lösenord måste vara mer än 6 tecken");
-                    return;
-                }
+                conditions(email, password1, password2);
 
                 fAuth.createUserWithEmailAndPassword(email,password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -82,6 +63,33 @@ public class Register extends AppCompatActivity {
                 });
 
             }
-        });
+        };
+    }
+
+    private void conditions(String email, String password1, String password2 ) {
+        if (TextUtils.isEmpty(email)){
+            mEmail.setError("E-post är obligatoriskt");
+            return;
+        }
+
+        if (TextUtils.isEmpty(password1)){
+            mPassword1.setError("Lösenord är obligatoriskt");
+            return;
+        }
+
+        if (TextUtils.isEmpty(password2)){
+            mPassword2.setError("Lösenord är obligatoriskt");
+            return;
+        }
+
+        if (!password1.equals(password2)){
+            mPassword2.setError("Lösenord ej samma");
+            return;
+        }
+
+        if (password1.length() <= 6){
+            mPassword1.setError("Lösenord måste vara mer än 6 tecken");
+            return;
+        }
     }
 }

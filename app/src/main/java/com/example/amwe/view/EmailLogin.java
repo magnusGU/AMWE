@@ -19,8 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class EmailLogin extends AppCompatActivity {
 
-    EditText mEmail, mPassword;
-    Button mConfirm, mRegister;
+    private EditText mEmail, mPassword;
+    private Button mConfirm, mRegister;
     private FirebaseAuth fAuth;
 
     @Override
@@ -34,38 +34,7 @@ public class EmailLogin extends AppCompatActivity {
         mPassword = findViewById(R.id.login_password);
 
         mConfirm = findViewById(R.id.login_button);
-        //mConfirm.setOnClickListener(login());
-        mConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();;
-
-                if (TextUtils.isEmpty(email)){
-                    mEmail.setError("E-post är obligatoriskt");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)){
-                    mPassword.setError("Lösenord är obligatoriskt");
-                    return;
-                }
-
-
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            System.out.println("Signed in");
-                            startActivity(new Intent(EmailLogin.this, MainActivity.class));
-                        }
-                        else {
-                            Toast.makeText(EmailLogin.this, "Failed", Toast.LENGTH_SHORT);
-                        }
-                    }
-                });
-            }
-        });
+        mConfirm.setOnClickListener(login());
 
         mRegister = findViewById(R.id.button_register);
         mRegister.setOnClickListener(register());
@@ -80,7 +49,7 @@ public class EmailLogin extends AppCompatActivity {
         };
     }
 
-    /*
+
     private View.OnClickListener login() {
         return new View.OnClickListener() {
             @Override
@@ -117,5 +86,4 @@ public class EmailLogin extends AppCompatActivity {
             }
         };
     }
-     */
 }
