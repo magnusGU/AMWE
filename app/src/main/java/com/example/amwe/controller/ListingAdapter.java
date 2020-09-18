@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -145,48 +144,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         return listingList.size();
     }
 
-    public searchFunction getSearch(){return search;}
-
-    @Override
-    public Filter getFilter() {
-        return search.getFilter();
+    public searchFunction getSearch(){
+        return search;
     }
 
-    private Filter searchFilter = new Filter() {
-        //filters listings by the text written
-
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<Listing> filteredList = new ArrayList<>();
-
-            if (charSequence == null || charSequence.length() == 0) {
-                filteredList.addAll(listingListCopy);
-
-
-            }else{
-                String filterPattern = charSequence.toString().toLowerCase().trim();
-
-                for (Listing l : listingListCopy) {
-                    if (l.getTitle().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(l);
-
-
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            listingList.clear();
-            listingList.addAll((ArrayList) filterResults.values);
-
-            notifyDataSetChanged();
-        }
-    };
 }

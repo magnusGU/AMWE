@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) { //updating search in real time as the user writes
-                listingAdapter.getFilter().filter(s);
-                //listingAdapter.getSearch().getFilter().filter(s);
+                listingAdapter.getSearch().getFilter().filter(s);
+                listingAdapter.notifyDataSetChanged();
                 return false;
             }
         });

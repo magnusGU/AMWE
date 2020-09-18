@@ -9,8 +9,8 @@ public class searchFunction implements Filterable {
 
     private ArrayList<Listing> list;
 
-    public searchFunction(){
-        this.list =
+    public searchFunction(ArrayList<Listing> listingList){
+        this.list = listingList;
     }
 
     @Override
@@ -35,8 +35,6 @@ public class searchFunction implements Filterable {
                 for (Listing l : list) {
                     if (l.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(l);
-
-
                     }
                 }
             }
@@ -51,8 +49,6 @@ public class searchFunction implements Filterable {
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             list.clear();
             list.addAll((ArrayList) filterResults.values);
-
-            notifyDataSetChanged();
         }
     };
 }
