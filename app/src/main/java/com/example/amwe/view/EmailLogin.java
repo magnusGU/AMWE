@@ -77,7 +77,7 @@ public class EmailLogin extends AppCompatActivity {
                             startActivity(new Intent(EmailLogin.this, MainActivity.class));
                         }
                         else {
-                            Toast.makeText(EmailLogin.this, "Failed", Toast.LENGTH_SHORT);
+                            Toast.makeText(EmailLogin.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

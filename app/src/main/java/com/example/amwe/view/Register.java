@@ -57,7 +57,7 @@ public class Register extends AppCompatActivity {
                             fAuth.signOut();
                         }
                         else {
-                            Toast.makeText(Register.this, "Failed", Toast.LENGTH_SHORT);
+                            Toast.makeText(Register.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
