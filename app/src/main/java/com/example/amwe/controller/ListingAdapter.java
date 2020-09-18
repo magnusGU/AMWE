@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
+import com.example.amwe.model.searchFunction;
 import com.example.amwe.view.ListingPageActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,9 +31,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
-public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> implements Filterable{
+public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
     private ArrayList <Listing> listingList;
     private ArrayList<Listing> listingListCopy; //copy needed for search function
+    private searchFunction search;
     private Context context;
     private Database db;
 
@@ -144,9 +145,11 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         return listingList.size();
     }
 
+    public searchFunction getSearch(){return search;}
+
     @Override
     public Filter getFilter() {
-        return searchFilter;
+        return search.getFilter();
     }
 
     private Filter searchFilter = new Filter() {
