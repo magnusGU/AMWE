@@ -8,9 +8,11 @@ import java.util.ArrayList;
 public class SearchFunction implements Filterable {
 
     private ArrayList<Listing> list;
+    private ArrayList<Listing> originalList;
 
     public SearchFunction(ArrayList<Listing> listingList){
-        this.list = new ArrayList<>(listingList);
+        this.list = listingList;
+        this.originalList = new ArrayList<>(listingList);
     }
 
     @Override
@@ -26,10 +28,10 @@ public class SearchFunction implements Filterable {
             ArrayList<Listing> filteredList = new ArrayList<>();
 
             if (charSequence == null || charSequence.length() == 0) {
-                filteredList.addAll(list);
+                filteredList.addAll(originalList);
             }else{
                 String filterPattern = charSequence.toString().toLowerCase().trim();
-                for (Listing l : list) {
+                for (Listing l : originalList) {
                     if (l.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(l);
                     }
