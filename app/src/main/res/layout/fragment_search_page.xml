@@ -13,7 +13,7 @@
         android:layout_width="409dp"
         android:layout_height="48dp"
         android:background="@color/colorWhite"
-        android:elevation="2dp"
+        android:elevation="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
