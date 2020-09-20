@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
-import com.example.amwe.model.searchFunction;
+import com.example.amwe.model.SearchFunction;
 import com.example.amwe.view.ListingPageActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
     private ArrayList <Listing> listingList;
     private ArrayList<Listing> listingListCopy; //copy needed for search function
-    private searchFunction search;
+    private SearchFunction search;
     private Context context;
     private Database db;
 
@@ -137,14 +137,14 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
             }
         });
-            }
+    }
 
     @Override
     public int getItemCount() {
         return listingList.size();
     }
 
-    public searchFunction getSearch(){
+    public SearchFunction getSearch(){
         return search;
     }
 

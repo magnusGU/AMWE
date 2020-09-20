@@ -5,12 +5,12 @@ import android.widget.Filterable;
 
 import java.util.ArrayList;
 
-public class searchFunction implements Filterable {
+public class SearchFunction implements Filterable {
 
     private ArrayList<Listing> list;
 
-    public searchFunction(ArrayList<Listing> listingList){
-        this.list = listingList;
+    public SearchFunction(ArrayList<Listing> listingList){
+        this.list = new ArrayList<>(listingList);
     }
 
     @Override
@@ -27,11 +27,8 @@ public class searchFunction implements Filterable {
 
             if (charSequence == null || charSequence.length() == 0) {
                 filteredList.addAll(list);
-
-
             }else{
                 String filterPattern = charSequence.toString().toLowerCase().trim();
-
                 for (Listing l : list) {
                     if (l.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(l);
