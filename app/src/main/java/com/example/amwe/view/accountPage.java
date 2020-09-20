@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +30,7 @@ public class accountPage extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    Button logOutButton;
+    private Button logOutButton;
 
     public accountPage() {
         // Required empty public constructor
@@ -59,26 +61,36 @@ public class accountPage extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        /*
-        logOutButton = (Button) getView().findViewById(R.id.account_logout_button);
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logOut();
-            }
-        });
-         */
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_page, container, false);
-    }
+        View v= inflater.inflate(R.layout.fragment_account_page, container, false);
+        logOutButton =  v.findViewById(R.id.account_logout_button);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOut();
+            }
+        });
+        initUI(v);
 
-    public void logOut(){
+        return v;
+        }
+
+    private void logOut(){
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getContext(), Login.class));
+    }
+    private void initUI(View v){
+        TextView name =v.findViewById(R.id.account_page_name);
+        //Obviously temporary but works now as a test.
+        name.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
+
     }
 }
