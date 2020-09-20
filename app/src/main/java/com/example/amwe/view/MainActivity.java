@@ -20,6 +20,7 @@ import com.example.amwe.model.Listing;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -74,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
         this.listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-
-
     }
 
     private void initializeList() {
@@ -101,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) { //updating search in real time as the user writes
                 listingAdapter.getSearch().getFilter().filter(s);
+                try {
+                    TimeUnit.MILLISECONDS.sleep(150); // OBS!!! Temporary! - This is to make sure that search list get updated before notifyDataSetChanged is called
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 listingAdapter.notifyDataSetChanged();
                 return false;
             }
