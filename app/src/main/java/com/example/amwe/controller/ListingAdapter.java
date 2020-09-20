@@ -32,7 +32,7 @@ import java.util.ArrayList;
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
     private ArrayList <Listing> listingList;
-    private SearchFunction search;
+    SearchFunction search;
     private Context context;
     private Database db;
 
@@ -59,7 +59,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     }
     public ListingAdapter(final ArrayList<Listing> listingList){
         this.listingList = listingList;
-        this.search = new SearchFunction(listingList);
         //Simply an independent copy of listingList
         db = new Database();
 
@@ -75,7 +74,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 }
                 //This line is what updated the view
                 notifyDataSetChanged();
+                search = new SearchFunction(listingList);
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -84,8 +85,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         };
         //this listener is assigned to the databasereference
         listings.addValueEventListener(listingsListener);
-
-
     }
 
 
