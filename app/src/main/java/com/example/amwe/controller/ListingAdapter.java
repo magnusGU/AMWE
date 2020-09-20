@@ -101,7 +101,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHold holder, final int position) {
-        final Listing currentListing=listingList.get(position);
+        final Listing currentListing = listingList.get(position);
 
         try{
             byte[] decodedString = Base64.decode(currentListing.getBookImage(), Base64.DEFAULT);
