@@ -1,6 +1,5 @@
 package com.example.amwe.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,10 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.amwe.R;
-import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +25,6 @@ public class accountPage extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    Button logOutButton;
 
     public accountPage() {
         // Required empty public constructor
@@ -59,15 +55,6 @@ public class accountPage extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        /*
-        logOutButton = (Button) getView().findViewById(R.id.account_logout_button);
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logOut();
-            }
-        });
-         */
     }
 
     @Override
@@ -75,10 +62,5 @@ public class accountPage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_account_page, container, false);
-    }
-
-    public void logOut(){
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getContext(), Login.class));
     }
 }

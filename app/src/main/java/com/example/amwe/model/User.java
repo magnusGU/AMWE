@@ -2,7 +2,7 @@ package com.example.amwe.model;
 
 import java.util.ArrayList;
 
-public class User{
+public class User {
 
     private String name;
     private ArrayList<Integer> watchlist;
