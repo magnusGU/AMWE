@@ -1,17 +1,14 @@
 package com.example.amwe.model;
 
-import android.widget.Filter;
-import android.widget.Filterable;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFunction {
 
-    private ArrayList<Listing> list;
-    private ArrayList<Listing> originalList;
+    private List<Listing> list;
+    private List<Listing> originalList;
 
-    public SearchFunction(ArrayList<Listing> listingList){
+    public SearchFunction(List<Listing> listingList){
         this.list = listingList;
         this.originalList = new ArrayList<>(listingList);
     }
@@ -45,9 +42,9 @@ public class SearchFunction {
             }
 
         }
-        public void publishResults(ArrayList<Listing> filtered) {
+        public void publishResults(List<Listing> filtered) {
             list.clear();
-            list.addAll( filtered);
+            list.addAll(filtered);
         }
 
 }
