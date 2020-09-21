@@ -11,6 +11,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Database {
@@ -26,6 +28,12 @@ public class Database {
     public DatabaseReference getListings() {
         return database.getReference().child("listings");
     }
+
+    public void addUser(String uid, String name){
+        User user = new User(name);
+        database.getReference().child("users").child(uid).setValue(user);
+    }
+
     /*public ArrayList<Listing> getListings() {
         DatabaseReference listings = database.getReference().child("listings");
         final ArrayList<Listing> returnListings = new ArrayList<Listing>();
