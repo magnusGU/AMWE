@@ -4,8 +4,9 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SearchFunction implements Filterable {
+public class SearchFunction {
 
     private ArrayList<Listing> list;
     private ArrayList<Listing> originalList;
@@ -15,39 +16,38 @@ public class SearchFunction implements Filterable {
         this.originalList = new ArrayList<>(listingList);
     }
 
-    @Override
-    public Filter getFilter() {
+
+    public myFilter getFilter() {
         return searchFilter;
     }
 
-    private Filter searchFilter = new Filter() {
+    private myFilter searchFilter = new myFilter();
         //filters listings by the text written
 
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<Listing> filteredList = new ArrayList<>();
+        public class myFilter {
+            public void performFiltering(CharSequence charSequence) {
+                ArrayList<Listing> filteredList = new ArrayList<>();
 
-            if (charSequence == null || charSequence.length() == 0) {
-                filteredList.addAll(originalList);
-            }else{
-                String filterPattern = charSequence.toString().toLowerCase().trim();
-                for (Listing l : originalList) {
-                    if (l.getTitle().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(l);
+                if (charSequence == null || charSequence.length() == 0) {
+                    filteredList.addAll(originalList);
+                } else {
+                    String filterPattern = charSequence.toString().toLowerCase().trim();
+                    for (Listing l : originalList) {
+                        if (l.getTitle().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(l);
+                        }
                     }
                 }
+
+                publishResults(filteredList);
+
+
             }
 
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
         }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+        public void publishResults(ArrayList<Listing> filtered) {
             list.clear();
-            list.addAll((ArrayList) filterResults.values);
+            list.addAll( filtered);
         }
-    };
+
 }

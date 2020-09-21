@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) { //updating search in real time as the user writes
-                listingAdapter.getSearch().getFilter().filter(s);
+                listingAdapter.getSearch().getFilter().performFiltering(s);
                 try {
                     TimeUnit.MILLISECONDS.sleep(150); // OBS!!! Temporary! - This is to make sure that search list get updated before notifyDataSetChanged is called.
                 } catch (InterruptedException e) {
