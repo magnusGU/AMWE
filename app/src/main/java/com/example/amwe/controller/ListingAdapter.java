@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
+import com.example.amwe.model.SearchFunction;
 import com.example.amwe.view.ListingPageActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,9 +30,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
-public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> implements Filterable{
+public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
     private ArrayList <Listing> listingList;
-    private ArrayList<Listing> listingListCopy; //copy needed for search function
+    SearchFunction search;
     private Context context;
     private Database db;
 
@@ -75,9 +74,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 }
                 //This line is what updated the view
                 notifyDataSetChanged();
-                listingListCopy = new ArrayList<>(listingList);
-
+                search = new SearchFunction(listingList);
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -86,8 +85,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         };
         //this listener is assigned to the databasereference
         listings.addValueEventListener(listingsListener);
-
-
     }
 
 
@@ -104,7 +101,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHold holder, final int position) {
-        final Listing currentListing=listingList.get(position);
+        final Listing currentListing = listingList.get(position);
 
         try{
             byte[] decodedString = Base64.decode(currentListing.getBookImage(), Base64.DEFAULT);
@@ -137,53 +134,15 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
             }
         });
-            }
+    }
 
     @Override
     public int getItemCount() {
         return listingList.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return searchFilter;
+    public SearchFunction getSearch(){
+        return search;
     }
 
-    private Filter searchFilter = new Filter() {
-        //filters listings by the text written
-
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<Listing> filteredList = new ArrayList<>();
-
-            if (charSequence == null || charSequence.length() == 0) {
-                filteredList.addAll(listingListCopy);
-
-
-            }else{
-                String filterPattern = charSequence.toString().toLowerCase().trim();
-
-                for (Listing l : listingListCopy) {
-                    if (l.getTitle().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(l);
-
-
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            listingList.clear();
-            listingList.addAll((ArrayList) filterResults.values);
-
-            notifyDataSetChanged();
-        }
-    };
 }
