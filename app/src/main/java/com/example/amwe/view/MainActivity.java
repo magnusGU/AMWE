@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Listing> currentListings;
+    //List<Listing> currentListings;
     ListingAdapter listingAdapter;
 
     @Override
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new searchPage()).commit();
 
         createList(recyclerView);
-        BottomNavigationView.OnNavigationItemSelectedListener navListner = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
@@ -61,15 +61,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         };
-        bottomNavigation.setOnNavigationItemSelectedListener(navListner);
+        bottomNavigation.setOnNavigationItemSelectedListener(navListener);
     }
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
     private  void createList(RecyclerView recyclerView){
-        this.currentListings= new ArrayList<>();
+        ArrayList<Listing> currentListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //sketchy but we will have to discuss this
         ListingAdapter adapter = new ListingAdapter(currentListings);
         this.listingAdapter = adapter;

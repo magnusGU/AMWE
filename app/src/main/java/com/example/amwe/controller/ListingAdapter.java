@@ -27,14 +27,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
-    private ArrayList <Listing> listingList;
+    private List<Listing> listingList;
     SearchFunction search;
     private Context context;
-    private Database db;
+    //private Database db;
 
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
@@ -57,10 +57,10 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         }
 
     }
-    public ListingAdapter(final ArrayList<Listing> listingList){
+    public ListingAdapter(final List<Listing> listingList){
         this.listingList = listingList;
         //Simply an independent copy of listingList
-        db = new Database();
+        Database db = new Database();
 
         //create database listener that will update recyclerView
         //if the data in the database is changed
@@ -93,9 +93,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     public ViewHold onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Temporary should have a reference to card
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listing_card,parent,false);
-        this.context=parent.getContext();
-        ViewHold vh = new ViewHold(v);
-        return vh;
+        this.context = parent.getContext();
+        return new ViewHold(v);
     }
 
 

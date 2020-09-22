@@ -47,8 +47,8 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 final String name = mName.getText().toString().trim();
                 String email = mEmail.getText().toString().trim();
-                String password1 = mPassword1.getText().toString().trim();;
-                String password2 = mPassword2.getText().toString().trim();;
+                String password1 = mPassword1.getText().toString().trim();
+                String password2 = mPassword2.getText().toString().trim();
 
                 conditions(email, password1, password2);
 
