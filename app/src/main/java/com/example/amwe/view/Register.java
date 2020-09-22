@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.amwe.R;
+import com.example.amwe.model.Database;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,6 +23,7 @@ public class Register extends AppCompatActivity {
     private EditText mName, mEmail, mPassword1, mPassword2;
     private Button mConfirm;
     private FirebaseAuth fAuth;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class Register extends AppCompatActivity {
         mConfirm = findViewById(R.id.register_confirm);
 
         fAuth = FirebaseAuth.getInstance();
+        db = new Database();
 
         mConfirm.setOnClickListener(register());
     }
@@ -42,6 +45,7 @@ public class Register extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final String name = mName.getText().toString().trim();
                 String email = mEmail.getText().toString().trim();
                 String password1 = mPassword1.getText().toString().trim();
                 String password2 = mPassword2.getText().toString().trim();
@@ -53,6 +57,7 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         System.out.println("Registered");
                         if (task.isSuccessful()){
+                            db.addUser(fAuth.getCurrentUser().getUid(), name);
                             startActivity(new Intent(Register.this, EmailLogin.class));
                             fAuth.signOut();
                         }

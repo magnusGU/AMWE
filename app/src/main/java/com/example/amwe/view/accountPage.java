@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.amwe.R;
@@ -88,9 +89,9 @@ public class accountPage extends Fragment {
     }
     private void initUI(View v){
         TextView name =v.findViewById(R.id.account_page_name);
+        ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
         //Obviously temporary but works now as a test.
         name.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-
 
     }
 }
