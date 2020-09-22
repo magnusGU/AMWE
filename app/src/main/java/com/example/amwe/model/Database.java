@@ -3,6 +3,11 @@ package com.example.amwe.model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,14 +32,11 @@ public class Database {
     }
 
     public void updateListing(Listing updatedListing) {
-        //DatabaseReference listings = getListings();
-        //DatabaseReference users = getDatabaseReference().child("testusers");
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Map<String, Object> updatedValues = updatedListing.toMap();
 
-        //listings.child().updateChildren(updatedValues);
         String key = updatedListing.getId();
 
         Map<String, Object> childUpdates = new HashMap<>();
@@ -45,7 +47,6 @@ public class Database {
     }
 
     public void insertNewListing(Listing newEntry) {
-        //FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference listings = getListings();
@@ -57,5 +58,10 @@ public class Database {
         childUpdates.put("/testusers/" + currentUid + "/" + key, entryValues);
 
         db.updateChildren(childUpdates);
+    }
+
+    public void addUser(String uid, String name){
+        User user = new User(name);
+        database.getReference().child("users").child(uid).setValue(user);
     }
 }
