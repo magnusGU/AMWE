@@ -31,7 +31,7 @@ import java.util.List;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
-    private List<Listing> listingList;
+    private List<Listing> bookListings;
     SearchFunction search;
     private Context context;
     //private Database db;
@@ -57,9 +57,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         }
 
     }
-    public ListingAdapter(final List<Listing> listingList){
-        this.listingList = listingList;
-        //Simply an independent copy of listingList
+    public ListingAdapter(final List<Listing> bookListings){
+        this.bookListings = bookListings;
+        //Simply an independent copy of bookListings
         Database db = new Database();
 
         //create database listener that will update recyclerView
@@ -68,13 +68,18 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         ValueEventListener listingsListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listingList.clear();
+                bookListings.clear();
                 for (DataSnapshot item: snapshot.getChildren()) {
-                    listingList.add(item.getValue(Listing.class));
+                    String bookId = item.getKey();
+                    Listing newListing = item.getValue(Listing.class);
+                    newListing.setId(bookId);
+                    Log.d("HERE", "onDataChange: ");
+                    bookListings.add(newListing);
+
                 }
                 //This line is what updated the view
                 notifyDataSetChanged();
-                search = new SearchFunction(listingList);
+                search = new SearchFunction(bookListings);
             }
 
 
@@ -83,7 +88,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 Log.d("HERE", "onCancelled");
             }
         };
-        //this listener is assigned to the databasereference
+        //this listener is assigned to the database reference
         listings.addValueEventListener(listingsListener);
     }
 
@@ -100,7 +105,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHold holder, final int position) {
-        final Listing currentListing = listingList.get(position);
+        final Listing currentListing = bookListings.get(position);
 
         try{
             byte[] decodedString = Base64.decode(currentListing.getBookImage(), Base64.DEFAULT);
@@ -137,7 +142,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return listingList.size();
+        return bookListings.size();
     }
 
     public SearchFunction getSearch(){

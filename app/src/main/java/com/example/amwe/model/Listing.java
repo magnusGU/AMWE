@@ -2,9 +2,12 @@ package com.example.amwe.model;
 
 import android.media.Image;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Listing {
 
-    private int id;
+    private String id;
     private String title;
     private String edition;
     private String author;
@@ -19,7 +22,7 @@ public class Listing {
     public Listing (){
     }
 
-    public Listing (int id, String title, String edition,String author,long isbn,String description,
+    public Listing (String id, String title, String edition,String author,long isbn,String description,
                     String bookImage,double price,String seller,String condition, String date){
         this.id=id;
         this.title=title;
@@ -50,7 +53,7 @@ public class Listing {
                 '}';
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -90,7 +93,7 @@ public class Listing {
         return seller;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -138,6 +141,22 @@ public class Listing {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("author", author);
+        result.put("bookImage", bookImage);
+        result.put("condition", condition);
+        result.put("date", date);
+        result.put("description", description);
+        result.put("edition", edition);
+        result.put("isbn", isbn);
+        result.put("price", price);
+        result.put("seller", seller.getName());
+        result.put("title", title);
+
+        return result;
     }
 
 }
