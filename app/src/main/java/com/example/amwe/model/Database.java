@@ -72,12 +72,12 @@ public class Database {
         database.getReference().child("users").child(uid).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    public void onDataChange(DataSnapshot snapshot) {
                         name[0] = snapshot.getValue(User.class).getName();
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                    public void onCancelled(DatabaseError error) {
 
                     }
                 }
