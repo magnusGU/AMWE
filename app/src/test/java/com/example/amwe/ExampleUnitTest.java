@@ -34,8 +34,8 @@ public class ExampleUnitTest {
         ArrayList<Listing> listings = new ArrayList<>();
 
 
-        Listing listing1 = new Listing(1,"a","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing2 = new Listing(1,"b","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
         ArrayList<Listing> listingsCopy = new ArrayList<>(listings);

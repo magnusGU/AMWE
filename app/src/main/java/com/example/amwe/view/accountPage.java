@@ -33,6 +33,7 @@ public class accountPage extends Fragment {
     private String mParam1;
     private String mParam2;
     private Button logOutButton;
+    private Button addListing;
 
     public accountPage() {
         // Required empty public constructor
@@ -79,6 +80,15 @@ public class accountPage extends Fragment {
                 logOut();
             }
         });
+
+        addListing = v.findViewById(R.id.account_page_add_listing_button);
+        addListing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddListing.class));
+            }
+        });
+
         initUI(v);
 
         return v;
@@ -93,7 +103,7 @@ public class accountPage extends Fragment {
         TextView name =v.findViewById(R.id.account_page_name);
         ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
         //Obviously temporary but works now as a test.
-        name.setText(db.getName(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+        name.setText(db.getName());
 
     }
 }
