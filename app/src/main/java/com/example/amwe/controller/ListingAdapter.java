@@ -73,7 +73,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                     String bookId = item.getKey();
                     Listing newListing = item.getValue(Listing.class);
                     newListing.setId(bookId);
-                    Log.d("HERE", "onDataChange: ");
                     bookListings.add(newListing);
 
                 }
