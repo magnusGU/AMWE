@@ -7,4 +7,5 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorCard">#FAFAFA</color>
+    <color name="colorEditText">#1A000000</color>
 </resources>
