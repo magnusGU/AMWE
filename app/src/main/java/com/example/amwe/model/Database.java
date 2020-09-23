@@ -67,23 +67,10 @@ public class Database {
         database.getReference().child("users").child(uid).setValue(user);
     }
 
-    public String getName(String uid){
-        final String[] name = new String[1];
-        database.getReference().child("users").child(uid).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        name[0] = snapshot.getValue(User.class).getName();
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-
-                    }
-                }
-                );
-        System.out.println(name[0]);
-        return name[0];
+    public String getName(){
+        String displayName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        //System.out.println(displayName);
+        return displayName;
     }
     
 }

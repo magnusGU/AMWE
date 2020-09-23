@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class Register extends AppCompatActivity {
 
@@ -57,6 +58,9 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         System.out.println("Registered");
                         if (task.isSuccessful()){
+                            UserProfileChangeRequest.Builder updateinfo = new UserProfileChangeRequest
+                                    .Builder().setDisplayName(name);
+                            task.getResult().getUser().updateProfile(updateinfo.build());
                             db.addUser(fAuth.getCurrentUser().getUid(), name);
                             startActivity(new Intent(Register.this, EmailLogin.class));
                             fAuth.signOut();
