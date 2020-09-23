@@ -103,7 +103,7 @@ public class accountPage extends Fragment {
         TextView name =v.findViewById(R.id.account_page_name);
         ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
         //Obviously temporary but works now as a test.
-        name.setText(db.getName(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+        name.setText(db.getName());
 
     }
 }
