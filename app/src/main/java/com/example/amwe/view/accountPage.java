@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.amwe.R;
+import com.example.amwe.model.Database;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -88,10 +89,11 @@ public class accountPage extends Fragment {
         startActivity(new Intent(getContext(), Login.class));
     }
     private void initUI(View v){
+        Database db = new Database();
         TextView name =v.findViewById(R.id.account_page_name);
         ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
         //Obviously temporary but works now as a test.
-        name.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        name.setText(db.getName(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
     }
 }

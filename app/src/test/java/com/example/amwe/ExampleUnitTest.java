@@ -8,6 +8,7 @@ import com.example.amwe.controller.ListingAdapter;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.junit.Test;
 
