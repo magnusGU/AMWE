@@ -2,13 +2,16 @@ package com.example.amwe.view;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,9 +20,24 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
 
 import com.example.amwe.BuildConfig;
 import com.example.amwe.R;
+import com.example.amwe.model.Database;
+import com.example.amwe.model.Listing;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +55,18 @@ public class AddListing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_listing);
-        cameraClick = findViewById(R.id.uppload_image);
+        cameraClick = findViewById(R.id.upload_image);
+        Button mSubmit = findViewById(R.id.upload);
+        EditText title = findViewById(R.id.input_title);
+        EditText author = findViewById(R.id.input_author);
+        EditText edition = findViewById(R.id.input_edition);
+        EditText isbn = findViewById(R.id.input_ISBN);
+        EditText description = findViewById(R.id.input_description);
+
+        //TODO: Some blanks to fill in: image, price, condition
+
+        mSubmit.setOnClickListener(submit(title, author, edition, isbn, description));
+
         cameraClick.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -98,4 +127,31 @@ public class AddListing extends AppCompatActivity {
 
 
     }
+
+
+
+
+    private View.OnClickListener submit(final EditText title, final EditText author, final EditText edition,
+                                        final EditText isbn, final EditText description) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Database db = new Database();
+                DateFormat dateFormat = DateFormat.getDateTimeInstance();
+                //Date date = new Date(System.currentTimeMillis());
+                String dateString = dateFormat.format(new Date());
+
+                Listing newBook = new Listing(null, title.getText().toString(),
+                        edition.getText().toString(), author.getText().toString(),
+                        Long.parseLong(isbn.getText().toString()), description.getText().toString(),
+                        null, 0, null, null, dateString);
+
+
+                db.insertNewListing(newBook);
+                finish();
+            }
+        };
+    }
 }
+
+
