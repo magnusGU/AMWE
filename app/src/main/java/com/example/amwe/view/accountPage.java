@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,12 +27,6 @@ public class accountPage extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private Button logOutButton;
-    private Button addListing;
 
     public accountPage() {
         // Required empty public constructor
@@ -61,8 +54,9 @@ public class accountPage extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
 
@@ -73,7 +67,7 @@ public class accountPage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_account_page, container, false);
-        logOutButton =  v.findViewById(R.id.account_logout_button);
+        Button logOutButton = v.findViewById(R.id.account_logout_button);
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +75,7 @@ public class accountPage extends Fragment {
             }
         });
 
-        addListing = v.findViewById(R.id.account_page_add_listing_button);
+        Button addListing = v.findViewById(R.id.account_page_add_listing_button);
         addListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

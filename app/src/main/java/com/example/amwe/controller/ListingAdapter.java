@@ -39,7 +39,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
         private TextView textViewDate;
-        private View view;
         private TextView textViewTitle;
         private TextView textViewPrice;
         private TextView textViewCondition;
@@ -53,7 +52,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             textViewTitle=itemView.findViewById(R.id.listing_);
             textViewPrice = itemView.findViewById(R.id.listing_card_price);
             textViewCondition = itemView.findViewById(R.id.listing_card_condition);
-            this.view=itemView;
         }
 
     }

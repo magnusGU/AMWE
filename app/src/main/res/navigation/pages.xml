@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pages"
-    app:startDestination="@id/searchPage">
+    app:startDestination="@id/searchPage"
+    tools:ignore="UnusedNavigation">
     <fragment
         android:id="@+id/searchPage"
         android:name="com.example.amwe.view.searchPage"

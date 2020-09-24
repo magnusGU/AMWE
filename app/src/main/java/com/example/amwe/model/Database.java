@@ -1,19 +1,11 @@
 package com.example.amwe.model;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
-
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class Database {
     private FirebaseDatabase database;
 
@@ -72,9 +64,7 @@ public class Database {
     }
 
     public String getName(){
-        String displayName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        //System.out.println(displayName);
-        return displayName;
+        return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
     
 }
