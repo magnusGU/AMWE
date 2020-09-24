@@ -158,7 +158,7 @@ public class AddListing extends AppCompatActivity {
                             getApplicationContext().getContentResolver(),
                             photoURI);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 
                     byte[] array = stream.toByteArray();
                     base64Photo = Base64.encodeToString(array, 0);
