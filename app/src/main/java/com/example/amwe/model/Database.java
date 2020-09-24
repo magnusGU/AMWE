@@ -52,12 +52,12 @@ public class Database {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        String displayName = getName();
+        newEntry.setSeller(displayName);
         DatabaseReference listings = getListings();
         String key = listings.push().getKey();
         Map<String, Object> entryValues = newEntry.toMap();
 
-        String displayName = getName();
-        newEntry.setSeller(displayName);
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, entryValues);
