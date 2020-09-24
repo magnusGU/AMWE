@@ -66,10 +66,12 @@ public class AddListing extends AppCompatActivity {
         EditText edition = findViewById(R.id.input_edition);
         EditText isbn = findViewById(R.id.input_ISBN);
         EditText description = findViewById(R.id.input_description);
+        EditText price = findViewById(R.id.input_price);
+        EditText condition = findViewById(R.id.input_condition);
 
         //TODO: Some blanks to fill in: image, price, condition
 
-        mSubmit.setOnClickListener(submit(title, author, edition, isbn, description));
+        mSubmit.setOnClickListener(submit(title, author, edition, isbn, description, price, condition));
 
         cameraClick.setOnClickListener(camera());
     }
@@ -136,8 +138,13 @@ public class AddListing extends AppCompatActivity {
 
     }
 
-    private View.OnClickListener submit(final EditText title, final EditText author, final EditText edition,
-                                        final EditText isbn, final EditText description) {
+    private View.OnClickListener submit(final EditText title,
+                                        final EditText author,
+                                        final EditText edition,
+                                        final EditText isbn,
+                                        final EditText description,
+                                        final EditText price,
+                                        final EditText condition) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +158,7 @@ public class AddListing extends AppCompatActivity {
                             getApplicationContext().getContentResolver(),
                             photoURI);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 
                     byte[] array = stream.toByteArray();
                     base64Photo = Base64.encodeToString(array, 0);
@@ -169,11 +176,10 @@ public class AddListing extends AppCompatActivity {
                         Long.parseLong(isbn.getText().toString()),
                         description.getText().toString(),
                         base64Photo,
-                        0,
+                        Integer.parseInt(price.getText().toString()),
                         null,
-                        null,
+                        condition.getText().toString(),
                         dateString);
-
 
                 db.insertNewListing(newBook);
                 finish();
