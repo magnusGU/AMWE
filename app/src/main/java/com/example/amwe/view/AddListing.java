@@ -102,9 +102,9 @@ public class AddListing extends AppCompatActivity {
 
 
             //Cast because of return type Object
-          //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            cameraClick.setImageBitmap(thumbnail);}
-
+            //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            cameraClick.setImageBitmap(thumbnail);
+            }
         }
     }
 

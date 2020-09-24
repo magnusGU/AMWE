@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.AddListing" >
+    android:layout_height="wrap_content"
+    tools:context=".view.AddListing">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,10 +24,10 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/et_bg"
-                app:srcCompat="@drawable/ic_baseline_add_a_photo_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
+                app:srcCompat="@drawable/ic_baseline_add_a_photo_24" />
 
             <EditText
                 android:id="@+id/input_description"
@@ -48,7 +48,29 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_ISBN" />
+                app:layout_constraintTop_toBottomOf="@+id/input_price" />
+
+            <Button
+                android:id="@+id/upload"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_bg"
+                android:text="Ladda upp"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/input_description"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -128,6 +150,26 @@
                 app:layout_constraintTop_toBottomOf="@+id/input_author" />
 
             <EditText
+                android:id="@+id/input_price"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/et_bg"
+                android:ems="10"
+                android:hint="Pris"
+                android:inputType="number"
+                android:padding="16dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/input_condition" />
+
+            <EditText
                 android:id="@+id/input_ISBN"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
@@ -147,26 +189,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/input_edition" />
 
-            <Button
-                android:id="@+id/upload"
+            <EditText
+                android:id="@+id/input_condition"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/button_bg"
-                android:text="Ladda upp"
-                android:textColor="@color/colorWhite"
+                android:background="@drawable/et_bg"
+                android:ems="10"
+                android:hint="Skick"
+                android:inputType="number"
+                android:padding="16dp"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_description" />
+                app:layout_constraintTop_toBottomOf="@+id/input_ISBN" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
