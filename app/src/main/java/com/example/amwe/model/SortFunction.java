@@ -72,4 +72,6 @@ public class SortFunction {
         return updatedOrder;
     }
 
+    private ArrayList<Listing> getOriginalList() {return originalList;}
+
 }
