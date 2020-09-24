@@ -1,5 +1,6 @@
 package com.example.amwe.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,13 +8,41 @@ import java.util.Comparator;
 public class SortFunction {
 
     ArrayList<Listing> list;
+    ArrayList<Listing> originalList;
 
     public SortFunction(ArrayList<Listing> list) {
         this.list = list;
+        this.originalList = new ArrayList<Listing>(list);
     }
 
-    private void sortPrice() {
-        //TODO
+    private ArrayList<Listing> sortPrice() {
+        double[] prices = new double[list.size()];
+        ArrayList<Listing> updatedOrder = new ArrayList();
+
+        for (int i = 0; i < prices.length; i++) { //get all prices
+            prices[i] = list.get(i).getPrice();
+        }
+
+        for (int i = 0; i < prices.length-1; i++) { //bubble-sorting, sorts
+            for (int j = 0; j < prices.length-i-1; j++) {
+                if (prices[j] > prices[j+1]) {
+                    double temp = prices[j];
+                    prices[j] = prices[j+1];
+                    prices[j+1] = temp;
+                }
+            }
+        }
+
+        for (double d:prices) {
+            for (Listing l:list) {
+                if(l.getPrice() == d) {
+                    updatedOrder.add(l);
+                    break;
+                }
+            }
+        }
+
+        return updatedOrder;
     }
 
     private ArrayList<Listing> sortAlphabetically() {
