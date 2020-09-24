@@ -153,7 +153,7 @@ public class AddListing extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Database db = new Database();
-                DateFormat dateFormat = DateFormat.getDateTimeInstance();
+                DateFormat dateFormat = DateFormat.getDateInstance();
                 String dateString = dateFormat.format(new Date());
 
                 String base64Photo;

@@ -43,7 +43,7 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, updatedValues);
-        childUpdates.put("/testusers/" + currentUid + "/" + key, updatedValues);
+        childUpdates.put("/users/" + currentUid + "/" + key, updatedValues);
 
         db.updateChildren(childUpdates);
     }
@@ -61,7 +61,7 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, entryValues);
-        childUpdates.put("/testusers/" + currentUid + "/" + key, entryValues);
+        childUpdates.put("/users/" + currentUid + "/" + key, entryValues);
 
         db.updateChildren(childUpdates);
     }
