@@ -31,7 +31,7 @@ public class ExampleUnitTest {
         listings.add(listing2);
         ArrayList<Listing> listingsCopy = new ArrayList<>(listings);
         SearchFunction searchFunction = new SearchFunction(listings);
-        searchFunction.getFilter().performFiltering("a");
+        searchFunction.performFiltering("a");
         TimeUnit.SECONDS.sleep(1);
         assertEquals(1,listings.size());
     }

@@ -37,11 +37,11 @@ import java.io.IOException;
 import java.util.Date;
 
 public class AddListing extends AppCompatActivity {
-    ImageButton cameraClick;
-    final int CAMERA_PIC_REQUEST = 2;
-    String photoPath;
-    File photoFile;
-    Uri photoURI;
+    private ImageButton cameraClick;
+    private final int CAMERA_PIC_REQUEST = 2;
+    private String photoPath;
+    private File photoFile;
+    private Uri photoURI;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)

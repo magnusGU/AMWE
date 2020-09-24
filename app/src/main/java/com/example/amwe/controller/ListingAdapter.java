@@ -32,7 +32,7 @@ import java.util.List;
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
     private List<Listing> bookListings;
-    SearchFunction search;
+    private SearchFunction search;
     private Context context;
     //private Database db;
 
