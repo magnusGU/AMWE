@@ -20,6 +20,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.content.Context;
@@ -82,14 +83,17 @@ public class AddListing extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_PIC_REQUEST) {
             if(photoURI!=null){
-            File image = new File(photoFile.toURI());
+                File image = new File(photoFile.toURI());
 
-            Bitmap thumbnail = BitmapFactory.decodeFile(image.getAbsolutePath());
+                Bitmap thumbnail = BitmapFactory.decodeFile(image.getAbsolutePath());
 
 
-            //Cast because of return type Object
-            //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            cameraClick.setImageBitmap(thumbnail);
+                //Cast because of return type Object
+                //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                cameraClick.setImageBitmap(thumbnail);
+                ViewGroup.LayoutParams params = cameraClick.getLayoutParams();
+                params.height = 1500;
+                cameraClick.setLayoutParams(params);
             }
         }
     }

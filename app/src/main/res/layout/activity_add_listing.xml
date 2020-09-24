@@ -201,7 +201,7 @@
                 android:background="@drawable/et_bg"
                 android:ems="10"
                 android:hint="Skick"
-                android:inputType="number"
+                android:inputType="textPersonName"
                 android:padding="16dp"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
