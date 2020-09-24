@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,6 +36,7 @@ import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,6 +54,7 @@ public class AddListing extends AppCompatActivity {
     Uri photoURI;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,27 +71,7 @@ public class AddListing extends AppCompatActivity {
 
         mSubmit.setOnClickListener(submit(title, author, edition, isbn, description));
 
-        cameraClick.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                //Uri outputFileUri = Uri.fromFile(new File(getExternalCacheDir().getPath(), "pickImageResult.jpeg"));
-                //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                try {
-                  photoFile=createImageFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (photoFile!=null){
-                    photoURI = FileProvider.getUriForFile(getApplicationContext(),
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            photoFile);
-                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                    startActivityForResult(cameraIntent,CAMERA_PIC_REQUEST);
-                }
-            }
-        });
+        cameraClick.setOnClickListener(camera());
     }
 
 
@@ -106,6 +90,30 @@ public class AddListing extends AppCompatActivity {
             cameraClick.setImageBitmap(thumbnail);}
 
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private View.OnClickListener camera() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                //Uri outputFileUri = Uri.fromFile(new File(getExternalCacheDir().getPath(), "pickImageResult.jpeg"));
+                //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (photoFile != null) {
+                    photoURI = FileProvider.getUriForFile(getApplicationContext(),
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            photoFile);
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                }
+            }
+        };
     }
 
     //SimpleDateFormat requires a newer Api than we are developing for, probably easy to fix but will do later.
@@ -128,9 +136,6 @@ public class AddListing extends AppCompatActivity {
 
     }
 
-
-
-
     private View.OnClickListener submit(final EditText title, final EditText author, final EditText edition,
                                         final EditText isbn, final EditText description) {
         return new View.OnClickListener() {
@@ -138,13 +143,36 @@ public class AddListing extends AppCompatActivity {
             public void onClick(View view) {
                 Database db = new Database();
                 DateFormat dateFormat = DateFormat.getDateTimeInstance();
-                //Date date = new Date(System.currentTimeMillis());
                 String dateString = dateFormat.format(new Date());
 
-                Listing newBook = new Listing(null, title.getText().toString(),
-                        edition.getText().toString(), author.getText().toString(),
-                        Long.parseLong(isbn.getText().toString()), description.getText().toString(),
-                        null, 0, null, null, dateString);
+                String base64Photo;
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getApplicationContext().getContentResolver(),
+                            photoURI);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+                    byte[] array = stream.toByteArray();
+                    base64Photo = Base64.encodeToString(array, 0);
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                Listing newBook = new Listing(null,
+                        title.getText().toString(),
+                        edition.getText().toString(),
+                        author.getText().toString(),
+                        Long.parseLong(isbn.getText().toString()),
+                        description.getText().toString(),
+                        base64Photo,
+                        0,
+                        null,
+                        null,
+                        dateString);
 
 
                 db.insertNewListing(newBook);
