@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
-    //List<Listing> currentListings;
     private ListingAdapter listingAdapter;
 
     @Override

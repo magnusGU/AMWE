@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,7 @@ import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
-import com.example.amwe.model.User;
 import com.example.amwe.view.ListingPageActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -36,7 +29,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     private List<Listing> bookListings;
     private SearchFunction search;
     private Context context;
-    //private Database db;
 
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
@@ -60,43 +52,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     public ListingAdapter(final List<Listing> bookListings, final String listName){
         this.bookListings = bookListings;
-        //Simply an independent copy of bookListings
-        Database db = new Database();
-
-        //create database listener that will update recyclerView
-        //if the data in the database is changed
-        DatabaseReference listings = db.getListings();
-        ValueEventListener listingsListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                bookListings.clear();
-                for (DataSnapshot item: snapshot.getChildren()) {
-                    String bookId = item.getKey();
-                    Listing newListing = item.getValue(Listing.class);
-                    if (listName.equals("currentListings")){
-                    newListing.setId(bookId);
-                    bookListings.add(newListing);
-                    }
-                    else if (listName.equals("myListings")){
-                        if (newListing.getSeller().getName().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())){
-                            bookListings.add(newListing);
-                        }
-                    }
-
-                }
-                //This line is what updated the view
-                notifyDataSetChanged();
-                search = new SearchFunction(bookListings);
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("HERE", "onCancelled");
-            }
-        };
-        //this listener is assigned to the database reference
-        listings.addValueEventListener(listingsListener);
+        //create database with listener that will update recyclerView
+        Database.addListingListener(bookListings, listName, this);
     }
 
 
@@ -153,6 +110,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     }
 
     public SearchFunction getSearch(){
+        if (search == null) {
+            search = new SearchFunction(bookListings);
+        }
         return search;
     }
 

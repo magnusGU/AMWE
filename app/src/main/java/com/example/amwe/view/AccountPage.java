@@ -34,8 +34,6 @@ public class AccountPage extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private ListingAdapter listingAdapter;
-
     public AccountPage() {
         // Required empty public constructor
     }
@@ -110,7 +108,6 @@ public class AccountPage extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         //sketchy but we will have to discuss this
         ListingAdapter adapter = new ListingAdapter(myListings, "myListings");
-        this.listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
@@ -122,11 +119,10 @@ public class AccountPage extends Fragment {
     }
 
     private void initUI(View v){
-        Database db = new Database();
         TextView name =v.findViewById(R.id.account_page_name);
         ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
         //Obviously temporary but works now as a test.
-        name.setText(db.getName());
+        name.setText(Database.getName());
 
     }
 }
