@@ -18,17 +18,17 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link accountPage#newInstance} factory method to
+ * Use the {@link AccountPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class accountPage extends Fragment {
+public class AccountPage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public accountPage() {
+    public AccountPage() {
         // Required empty public constructor
     }
 
@@ -41,8 +41,8 @@ public class accountPage extends Fragment {
      * @return A new instance of fragment accountPage.
      */
     // TODO: Rename and change types and number of parameters
-    public static accountPage newInstance(String param1, String param2) {
-        accountPage fragment = new accountPage();
+    public static AccountPage newInstance(String param1, String param2) {
+        AccountPage fragment = new AccountPage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context=".view.accountPage" >
+    tools:context=".view.AccountPage" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -136,10 +136,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginBottom="32dp"
                 android:text="Logga ut"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:layout_editor_absoluteY="168dp"
                 tools:ignore="MissingConstraints" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
