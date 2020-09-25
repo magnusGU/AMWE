@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,5 +59,10 @@ public class ListingPageActivity extends AppCompatActivity {
         String newCondition = getIntent().getStringExtra("condition");
         condition.setText(newCondition);
 
+
+        Button deleteButton = findViewById(R.id.delete_button);
+        deleteButton.setVisibility(View.GONE);
+        Button editButton = findViewById(R.id.edit_button);
+        deleteButton.setVisibility(View.GONE);
     }
 }
