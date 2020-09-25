@@ -20,9 +20,7 @@ import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
-import com.example.amwe.model.User;
 import com.example.amwe.view.ListingPageActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +34,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     private List<Listing> bookListings;
     private SearchFunction search;
     private Context context;
-    //private Database db;
 
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
@@ -61,7 +58,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     public ListingAdapter(final List<Listing> bookListings, final String listName){
         this.bookListings = bookListings;
         //Simply an independent copy of bookListings
-        Database db = new Database();
+        final Database db = new Database();
 
         //create database listener that will update recyclerView
         //if the data in the database is changed
@@ -78,7 +75,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                     bookListings.add(newListing);
                     }
                     else if (listName.equals("myListings")){
-                        if (newListing.getSeller().getName().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())){
+                        if (newListing.getSeller().getName().equals(db.getName())){
                             bookListings.add(newListing);
                         }
                     }
