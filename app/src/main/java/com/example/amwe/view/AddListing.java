@@ -29,11 +29,9 @@ import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
@@ -140,7 +138,6 @@ public class AddListing extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Database db = new Database();
                 DateFormat dateFormat = DateFormat.getDateInstance();
                 String dateString = dateFormat.format(new Date());
 
@@ -173,7 +170,7 @@ public class AddListing extends AppCompatActivity {
                         condition.getText().toString(),
                         dateString);
 
-                db.insertNewListing(newBook);
+                Database.insertNewListing(newBook);
                 finish();
             }
         };

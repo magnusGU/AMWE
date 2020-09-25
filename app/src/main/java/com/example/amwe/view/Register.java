@@ -23,7 +23,6 @@ public class Register extends AppCompatActivity {
 
     private EditText mName, mEmail, mPassword1, mPassword2;
     private FirebaseAuth fAuth;
-    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class Register extends AppCompatActivity {
         Button mConfirm = findViewById(R.id.register_confirm);
 
         fAuth = FirebaseAuth.getInstance();
-        db = new Database();
 
         mConfirm.setOnClickListener(register());
     }
@@ -60,7 +58,7 @@ public class Register extends AppCompatActivity {
                             UserProfileChangeRequest.Builder updateinfo = new UserProfileChangeRequest
                                     .Builder().setDisplayName(name);
                             task.getResult().getUser().updateProfile(updateinfo.build());
-                            db.addUser(fAuth.getCurrentUser().getUid(), name);
+                            Database.addUser(fAuth.getCurrentUser().getUid(), name);
                             startActivity(new Intent(Register.this, EmailLogin.class));
                             fAuth.signOut();
                         }

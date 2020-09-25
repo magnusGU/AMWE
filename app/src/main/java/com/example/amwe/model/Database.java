@@ -1,35 +1,45 @@
 package com.example.amwe.model;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.example.amwe.controller.ListingAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 public class Database {
-    private FirebaseDatabase database;
+    static private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    public Database() {
-        this.database = FirebaseDatabase.getInstance();
+    private Database() {
+        //database = FirebaseDatabase.getInstance();
     }
 
-    public FirebaseDatabase getDatabase() {
+
+    static public FirebaseDatabase getDatabase() {
         return database;
     }
 
-    private DatabaseReference getDatabaseReference() {
+    static private DatabaseReference getDatabaseReference() {
         return database.getReference();
     }
 
-    public DatabaseReference getListings() {
-        return database.getReference().child("listings");
+    static public DatabaseReference getListings() {
+        return getDatabaseReference().child("listings");
     }
 
-    public DatabaseReference getMyListings() {
-        return database.getReference().child("listings");
+    static public DatabaseReference getMyListings() {
+        return getDatabaseReference().child("listings");
     }
 
-    public void updateListing(Listing updatedListing) {
+    static public void updateListing(Listing updatedListing) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -44,7 +54,7 @@ public class Database {
         db.updateChildren(childUpdates);
     }
 
-    public void insertNewListing(Listing newEntry) {
+    static public void insertNewListing(Listing newEntry) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -62,13 +72,46 @@ public class Database {
         db.updateChildren(childUpdates);
     }
 
-    public void addUser(String uid, String name){
+    static public void addUser(String uid, String name) {
         User user = new User(name);
         database.getReference().child("users").child(uid).setValue(user);
     }
 
-    public String getName(){
+    static public String getName() {
         return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
-    
+
+    static public void addListingListener(final List<Listing> bookListings,
+                                          final String listName,
+                                          final ListingAdapter adapter) {
+        DatabaseReference listings = getListings();
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                bookListings.clear();
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    String bookId = item.getKey();
+                    Listing newListing = item.getValue(Listing.class);
+                    if (listName.equals("currentListings")) {
+                        newListing.setId(bookId);
+                        bookListings.add(newListing);
+                    } else if (listName.equals("myListings")) {
+                        if (newListing.getSeller().getName().equals(getName())) {
+                            bookListings.add(newListing);
+                        }
+                    }
+
+                }
+                //Notify observers
+                adapter.notifyDataSetChanged();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("HERE", "onCancelled");
+            }
+        };
+        listings.addValueEventListener(listener);
+    }
 }
