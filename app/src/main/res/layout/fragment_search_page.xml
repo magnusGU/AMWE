@@ -5,7 +5,7 @@
     android:id="@+id/search_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.searchPage">
+    tools:context=".view.SearchPage">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/search_function" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecycleView"
         android:layout_width="0dp"

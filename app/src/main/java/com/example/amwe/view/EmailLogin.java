@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class EmailLogin extends AppCompatActivity {
 
     private EditText mEmail, mPassword;
-    private Button mConfirm, mRegister;
     private FirebaseAuth fAuth;
 
     @Override
@@ -34,10 +32,10 @@ public class EmailLogin extends AppCompatActivity {
         mEmail = findViewById(R.id.login_email);
         mPassword = findViewById(R.id.login_password);
 
-        mConfirm = findViewById(R.id.login_button);
+        Button mConfirm = findViewById(R.id.login_button);
         mConfirm.setOnClickListener(login());
 
-        mRegister = findViewById(R.id.button_register);
+        Button mRegister = findViewById(R.id.button_register);
         mRegister.setOnClickListener(register());
     }
 

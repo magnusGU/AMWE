@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     //List<Listing> currentListings;
-    ListingAdapter listingAdapter;
+    private ListingAdapter listingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         final RecyclerView recyclerView = findViewById(R.id.RecycleView);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.pages, new searchPage()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.pages, new SearchPage()).commit();
 
         createList(recyclerView);
         BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -45,16 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.search_page:
                         recyclerView.setVisibility(View.VISIBLE);
-                        selectedFragment = new searchPage();
+                        selectedFragment = new SearchPage();
 
                         break;
                     case R.id.message_page:
-                        selectedFragment = new messagesPage();
+                        selectedFragment = new MessagesPage();
                         recyclerView.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.account_page:
                         recyclerView.setVisibility(View.INVISIBLE);
-                        selectedFragment = new accountPage();
+                        selectedFragment = new AccountPage();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.pages, selectedFragment).commit();
@@ -65,22 +65,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
-    private  void createList(RecyclerView recyclerView){
+    private void createList(RecyclerView recyclerView){
         ArrayList<Listing> currentListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //sketchy but we will have to discuss this
-        ListingAdapter adapter = new ListingAdapter(currentListings);
+        ListingAdapter adapter = new ListingAdapter(currentListings, "currentListings");
         this.listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-    }
-
-    private void initializeList() {
-
-
-
     }
 
     @Override
@@ -98,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) { //updating search in real time as the user writes
-                listingAdapter.getSearch().getFilter().performFiltering(s);
+                listingAdapter.getSearch().performFiltering(s);
                 try {
                     TimeUnit.MILLISECONDS.sleep(150); // OBS!!! Temporary! - This is to make sure that search list get updated before notifyDataSetChanged is called.
                 } catch (InterruptedException e) {

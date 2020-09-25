@@ -1,34 +1,23 @@
 package com.example.amwe.view;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 
 import com.example.amwe.BuildConfig;
@@ -47,11 +36,11 @@ import java.io.IOException;
 import java.util.Date;
 
 public class AddListing extends AppCompatActivity {
-    ImageButton cameraClick;
-    final int CAMERA_PIC_REQUEST = 2;
-    String photoPath;
-    File photoFile;
-    Uri photoURI;
+    private ImageButton cameraClick;
+    private final int CAMERA_PIC_REQUEST = 2;
+    private String photoPath;
+    private File photoFile;
+    private Uri photoURI;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -82,14 +71,17 @@ public class AddListing extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_PIC_REQUEST) {
             if(photoURI!=null){
-            File image = new File(photoFile.toURI());
+                File image = new File(photoFile.toURI());
 
-            Bitmap thumbnail = BitmapFactory.decodeFile(image.getAbsolutePath());
+                Bitmap thumbnail = BitmapFactory.decodeFile(image.getAbsolutePath());
 
 
-            //Cast because of return type Object
-            //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            cameraClick.setImageBitmap(thumbnail);
+                //Cast because of return type Object
+                //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                cameraClick.setImageBitmap(thumbnail);
+                ViewGroup.LayoutParams params = cameraClick.getLayoutParams();
+                params.height = 1500;
+                cameraClick.setLayoutParams(params);
             }
         }
     }
@@ -149,7 +141,7 @@ public class AddListing extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Database db = new Database();
-                DateFormat dateFormat = DateFormat.getDateTimeInstance();
+                DateFormat dateFormat = DateFormat.getDateInstance();
                 String dateString = dateFormat.format(new Date());
 
                 String base64Photo;

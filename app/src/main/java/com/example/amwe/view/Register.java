@@ -22,7 +22,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class Register extends AppCompatActivity {
 
     private EditText mName, mEmail, mPassword1, mPassword2;
-    private Button mConfirm;
     private FirebaseAuth fAuth;
     private Database db;
 
@@ -34,7 +33,7 @@ public class Register extends AppCompatActivity {
         mEmail = findViewById(R.id.register_email);
         mPassword1 = findViewById(R.id.register_password_1);
         mPassword2 = findViewById(R.id.register_password_2);
-        mConfirm = findViewById(R.id.register_confirm);
+        Button mConfirm = findViewById(R.id.register_confirm);
 
         fAuth = FirebaseAuth.getInstance();
         db = new Database();
@@ -98,7 +97,6 @@ public class Register extends AppCompatActivity {
 
         if (password1.length() <= 6){
             mPassword1.setError("Lösenord måste vara mer än 6 tecken");
-            return;
         }
     }
 }

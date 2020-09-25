@@ -20,7 +20,9 @@ import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
+import com.example.amwe.model.User;
 import com.example.amwe.view.ListingPageActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,14 +34,13 @@ import java.util.List;
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
     private List<Listing> bookListings;
-    SearchFunction search;
+    private SearchFunction search;
     private Context context;
     //private Database db;
 
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
         private TextView textViewDate;
-        private View view;
         private TextView textViewTitle;
         private TextView textViewPrice;
         private TextView textViewCondition;
@@ -53,11 +54,11 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             textViewTitle=itemView.findViewById(R.id.listing_);
             textViewPrice = itemView.findViewById(R.id.listing_card_price);
             textViewCondition = itemView.findViewById(R.id.listing_card_condition);
-            this.view=itemView;
         }
 
     }
-    public ListingAdapter(final List<Listing> bookListings){
+
+    public ListingAdapter(final List<Listing> bookListings, final String listName){
         this.bookListings = bookListings;
         //Simply an independent copy of bookListings
         Database db = new Database();
@@ -72,8 +73,15 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 for (DataSnapshot item: snapshot.getChildren()) {
                     String bookId = item.getKey();
                     Listing newListing = item.getValue(Listing.class);
+                    if (listName.equals("currentListings")){
                     newListing.setId(bookId);
                     bookListings.add(newListing);
+                    }
+                    else if (listName.equals("myListings")){
+                        if (newListing.getSeller().getName().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())){
+                            bookListings.add(newListing);
+                        }
+                    }
 
                 }
                 //This line is what updated the view

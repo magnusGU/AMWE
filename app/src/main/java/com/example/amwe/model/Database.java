@@ -1,19 +1,11 @@
 package com.example.amwe.model;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
-
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class Database {
     private FirebaseDatabase database;
 
@@ -33,6 +25,10 @@ public class Database {
         return database.getReference().child("listings");
     }
 
+    public DatabaseReference getMyListings() {
+        return database.getReference().child("listings");
+    }
+
     public void updateListing(Listing updatedListing) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -43,7 +39,7 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, updatedValues);
-        childUpdates.put("/testusers/" + currentUid + "/" + key, updatedValues);
+        childUpdates.put("/users/" + currentUid + "/" + key, updatedValues);
 
         db.updateChildren(childUpdates);
     }
@@ -61,7 +57,7 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, entryValues);
-        childUpdates.put("/testusers/" + currentUid + "/" + key, entryValues);
+        childUpdates.put("/users/" + currentUid + "/" + key, entryValues);
 
         db.updateChildren(childUpdates);
     }
@@ -72,9 +68,7 @@ public class Database {
     }
 
     public String getName(){
-        String displayName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        //System.out.println(displayName);
-        return displayName;
+        return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
     
 }

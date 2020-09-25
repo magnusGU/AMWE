@@ -18,7 +18,7 @@
 
         <fragment
             android:id="@+id/fragment"
-            android:name="com.example.amwe.view.searchPage"
+            android:name="com.example.amwe.view.SearchPage"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
