@@ -65,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
-    private  void createList(RecyclerView recyclerView){
+    private void createList(RecyclerView recyclerView){
         ArrayList<Listing> currentListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //sketchy but we will have to discuss this
-        ListingAdapter adapter = new ListingAdapter(currentListings);
+        ListingAdapter adapter = new ListingAdapter(currentListings, "currentListings");
         this.listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

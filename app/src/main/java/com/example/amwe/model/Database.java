@@ -25,6 +25,10 @@ public class Database {
         return database.getReference().child("listings");
     }
 
+    public DatabaseReference getMyListings() {
+        return database.getReference().child("listings");
+    }
+
     public void updateListing(Listing updatedListing) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
