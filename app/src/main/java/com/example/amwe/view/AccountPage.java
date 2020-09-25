@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.amwe.R;
+import com.example.amwe.controller.ListingAdapter;
 import com.example.amwe.model.Database;
+import com.example.amwe.model.Listing;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +33,8 @@ public class AccountPage extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private ListingAdapter listingAdapter;
 
     public AccountPage() {
         // Required empty public constructor
@@ -59,7 +67,6 @@ public class AccountPage extends Fragment {
             String mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
     }
 
     @Override
@@ -83,15 +90,37 @@ public class AccountPage extends Fragment {
             }
         });
 
+
+
+        final RecyclerView recyclerView = v.findViewById(R.id.MyListings);
+        createList(recyclerView);
+
+
         initUI(v);
 
         return v;
         }
 
+
+    /*Not the right place for it because of weird references to model but it will have to do for now*/
+    private void createList(RecyclerView recyclerView){
+        ArrayList<Listing> myListings = new ArrayList<>();
+
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        //sketchy but we will have to discuss this
+        ListingAdapter adapter = new ListingAdapter(myListings, "myListings");
+        this.listingAdapter = adapter;
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
+
     private void logOut(){
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getContext(), Login.class));
     }
+
     private void initUI(View v){
         Database db = new Database();
         TextView name =v.findViewById(R.id.account_page_name);

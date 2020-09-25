@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/search_function" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecycleView"
         android:layout_width="0dp"

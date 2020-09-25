@@ -20,7 +20,9 @@ import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
+import com.example.amwe.model.User;
 import com.example.amwe.view.ListingPageActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +57,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         }
 
     }
-    public ListingAdapter(final List<Listing> bookListings){
+
+    public ListingAdapter(final List<Listing> bookListings, final String listName){
         this.bookListings = bookListings;
         //Simply an independent copy of bookListings
         Database db = new Database();
@@ -70,8 +73,15 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 for (DataSnapshot item: snapshot.getChildren()) {
                     String bookId = item.getKey();
                     Listing newListing = item.getValue(Listing.class);
+                    if (listName.equals("currentListings")){
                     newListing.setId(bookId);
                     bookListings.add(newListing);
+                    }
+                    else if (listName.equals("myListings")){
+                        if (newListing.getSeller().getName().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())){
+                            bookListings.add(newListing);
+                        }
+                    }
 
                 }
                 //This line is what updated the view
