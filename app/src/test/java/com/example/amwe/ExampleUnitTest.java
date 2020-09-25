@@ -1,19 +1,10 @@
 package com.example.amwe;
-
-import android.content.Context;
-import android.provider.ContactsContract;
-import android.widget.Filter;
-
-import com.example.amwe.controller.ListingAdapter;
-import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -40,7 +31,7 @@ public class ExampleUnitTest {
         listings.add(listing2);
         ArrayList<Listing> listingsCopy = new ArrayList<>(listings);
         SearchFunction searchFunction = new SearchFunction(listings);
-        searchFunction.getFilter().performFiltering("a");
+        searchFunction.performFiltering("a");
         TimeUnit.SECONDS.sleep(1);
         assertEquals(1,listings.size());
     }

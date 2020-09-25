@@ -1,7 +1,4 @@
 package com.example.amwe.model;
-
-import android.media.Image;
-
 import java.util.HashMap;
 import java.util.Map;
 

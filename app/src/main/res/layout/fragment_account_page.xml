@@ -138,8 +138,10 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="32dp"
                 android:text="Logga ut"
-                app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="168dp"
+                tools:ignore="MissingConstraints" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

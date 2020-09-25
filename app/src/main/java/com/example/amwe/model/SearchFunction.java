@@ -13,15 +13,7 @@ public class SearchFunction {
         this.originalList = new ArrayList<>(listingList);
     }
 
-
-    public myFilter getFilter() {
-        return searchFilter;
-    }
-
-    private myFilter searchFilter = new myFilter();
-        //filters listings by the text written
-
-        public class myFilter {
+        //filters listings by a given CharSequence
             public void performFiltering(CharSequence charSequence) {
                 ArrayList<Listing> filteredList = new ArrayList<>();
 
@@ -41,8 +33,8 @@ public class SearchFunction {
 
             }
 
-        }
-        public void publishResults(List<Listing> filtered) {
+
+        private void publishResults(List<Listing> filtered) {
             list.clear();
             list.addAll(filtered);
         }

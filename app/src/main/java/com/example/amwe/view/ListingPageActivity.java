@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.R;
 
+import java.text.DecimalFormat;
+
 public class ListingPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +41,9 @@ public class ListingPageActivity extends AppCompatActivity {
         String newDescription = getIntent().getStringExtra("description");
         description.setText(newDescription);
         TextView price = findViewById(R.id.listing_page_price);
-        String newPrice = getIntent().getStringExtra("price");
-        price.setText(newPrice + " kr");
+        float newPrice = Float.parseFloat(getIntent().getStringExtra("price"));
+        DecimalFormat df = new DecimalFormat("0.##");
+        price.setText(df.format(newPrice) + " kr");
         TextView author = findViewById(R.id.listing_page_author);
         String newAuthor = getIntent().getStringExtra("author");
         author.setText(newAuthor);

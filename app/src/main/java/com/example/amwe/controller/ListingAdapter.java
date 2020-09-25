@@ -32,14 +32,13 @@ import java.util.List;
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
     private List<Listing> bookListings;
-    SearchFunction search;
+    private SearchFunction search;
     private Context context;
     //private Database db;
 
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
         private TextView textViewDate;
-        private View view;
         private TextView textViewTitle;
         private TextView textViewPrice;
         private TextView textViewCondition;
@@ -53,7 +52,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             textViewTitle=itemView.findViewById(R.id.listing_);
             textViewPrice = itemView.findViewById(R.id.listing_card_price);
             textViewCondition = itemView.findViewById(R.id.listing_card_condition);
-            this.view=itemView;
         }
 
     }
