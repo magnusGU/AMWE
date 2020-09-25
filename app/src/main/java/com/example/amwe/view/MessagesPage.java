@@ -12,10 +12,10 @@ import com.example.amwe.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link messagesPage#newInstance} factory method to
+ * Use the {@link MessagesPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class messagesPage extends Fragment {
+public class MessagesPage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class messagesPage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public messagesPage() {
+    public MessagesPage() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class messagesPage extends Fragment {
      * @return A new instance of fragment messagesPage.
      */
     // TODO: Rename and change types and number of parameters
-    public static messagesPage newInstance(String param1, String param2) {
-        messagesPage fragment = new messagesPage();
+    public static MessagesPage newInstance(String param1, String param2) {
+        MessagesPage fragment = new MessagesPage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

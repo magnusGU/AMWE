@@ -1,5 +1,4 @@
 package com.example.amwe.view;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 

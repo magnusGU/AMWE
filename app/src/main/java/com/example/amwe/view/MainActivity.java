@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         final RecyclerView recyclerView = findViewById(R.id.RecycleView);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.pages, new searchPage()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.pages, new SearchPage()).commit();
 
         createList(recyclerView);
         BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -45,16 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.search_page:
                         recyclerView.setVisibility(View.VISIBLE);
-                        selectedFragment = new searchPage();
+                        selectedFragment = new SearchPage();
 
                         break;
                     case R.id.message_page:
-                        selectedFragment = new messagesPage();
+                        selectedFragment = new MessagesPage();
                         recyclerView.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.account_page:
                         recyclerView.setVisibility(View.INVISIBLE);
-                        selectedFragment = new accountPage();
+                        selectedFragment = new AccountPage();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.pages, selectedFragment).commit();

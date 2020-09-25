@@ -2,28 +2,20 @@ package com.example.amwe.view;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.SearchView;
 
 import com.example.amwe.R;
-import com.example.amwe.controller.ListingAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link searchPage#newInstance} factory method to
+ * Use the {@link SearchPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class searchPage extends Fragment {
+public class SearchPage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +26,7 @@ public class searchPage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public searchPage() {
+    public SearchPage() {
         // Required empty public constructor
     }
 
@@ -47,8 +39,8 @@ public class searchPage extends Fragment {
      * @return A new instance of fragment searchPage.
      */
     // TODO: Rename and change types and number of parameters
-    public static searchPage newInstance(String param1, String param2) {
-        searchPage fragment = new searchPage();
+    public static SearchPage newInstance(String param1, String param2) {
+        SearchPage fragment = new SearchPage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
