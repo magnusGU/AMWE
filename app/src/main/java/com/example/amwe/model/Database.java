@@ -1,6 +1,7 @@
 package com.example.amwe.model;
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
@@ -35,8 +36,8 @@ public class Database {
         return getDatabaseReference().child("listings");
     }
 
-    static public DatabaseReference getMyListings() {
-        return getDatabaseReference().child("listings");
+    static public DatabaseReference getCurrentUser() {
+        return getDatabaseReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     static public void updateListing(Listing updatedListing) {
@@ -90,15 +91,15 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 bookListings.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    String bookId = item.getKey();
-                    Listing newListing = item.getValue(Listing.class);
+                    final String bookId = item.getKey();
+                    final Listing newListing = item.getValue(Listing.class);
                     if (listName.equals("currentListings")) {
                         newListing.setId(bookId);
                         bookListings.add(newListing);
-                    } else if (listName.equals("myListings")) {
-                        if (newListing.getSeller().getName().equals(getName())) {
-                            bookListings.add(newListing);
-                        }
+                    }
+
+                    else if (listName.equals("myListings")) {
+                        addUserListner(bookListings, bookId, newListing, adapter);
                     }
 
                 }
@@ -114,4 +115,30 @@ public class Database {
         };
         listings.addValueEventListener(listener);
     }
+
+    static public void addUserListner(final List<Listing> bookListings,
+                                      final String bookId,
+                                      final Listing newListing,
+                                      final ListingAdapter adapter){
+
+        final DatabaseReference currentUser = getCurrentUser();
+        ValueEventListener userListner = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(bookId)){
+                    bookListings.add(newListing);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        };
+        currentUser.addValueEventListener(userListner);
+    }
+
+
 }
