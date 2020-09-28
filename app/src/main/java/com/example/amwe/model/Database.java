@@ -49,7 +49,7 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, updatedValues);
-        childUpdates.put("/users/" + currentUid + "/" + key, updatedValues);
+        childUpdates.put("/users/" + currentUid + "/listings/" + key, updatedValues);
 
         db.updateChildren(childUpdates);
     }
@@ -67,7 +67,7 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, entryValues);
-        childUpdates.put("/users/" + currentUid + "/" + key, entryValues);
+        childUpdates.put("/users/" + currentUid + "/listings/" + key, entryValues);
 
         db.updateChildren(childUpdates);
     }
@@ -82,7 +82,6 @@ public class Database {
     }
 
     static public void addListingListener(final List<Listing> bookListings,
-                                          final String listName,
                                           final ListingAdapter adapter) {
         DatabaseReference listings = getListings();
         ValueEventListener listener = new ValueEventListener() {
@@ -92,15 +91,8 @@ public class Database {
                 for (DataSnapshot item : snapshot.getChildren()) {
                     final String bookId = item.getKey();
                     final Listing newListing = item.getValue(Listing.class);
-                    if (listName.equals("currentListings")) {
-                        newListing.setId(bookId);
-                        bookListings.add(newListing);
-                    }
-
-                    else if (listName.equals("myListings")) {
-                        addUserListener(bookListings, bookId, newListing, adapter);
-                    }
-
+                    newListing.setId(bookId);
+                    bookListings.add(newListing);
                 }
                 //Notify observers
                 adapter.notifyDataSetChanged();
@@ -116,16 +108,18 @@ public class Database {
     }
 
     static public void addUserListener(final List<Listing> bookListings,
-                                       final String bookId,
-                                       final Listing newListing,
                                        final ListingAdapter adapter){
 
-        final DatabaseReference currentUser = getCurrentUser();
+        final DatabaseReference currentUserListings = getCurrentUser().child("listings");
         ValueEventListener userListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(bookId)){
-                    bookListings.add(newListing);
+                bookListings.clear();
+                for (DataSnapshot item : snapshot.getChildren()) {
+                        final String bookId = item.getKey();
+                        final Listing newListing = item.getValue(Listing.class);
+                        newListing.setId(bookId);
+                        bookListings.add(newListing);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -136,7 +130,7 @@ public class Database {
             }
 
         };
-        currentUser.addValueEventListener(userListener);
+        currentUserListings.addValueEventListener(userListener);
     }
 
 
