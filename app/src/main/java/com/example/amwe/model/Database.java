@@ -116,6 +116,7 @@ public class Database {
         listings.addValueEventListener(listener);
     }
 
+
     static public void addUserListner(final List<Listing> bookListings,
                                       final String bookId,
                                       final Listing newListing,
