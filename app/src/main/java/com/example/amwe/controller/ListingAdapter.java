@@ -103,6 +103,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
                 intent.putExtra("edition", currentListing.getEdition());
                 intent.putExtra("condition", currentListing.getCondition());
                 intent.putExtra("seller", currentListing.getSeller().toString());
+                intent.putExtra("bookId", currentListing.getId());
                 context.startActivity(intent);
 
             }
