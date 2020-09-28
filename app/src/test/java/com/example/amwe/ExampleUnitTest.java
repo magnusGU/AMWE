@@ -35,12 +35,11 @@ public class ExampleUnitTest {
     public void isFilteredListCorrectSize() throws InterruptedException {
         ArrayList<Listing> listings = new ArrayList<>();
 
-
         Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
         Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
-        ArrayList<Listing> listingsCopy = new ArrayList<>(listings);
+
         SearchFunction searchFunction = new SearchFunction(listings);
         searchFunction.performFiltering("a");
         assertEquals(1,listings.size());
@@ -50,12 +49,11 @@ public class ExampleUnitTest {
     public void isFilteredEmptyCorrect() throws InterruptedException {
         ArrayList<Listing> listings = new ArrayList<>();
 
-
         Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
         Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
-        ArrayList<Listing> listingsCopy = new ArrayList<>(listings);
+
         SearchFunction searchFunction = new SearchFunction(listings);
         searchFunction.performFiltering("c");
         assertEquals(0,listings.size());
@@ -215,5 +213,15 @@ public class ExampleUnitTest {
         sort.sortAlphabetically();
 
         assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
+    }
+
+    @Test
+    public void isSortedEmptyListStillEmpty() throws InterruptedException {
+        ArrayList<Listing> listings = new ArrayList<>();
+
+        SortFunction sort = new SortFunction(listings);
+        sort.sortPrice();
+        sort.sortAlphabetically();
+        assertEquals(0,listings.size());
     }
 }
