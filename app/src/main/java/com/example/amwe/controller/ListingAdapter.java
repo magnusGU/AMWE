@@ -53,7 +53,12 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     public ListingAdapter(final List<Listing> bookListings, final String listName){
         this.bookListings = bookListings;
         //create database with listener that will update recyclerView
-        Database.addListingListener(bookListings, listName, this);
+        if(listName.equals("currentListings")) {
+            Database.addListingListener(bookListings, this);
+        }
+        else if (listName.equals("myListings")) {
+            Database.addUserListener(bookListings, this);
+        }
     }
 
 
