@@ -90,8 +90,11 @@ public class AccountPage extends Fragment {
 
 
 
-        final RecyclerView recyclerView = v.findViewById(R.id.MyListings);
-        createList(recyclerView);
+        final RecyclerView myListings = v.findViewById(R.id.MyListings);
+        createList(myListings, "myListings");
+
+        final RecyclerView favourites = v.findViewById(R.id.Favourites);
+        createList(favourites, "favourites");
 
 
         initUI(v);
@@ -101,13 +104,14 @@ public class AccountPage extends Fragment {
 
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
-    private void createList(RecyclerView recyclerView){
+    private void createList(RecyclerView recyclerView, String listName){
         ArrayList<Listing> myListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+
         //sketchy but we will have to discuss this
-        ListingAdapter adapter = new ListingAdapter(myListings, "myListings");
+        ListingAdapter adapter = new ListingAdapter(myListings, listName);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
