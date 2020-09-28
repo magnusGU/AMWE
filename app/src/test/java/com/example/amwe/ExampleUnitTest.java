@@ -43,8 +43,22 @@ public class ExampleUnitTest {
         ArrayList<Listing> listingsCopy = new ArrayList<>(listings);
         SearchFunction searchFunction = new SearchFunction(listings);
         searchFunction.performFiltering("a");
-        TimeUnit.SECONDS.sleep(1);
         assertEquals(1,listings.size());
+    }
+
+    @Test
+    public void isFilteredEmptyCorrect() throws InterruptedException {
+        ArrayList<Listing> listings = new ArrayList<>();
+
+
+        Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
+        listings.add(listing1);
+        listings.add(listing2);
+        ArrayList<Listing> listingsCopy = new ArrayList<>(listings);
+        SearchFunction searchFunction = new SearchFunction(listings);
+        searchFunction.performFiltering("c");
+        assertEquals(0,listings.size());
     }
 
     @Test
@@ -91,6 +105,35 @@ public class ExampleUnitTest {
 
         SortFunction sort = new SortFunction(listings);
         sort.sortAlphabetically();
+
+        assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
+    }
+
+    @Test
+    public void firstSearchThenSortCorrectly() throws InterruptedException {
+        ArrayList<Listing> listings = new ArrayList<>();
+        ArrayList<Listing> expected = new ArrayList<>();
+
+        Listing listing1 = new Listing("1","aabb","b","c",3,"hej","1",300,"säljare","bra","3000");
+        Listing listing2 = new Listing("2","abab","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Listing listing3 = new Listing("3","bbaa","b","c",3,"hej","1",600,"säljare","bra","3000");
+        Listing listing4 = new Listing("4","baba","b","c",3,"hej","1",500,"säljare","bra","3000");
+        Listing listing5 = new Listing("3","baab","b","c",3,"hej","1",400,"säljare","bra","3000");
+        Listing listing6 = new Listing("4","abba","b","c",3,"hej","1",100,"säljare","bra","3000");
+        listings.add(listing1);
+        listings.add(listing2);
+        listings.add(listing3);
+        listings.add(listing4);
+        listings.add(listing5);
+        listings.add(listing6);
+        expected.add(listing1);
+        expected.add(listing5);
+        expected.add(listing3);
+
+        SortFunction sort = new SortFunction(listings);
+        sort.sortPrice();
+        SearchFunction searchFunction = new SearchFunction(listings);
+        searchFunction.performFiltering("aa");
 
         assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
     }
