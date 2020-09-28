@@ -141,17 +141,22 @@ public class Listing {
     }
 
     public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("author", author);
-        result.put("bookImage", bookImage);
-        result.put("condition", condition);
-        result.put("date", date);
-        result.put("description", description);
-        result.put("edition", edition);
-        result.put("isbn", isbn);
-        result.put("price", price);
-        result.put("seller", seller.getName());
-        result.put("title", title);
+        HashMap<String, Object> result;
+        try {
+            result = new HashMap<>();
+            result.put("author", author);
+            result.put("bookImage", bookImage);
+            result.put("condition", condition);
+            result.put("date", date);
+            result.put("description", description);
+            result.put("edition", edition);
+            result.put("isbn", isbn);
+            result.put("price", price);
+            result.put("seller", seller.getName());
+            result.put("title", title);
+        } catch (NullPointerException e) {
+            return new HashMap<>();
+        }
 
         return result;
     }

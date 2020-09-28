@@ -1,7 +1,6 @@
 package com.example.amwe.model;
 
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
@@ -99,7 +98,7 @@ public class Database {
                     }
 
                     else if (listName.equals("myListings")) {
-                        addUserListner(bookListings, bookId, newListing, adapter);
+                        addUserListener(bookListings, bookId, newListing, adapter);
                     }
 
                 }
@@ -116,13 +115,13 @@ public class Database {
         listings.addValueEventListener(listener);
     }
 
-    static public void addUserListner(final List<Listing> bookListings,
-                                      final String bookId,
-                                      final Listing newListing,
-                                      final ListingAdapter adapter){
+    static public void addUserListener(final List<Listing> bookListings,
+                                       final String bookId,
+                                       final Listing newListing,
+                                       final ListingAdapter adapter){
 
         final DatabaseReference currentUser = getCurrentUser();
-        ValueEventListener userListner = new ValueEventListener() {
+        ValueEventListener userListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(bookId)){
@@ -137,7 +136,7 @@ public class Database {
             }
 
         };
-        currentUser.addValueEventListener(userListner);
+        currentUser.addValueEventListener(userListener);
     }
 
 
