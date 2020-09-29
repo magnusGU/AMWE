@@ -130,8 +130,6 @@ public class Database {
             }
 
         };
-
-
         currentUserListings.addValueEventListener(myListingsListener);
     }
 
