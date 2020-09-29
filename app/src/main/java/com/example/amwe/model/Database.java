@@ -72,6 +72,11 @@ public class Database {
         db.updateChildren(childUpdates);
     }
 
+    static public void deleteListing(String id){
+        Database.getListings().child(id).removeValue();
+        Database.getCurrentUser().child("listings").child(id).removeValue();
+    }
+
     static public void addUser(String uid, String name) {
         User user = new User(name);
         database.getReference().child("users").child(uid).setValue(user);

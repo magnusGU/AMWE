@@ -73,6 +73,7 @@ public class ListingPageActivity extends AppCompatActivity {
         favourite.setOnClickListener(addToFavourites(bookId, favourite));
 
         Button deleteButton = findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(deleteListing(bookId));
         Button editButton = findViewById(R.id.edit_button);
         CardView sellerInfo = findViewById(R.id.sellerInfo);
         TextView sellerLabel = findViewById(R.id.listing_page_seller_label);
@@ -81,6 +82,33 @@ public class ListingPageActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Makes the a button call the deleteListing method in the Database class.
+     *
+     * @param bookId The id of the listing.
+     * @return A View.OnClickListener that can be applied to the button that the functionality wants to be added to.
+     */
+    private View.OnClickListener deleteListing(final String bookId) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Database.deleteListing(bookId);
+                finish();
+            }
+        };
+    }
+
+
+    /**
+     * Method changes the view of ListingPage if the listing is CurrentUser's.
+     *
+     * @param bookId     The id of the listing.
+     * @param favourite  The favourite-button.
+     * @param delete     The delete-button.
+     * @param edit       The edit-button
+     * @param sellerCard The card with seller information.
+     * @param label      The label over the card with seller information.
+     */
     private void myListingView(final String bookId,
                                final ImageButton favourite,
                                final Button delete,
@@ -139,7 +167,7 @@ public class ListingPageActivity extends AppCompatActivity {
      *
      * @param bookId    The id of the listing.
      * @param favourite The imageButton whose icon want's to be changed when listing is added to favourites.
-     * @return An View.OnClickListener that can be applied to the button that the functionality wants to be added to.
+     * @return A View.OnClickListener that can be applied to the button that the functionality wants to be added to.
      */
     private View.OnClickListener addToFavourites(final String bookId, final ImageButton favourite) {
         return new View.OnClickListener() {
