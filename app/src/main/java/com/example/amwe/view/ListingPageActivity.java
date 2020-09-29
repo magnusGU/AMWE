@@ -2,8 +2,6 @@ package com.example.amwe.view;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -18,13 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.R;
 import com.example.amwe.model.Database;
-import com.example.amwe.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 public class ListingPageActivity extends AppCompatActivity {
     @Override
@@ -71,8 +67,8 @@ public class ListingPageActivity extends AppCompatActivity {
 
         String bookId = getIntent().getStringExtra("bookId");
         ImageButton favourite = findViewById(R.id.addToFavourites);
-        favourite.setOnClickListener(addToFavourites(bookId));
-
+        changeIcon(favourite, bookId);
+        favourite.setOnClickListener(addToFavourites(bookId, favourite));
 
         Button deleteButton = findViewById(R.id.delete_button);
         deleteButton.setVisibility(View.GONE);
@@ -80,33 +76,59 @@ public class ListingPageActivity extends AppCompatActivity {
         deleteButton.setVisibility(View.GONE);
     }
 
-    private View.OnClickListener addToFavourites(final String bookId) {
+    private void changeIcon(final ImageButton favourite, final String bookId) {
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("listings").hasChild(bookId)){
+                    favourite.setVisibility(View.GONE);
+                }
+                else {
+                    if (snapshot.child("favourites").hasChild(bookId)){
+                        favourite.setImageResource(R.drawable.ic_baseline_favorite_24);
+                    }
+                    else {
+                        favourite.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        Database.getCurrentUser().addListenerForSingleValueEvent(listener);
+    }
+
+
+    private View.OnClickListener addToFavourites(final String bookId, final ImageButton favourite) {
         return new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
-                Database.getCurrentUser().addListenerForSingleValueEvent(new ValueEventListener() {
+                ValueEventListener listener = new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                         if (snapshot.child("favourites").hasChild(bookId)){
                             Database.getCurrentUser().child("favourites").child(bookId).removeValue();
                         }
                         else {
                             Database.getCurrentUser().child("favourites").child(bookId).setValue(true);
                         }
+                        changeIcon(favourite, bookId);
+
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });
-
+                };
+                Database.getCurrentUser().addListenerForSingleValueEvent(listener);
             }
         };
     }
-
-
 }

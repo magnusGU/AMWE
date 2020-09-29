@@ -129,4 +129,11 @@ public class AccountPage extends Fragment {
         name.setText(Database.getName());
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final RecyclerView favourites = getView().findViewById(R.id.Favourites);
+        createList(favourites, "favourites");
+    }
 }
