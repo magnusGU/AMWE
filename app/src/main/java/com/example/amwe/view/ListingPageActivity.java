@@ -2,19 +2,29 @@ package com.example.amwe.view;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.R;
+import com.example.amwe.model.Database;
+import com.example.amwe.model.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class ListingPageActivity extends AppCompatActivity {
     @Override
@@ -59,10 +69,44 @@ public class ListingPageActivity extends AppCompatActivity {
         String newCondition = getIntent().getStringExtra("condition");
         condition.setText(newCondition);
 
+        String bookId = getIntent().getStringExtra("bookId");
+        ImageButton favourite = findViewById(R.id.addToFavourites);
+        favourite.setOnClickListener(addToFavourites(bookId));
+
 
         Button deleteButton = findViewById(R.id.delete_button);
         deleteButton.setVisibility(View.GONE);
         Button editButton = findViewById(R.id.edit_button);
         deleteButton.setVisibility(View.GONE);
     }
+
+    private View.OnClickListener addToFavourites(final String bookId) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+                Database.getCurrentUser().addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.child("favourites").hasChild(bookId)){
+                            Database.getCurrentUser().child("favourites").child(bookId).removeValue();
+                        }
+                        else {
+                            Database.getCurrentUser().child("favourites").child(bookId).setValue(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        };
+    }
+
+
 }
