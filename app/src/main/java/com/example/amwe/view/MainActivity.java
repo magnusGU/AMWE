@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.search_page:
                         recyclerView.setVisibility(View.VISIBLE);
                         selectedFragment = new SearchPage();
+                        createList(recyclerView);
                         break;
                     case R.id.message_page:
                         selectedFragment = new MessagesPage();
