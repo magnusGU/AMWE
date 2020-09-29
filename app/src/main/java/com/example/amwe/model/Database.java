@@ -111,7 +111,7 @@ public class Database {
                                        final ListingAdapter adapter){
 
         final DatabaseReference currentUserListings = getCurrentUser().child("listings");
-        ValueEventListener userListener = new ValueEventListener() {
+        ValueEventListener myListingsListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 bookListings.clear();
@@ -130,8 +130,51 @@ public class Database {
             }
 
         };
-        currentUserListings.addValueEventListener(userListener);
+
+
+        currentUserListings.addValueEventListener(myListingsListener);
     }
 
+    static public void addFavouritesListener(final List<Listing> bookListings,
+                                             final ListingAdapter adapter){
+
+        DatabaseReference allListings = getListings();
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                bookListings.clear();
+                for (final DataSnapshot item : snapshot.getChildren()) {
+                    DatabaseReference favouriteListings = getCurrentUser().child("favourites");
+                    favouriteListings.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (final DataSnapshot item2 : snapshot.getChildren()){
+                                if (item.getKey().equals(item2.getKey())) {
+                                    final String bookId = item.getKey();
+                                    final Listing newListing = item.getValue(Listing.class);
+                                    newListing.setId(bookId);
+                                    bookListings.add(newListing);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                //Notify observers
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("HERE", "onCancelled");
+            }
+        };
+        allListings.addValueEventListener(listener);
+    }
 
 }

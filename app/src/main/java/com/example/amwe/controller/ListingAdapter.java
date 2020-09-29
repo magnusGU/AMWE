@@ -59,6 +59,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         else if (listName.equals("myListings")) {
             Database.addUserListener(bookListings, this);
         }
+        else if (listName.equals("favourites")){
+            Database.addFavouritesListener(bookListings, this);
+        }
     }
 
 
