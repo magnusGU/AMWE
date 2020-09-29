@@ -19,6 +19,7 @@ import com.example.amwe.R;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
+import com.example.amwe.model.SortFunction;
 import com.example.amwe.view.ListingPageActivity;
 
 import java.text.DecimalFormat;
@@ -28,6 +29,7 @@ import java.util.List;
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
     private List<Listing> bookListings;
     private SearchFunction search;
+    private SortFunction sort;
     private Context context;
 
     public static class ViewHold extends ViewHolder {
@@ -123,6 +125,13 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             search = new SearchFunction(bookListings);
         }
         return search;
+    }
+
+    public SortFunction getSort(){
+        if (sort == null) {
+            sort = new SortFunction(bookListings);
+        }
+        return sort;
     }
 
 }

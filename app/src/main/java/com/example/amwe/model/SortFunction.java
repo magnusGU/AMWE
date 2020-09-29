@@ -3,13 +3,14 @@ package com.example.amwe.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class SortFunction {
 
-    ArrayList<Listing> list;
-    ArrayList<Listing> originalList;
+    List<Listing> list;
+    List<Listing> originalList;
 
-    public SortFunction(ArrayList<Listing> list) {
+    public SortFunction(List<Listing> list) {
         this.list = list;
         this.originalList = new ArrayList<Listing>(list);
     }
@@ -32,7 +33,7 @@ public class SortFunction {
         });
     }
 
-    public ArrayList<Listing> getOriginalList() {
+    public List<Listing> getOriginalList() {
         return originalList;
     }
 }

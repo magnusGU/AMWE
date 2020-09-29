@@ -33,7 +33,7 @@ public class ExampleUnitTest {
 
     @Test
     public void isFilteredListCorrectSize() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
 
         Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
         Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
@@ -47,7 +47,7 @@ public class ExampleUnitTest {
 
     @Test
     public void isFilteredEmptyCorrect() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
 
         Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
         Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
@@ -61,8 +61,8 @@ public class ExampleUnitTest {
 
     @Test
     public void isSortedByPriceRight() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
+        List<Listing> expected = new ArrayList<>();
 
         Listing listing1 = new Listing("1","b","b","c",3,"hej","1",300,"säljare","bra","3000");
         Listing listing2 = new Listing("2","d","b","c",3,"hej","1",200,"säljare","bra","3000");
@@ -85,8 +85,8 @@ public class ExampleUnitTest {
 
     @Test
     public void isSortedAlphabeticallyRight() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
+        List<Listing> expected = new ArrayList<>();
 
         Listing listing1 = new Listing("1","b","b","c",3,"hej","1",300,"säljare","bra","3000");
         Listing listing2 = new Listing("2","d","b","c",3,"hej","1",200,"säljare","bra","3000");
@@ -109,8 +109,8 @@ public class ExampleUnitTest {
 
     @Test
     public void firstSearchThenSortCorrectly() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
+        List<Listing> expected = new ArrayList<>();
 
         Listing listing1 = new Listing("1","aabb","b","c",3,"hej","1",300,"säljare","bra","3000");
         Listing listing2 = new Listing("2","abab","b","c",3,"hej","1",200,"säljare","bra","3000");
@@ -138,8 +138,8 @@ public class ExampleUnitTest {
 
     @Test
     public void firstSortThenSearchCorrectly() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
+        List<Listing> expected = new ArrayList<>();
 
         Listing listing1 = new Listing("1","aabb","b","c",3,"hej","1",300,"säljare","bra","3000");
         Listing listing2 = new Listing("2","abab","b","c",3,"hej","1",200,"säljare","bra","3000");
@@ -167,8 +167,8 @@ public class ExampleUnitTest {
 
     @Test
     public void sortPriceFirstThenAlphabeticallyRight() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
+        List<Listing> expected = new ArrayList<>();
 
         Listing listing1 = new Listing("1","b","b","c",3,"hej","1",400,"säljare","bra","3000");
         Listing listing2 = new Listing("2","a","b","c",3,"hej","1",200,"säljare","bra","3000");
@@ -192,8 +192,8 @@ public class ExampleUnitTest {
 
     @Test
     public void sortAlphabeticallyFirstThenPriceRight() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
+        List<Listing> expected = new ArrayList<>();
 
         Listing listing1 = new Listing("1","b","b","c",3,"hej","1",200,"säljare","bra","3000");
         Listing listing2 = new Listing("2","a","b","c",3,"hej","1",400,"säljare","bra","3000");
@@ -217,7 +217,7 @@ public class ExampleUnitTest {
 
     @Test
     public void isSortedEmptyListStillEmpty() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
+        List<Listing> listings = new ArrayList<>();
 
         SortFunction sort = new SortFunction(listings);
         sort.sortPrice();
