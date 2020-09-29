@@ -251,7 +251,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/listing_page_description_label" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
+                android:id="@+id/sellerInfo"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="16dp"
@@ -351,7 +351,7 @@
             <Button
                 android:id="@+id/delete_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
@@ -371,16 +371,16 @@
             <Button
                 android:id="@+id/edit_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/button_bg"
+                android:background="@drawable/button_bg_white"
                 android:text="Redigera"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
