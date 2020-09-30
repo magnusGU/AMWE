@@ -16,6 +16,7 @@ import android.widget.SearchView;
 
 import com.example.amwe.R;
 import com.example.amwe.controller.ListingAdapter;
+import com.example.amwe.model.Item;
 import com.example.amwe.model.Listing;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
-    private ListingAdapter listingAdapter;
+    //private ListingAdapter listingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +37,23 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new SearchPage()).commit();
 
-        createList(recyclerView);
+        //createList(recyclerView);
         BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()){
                     case R.id.search_page:
-                        recyclerView.setVisibility(View.VISIBLE);
+                        //recyclerView.setVisibility(View.VISIBLE);
                         selectedFragment = new SearchPage();
-
+                        //createList(recyclerView);
                         break;
                     case R.id.message_page:
                         selectedFragment = new MessagesPage();
-                        recyclerView.setVisibility(View.INVISIBLE);
+                        //recyclerView.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.account_page:
-                        recyclerView.setVisibility(View.INVISIBLE);
+                        //recyclerView.setVisibility(View.INVISIBLE);
                         selectedFragment = new AccountPage();
                         break;
                 }
@@ -64,8 +65,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
+    /*
     private void createList(RecyclerView recyclerView){
-        ArrayList<Listing> currentListings = new ArrayList<>();
+        ArrayList<Item> currentListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -75,14 +77,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
+     */
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        /*
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_function, menu);
+        //inflater.inflate(R.menu.search_function, menu);
+        inflater.inflate(R.menu.sort_function,menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) { //for updating the search after filling in text completely and submitting it in search bar, not used since we want it updated in real time
@@ -101,6 +106,28 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+         */
+
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        /*
+        switch (item.getItemId()) {
+            case R.id.sort_alphabetically:
+                listingAdapter.getSort().sortAlphabetically();
+                listingAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.sort_price:
+                listingAdapter.getSort().sortPrice();
+                listingAdapter.notifyDataSetChanged();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+         */
+
+        return true;
+
     }
 }

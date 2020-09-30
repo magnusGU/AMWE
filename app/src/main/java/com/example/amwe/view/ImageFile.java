@@ -22,7 +22,14 @@ public class ImageFile {
 
     }
 
+
     //SimpleDateFormat requires a newer Api than we are developing for, probably easy to fix but will do later.
+
+    /**
+     *
+     * @return File. A new file with a unique name that is stored on the internal harddrive.
+     * @throws IOException
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public File createImageFile() throws IOException {
         // Create an image file name

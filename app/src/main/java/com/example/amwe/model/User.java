@@ -1,12 +1,13 @@
 package com.example.amwe.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User{
 
     private String name;
-    private ArrayList<Integer> watchlist;
-    private ArrayList<Integer> favourites;
+    private List<Integer> watchlist;
+    private List<String> favourites;
 
     public User() {
     }

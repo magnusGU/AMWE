@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.amwe.R;
 import com.example.amwe.controller.ListingAdapter;
 import com.example.amwe.model.Database;
+import com.example.amwe.model.Item;
 import com.example.amwe.model.Listing;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -90,8 +91,11 @@ public class AccountPage extends Fragment {
 
 
 
-        final RecyclerView recyclerView = v.findViewById(R.id.MyListings);
-        createList(recyclerView);
+        final RecyclerView myListings = v.findViewById(R.id.MyListings);
+        createList(myListings, "myListings");
+
+        final RecyclerView favourites = v.findViewById(R.id.Favourites);
+        createList(favourites, "favourites");
 
 
         initUI(v);
@@ -101,13 +105,14 @@ public class AccountPage extends Fragment {
 
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
-    private void createList(RecyclerView recyclerView){
-        ArrayList<Listing> myListings = new ArrayList<>();
+    private void createList(RecyclerView recyclerView, String listName){
+        ArrayList<Item> myListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+
         //sketchy but we will have to discuss this
-        ListingAdapter adapter = new ListingAdapter(myListings, "myListings");
+        ListingAdapter adapter = new ListingAdapter(myListings, listName);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
@@ -124,5 +129,12 @@ public class AccountPage extends Fragment {
         //Obviously temporary but works now as a test.
         name.setText(Database.getName());
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final RecyclerView favourites = getView().findViewById(R.id.Favourites);
+        createList(favourites, "favourites");
     }
 }

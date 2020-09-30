@@ -27,11 +27,12 @@
             android:tint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/searchView2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/searchBar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/sort_function" />
 
         <SearchView
-            android:id="@+id/searchView2"
+            android:id="@+id/searchBar"
             android:layout_width="0dp"
             android:layout_height="48dp"
             app:layout_constraintBottom_toBottomOf="parent"

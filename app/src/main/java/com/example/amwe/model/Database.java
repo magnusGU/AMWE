@@ -1,7 +1,6 @@
 package com.example.amwe.model;
 
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
@@ -40,7 +39,7 @@ public class Database {
         return getDatabaseReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
-    static public void updateListing(Listing updatedListing) {
+    static public void updateListing(Item updatedListing) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -50,12 +49,12 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, updatedValues);
-        childUpdates.put("/users/" + currentUid + "/" + key, updatedValues);
+        childUpdates.put("/users/" + currentUid + "/listings/" + key, updatedValues);
 
         db.updateChildren(childUpdates);
     }
 
-    static public void insertNewListing(Listing newEntry) {
+    static public void insertNewListing(Item newEntry) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -68,9 +67,14 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, entryValues);
-        childUpdates.put("/users/" + currentUid + "/" + key, entryValues);
+        childUpdates.put("/users/" + currentUid + "/listings/" + key, entryValues);
 
         db.updateChildren(childUpdates);
+    }
+
+    static public void deleteListing(String id){
+        Database.getListings().child(id).removeValue();
+        Database.getCurrentUser().child("listings").child(id).removeValue();
     }
 
     static public void addUser(String uid, String name) {
@@ -82,8 +86,7 @@ public class Database {
         return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
 
-    static public void addListingListener(final List<Listing> bookListings,
-                                          final String listName,
+    static public void addListingListener(final List<Item> bookListings,
                                           final ListingAdapter adapter) {
         DatabaseReference listings = getListings();
         ValueEventListener listener = new ValueEventListener() {
@@ -92,16 +95,9 @@ public class Database {
                 bookListings.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
                     final String bookId = item.getKey();
-                    final Listing newListing = item.getValue(Listing.class);
-                    if (listName.equals("currentListings")) {
-                        newListing.setId(bookId);
-                        bookListings.add(newListing);
-                    }
-
-                    else if (listName.equals("myListings")) {
-                        addUserListner(bookListings, bookId, newListing, adapter);
-                    }
-
+                    final Book newListing = item.getValue(Book.class);
+                    newListing.setId(bookId);
+                    bookListings.add(newListing);
                 }
                 //Notify observers
                 adapter.notifyDataSetChanged();
@@ -116,17 +112,19 @@ public class Database {
         listings.addValueEventListener(listener);
     }
 
-    static public void addUserListner(final List<Listing> bookListings,
-                                      final String bookId,
-                                      final Listing newListing,
-                                      final ListingAdapter adapter){
+    static public void addUserListener(final List<Item> bookListings,
+                                       final ListingAdapter adapter){
 
-        final DatabaseReference currentUser = getCurrentUser();
-        ValueEventListener userListner = new ValueEventListener() {
+        final DatabaseReference currentUserListings = getCurrentUser().child("listings");
+        ValueEventListener myListingsListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(bookId)){
-                    bookListings.add(newListing);
+                bookListings.clear();
+                for (DataSnapshot item : snapshot.getChildren()) {
+                        final String bookId = item.getKey();
+                        final Book newListing = item.getValue(Book.class);
+                        newListing.setId(bookId);
+                        bookListings.add(newListing);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -137,8 +135,49 @@ public class Database {
             }
 
         };
-        currentUser.addValueEventListener(userListner);
+        currentUserListings.addValueEventListener(myListingsListener);
     }
 
+    static public void addFavouritesListener(final List<Item> bookListings,
+                                             final ListingAdapter adapter){
+
+        DatabaseReference allListings = getListings();
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                bookListings.clear();
+                for (final DataSnapshot item : snapshot.getChildren()) {
+                    DatabaseReference favouriteListings = getCurrentUser().child("favourites");
+                    favouriteListings.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (final DataSnapshot item2 : snapshot.getChildren()){
+                                if (item.getKey().equals(item2.getKey())) {
+                                    final String bookId = item.getKey();
+                                    final Book newListing = item.getValue(Book.class);
+                                    newListing.setId(bookId);
+                                    bookListings.add(newListing);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                //Notify observers
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("HERE", "onCancelled");
+            }
+        };
+        allListings.addValueEventListener(listener);
+    }
 
 }
