@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.amwe.R;
 import com.example.amwe.controller.ListingAdapter;
 import com.example.amwe.model.Database;
+import com.example.amwe.model.Item;
 import com.example.amwe.model.Listing;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -105,7 +106,7 @@ public class AccountPage extends Fragment {
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
     private void createList(RecyclerView recyclerView, String listName){
-        ArrayList<Listing> myListings = new ArrayList<>();
+        ArrayList<Item> myListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());

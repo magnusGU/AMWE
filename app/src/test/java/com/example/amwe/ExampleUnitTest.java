@@ -5,7 +5,9 @@ import android.provider.ContactsContract;
 import android.widget.Filter;
 
 import com.example.amwe.controller.ListingAdapter;
+import com.example.amwe.model.Book;
 import com.example.amwe.model.Database;
+import com.example.amwe.model.Item;
 import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
 import com.example.amwe.model.SortFunction;
@@ -33,10 +35,10 @@ public class ExampleUnitTest {
 
     @Test
     public void isFilteredListCorrectSize() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
 
-        Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing1 = new Book("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing2 = new Book("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
 
@@ -47,10 +49,10 @@ public class ExampleUnitTest {
 
     @Test
     public void isFilteredEmptyCorrect() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
 
-        Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing1 = new Book("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing2 = new Book("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
 
@@ -61,13 +63,12 @@ public class ExampleUnitTest {
 
     @Test
     public void isSortedByPriceRight() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
-
-        Listing listing1 = new Listing("1","b","b","c",3,"hej","1",300,"säljare","bra","3000");
-        Listing listing2 = new Listing("2","d","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing3 = new Listing("3","a","b","c",3,"hej","1",400,"säljare","bra","3000");
-        Listing listing4 = new Listing("4","c","b","c",3,"hej","1",100,"säljare","bra","3000");
+        ArrayList<Item> listings = new ArrayList<>();
+        ArrayList<Item> expected = new ArrayList<>();
+        Item listing1 = new Book("1","b","b","c",3,"hej","1",300,"säljare","bra","3000");
+        Item listing2 = new Book("2","d","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing3 = new Book("3","a","b","c",3,"hej","1",400,"säljare","bra","3000");
+        Item listing4 = new Book("4","c","b","c",3,"hej","1",100,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
         listings.add(listing3);
@@ -85,13 +86,13 @@ public class ExampleUnitTest {
 
     @Test
     public void isSortedAlphabeticallyRight() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
+        ArrayList<Item> expected = new ArrayList<>();
 
-        Listing listing1 = new Listing("1","b","b","c",3,"hej","1",300,"säljare","bra","3000");
-        Listing listing2 = new Listing("2","d","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing3 = new Listing("3","a","b","c",3,"hej","1",400,"säljare","bra","3000");
-        Listing listing4 = new Listing("4","c","b","c",3,"hej","1",100,"säljare","bra","3000");
+        Item listing1 = new Book("1","b","b","c",3,"hej","1",300,"säljare","bra","3000");
+        Item listing2 = new Book("2","d","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing3 = new Book("3","a","b","c",3,"hej","1",400,"säljare","bra","3000");
+        Item listing4 = new Book("4","c","b","c",3,"hej","1",100,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
         listings.add(listing3);
@@ -109,15 +110,16 @@ public class ExampleUnitTest {
 
     @Test
     public void firstSearchThenSortCorrectly() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
+        ArrayList<Item> expected = new ArrayList<>();
 
-        Listing listing1 = new Listing("1","aabb","b","c",3,"hej","1",300,"säljare","bra","3000");
-        Listing listing2 = new Listing("2","abab","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing3 = new Listing("3","bbaa","b","c",3,"hej","1",600,"säljare","bra","3000");
-        Listing listing4 = new Listing("4","baba","b","c",3,"hej","1",500,"säljare","bra","3000");
-        Listing listing5 = new Listing("3","baab","b","c",3,"hej","1",400,"säljare","bra","3000");
-        Listing listing6 = new Listing("4","abba","b","c",3,"hej","1",100,"säljare","bra","3000");
+        Item listing1 = new Book("1","aabb","b","c",3,"hej","1",300,"säljare","bra","3000");
+        Item listing2 = new Book("2","abab","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing3 = new Book("3","bbaa","b","c",3,"hej","1",600,"säljare","bra","3000");
+        Item listing4 = new Book("4","baba","b","c",3,"hej","1",500,"säljare","bra","3000");
+        Item listing5 = new Book("3","baab","b","c",3,"hej","1",400,"säljare","bra","3000");
+        Item listing6 = new Book("4","abba","b","c",3,"hej","1",100,"säljare","bra","3000");
+
         listings.add(listing1);
         listings.add(listing2);
         listings.add(listing3);
@@ -138,15 +140,16 @@ public class ExampleUnitTest {
 
     @Test
     public void firstSortThenSearchCorrectly() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
+        ArrayList<Item> expected = new ArrayList<>();
 
-        Listing listing1 = new Listing("1","aabb","b","c",3,"hej","1",300,"säljare","bra","3000");
-        Listing listing2 = new Listing("2","abab","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing3 = new Listing("3","bbaa","b","c",3,"hej","1",600,"säljare","bra","3000");
-        Listing listing4 = new Listing("4","baba","b","c",3,"hej","1",500,"säljare","bra","3000");
-        Listing listing5 = new Listing("3","baab","b","c",3,"hej","1",400,"säljare","bra","3000");
-        Listing listing6 = new Listing("4","abba","b","c",3,"hej","1",100,"säljare","bra","3000");
+        Item listing1 = new Book("1","aabb","b","c",3,"hej","1",300,"säljare","bra","3000");
+        Item listing2 = new Book("2","abab","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing3 = new Book("3","bbaa","b","c",3,"hej","1",600,"säljare","bra","3000");
+        Item listing4 = new Book("4","baba","b","c",3,"hej","1",500,"säljare","bra","3000");
+        Item listing5 = new Book("3","baab","b","c",3,"hej","1",400,"säljare","bra","3000");
+        Item listing6 = new Book("4","abba","b","c",3,"hej","1",100,"säljare","bra","3000");
+
         listings.add(listing1);
         listings.add(listing2);
         listings.add(listing3);
@@ -167,13 +170,13 @@ public class ExampleUnitTest {
 
     @Test
     public void sortPriceFirstThenAlphabeticallyRight() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
+        ArrayList<Item> expected = new ArrayList<>();
 
-        Listing listing1 = new Listing("1","b","b","c",3,"hej","1",400,"säljare","bra","3000");
-        Listing listing2 = new Listing("2","a","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing3 = new Listing("3","b","b","c",3,"hej","1",300,"säljare","bra","3000");
-        Listing listing4 = new Listing("4","a","b","c",3,"hej","1",100,"säljare","bra","3000");
+        Item listing1 = new Book("1","b","b","c",3,"hej","1",400,"säljare","bra","3000");
+        Item listing2 = new Book("2","a","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing3 = new Book("3","b","b","c",3,"hej","1",300,"säljare","bra","3000");
+        Item listing4 = new Book("4","a","b","c",3,"hej","1",100,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
         listings.add(listing3);
@@ -192,13 +195,13 @@ public class ExampleUnitTest {
 
     @Test
     public void sortAlphabeticallyFirstThenPriceRight() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        ArrayList<Listing> expected = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
+        ArrayList<Item> expected = new ArrayList<>();
 
-        Listing listing1 = new Listing("1","b","b","c",3,"hej","1",200,"säljare","bra","3000");
-        Listing listing2 = new Listing("2","a","b","c",3,"hej","1",400,"säljare","bra","3000");
-        Listing listing3 = new Listing("3","a","b","c",3,"hej","1",100,"säljare","bra","3000");
-        Listing listing4 = new Listing("4","b","b","c",3,"hej","1",300,"säljare","bra","3000");
+        Item listing1 = new Book("1","b","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Item listing2 = new Book("2","a","b","c",3,"hej","1",400,"säljare","bra","3000");
+        Item listing3 = new Book("3","a","b","c",3,"hej","1",100,"säljare","bra","3000");
+        Item listing4 = new Book("4","b","b","c",3,"hej","1",300,"säljare","bra","3000");
         listings.add(listing1);
         listings.add(listing2);
         listings.add(listing3);
@@ -217,7 +220,7 @@ public class ExampleUnitTest {
 
     @Test
     public void isSortedEmptyListStillEmpty() throws InterruptedException {
-        ArrayList<Listing> listings = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
 
         SortFunction sort = new SortFunction(listings);
         sort.sortPrice();

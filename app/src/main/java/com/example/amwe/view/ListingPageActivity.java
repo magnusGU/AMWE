@@ -45,13 +45,13 @@ public class ListingPageActivity extends AppCompatActivity {
         String titleName = getIntent().getStringExtra("Title");
         title.setText(titleName);
         TextView isbn = findViewById(R.id.listing_page_isbn);
-        String newIsbn = getIntent().getStringExtra("isbn");
-        isbn.setText(newIsbn);
+        long newIsbn = getIntent().getLongExtra("isbn", 0);
+        isbn.setText(String.valueOf(newIsbn));
         TextView description = findViewById(R.id.listing_page_description);
         String newDescription = getIntent().getStringExtra("description");
         description.setText(newDescription);
         TextView price = findViewById(R.id.listing_page_price);
-        float newPrice = Float.parseFloat(getIntent().getStringExtra("price"));
+        double newPrice = getIntent().getDoubleExtra("price", 0);
         DecimalFormat df = new DecimalFormat("0.##");
         price.setText(df.format(newPrice) + " kr");
         TextView author = findViewById(R.id.listing_page_author);

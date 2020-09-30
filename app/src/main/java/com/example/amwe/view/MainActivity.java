@@ -16,6 +16,7 @@ import android.widget.SearchView;
 
 import com.example.amwe.R;
 import com.example.amwe.controller.ListingAdapter;
+import com.example.amwe.model.Item;
 import com.example.amwe.model.Listing;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
     private void createList(RecyclerView recyclerView){
-        ArrayList<Listing> currentListings = new ArrayList<>();
+        ArrayList<Item> currentListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_function, menu);
+        inflater.inflate(R.menu.sort_function,menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
@@ -102,5 +104,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_alphabetically:
+                listingAdapter.getSort().sortAlphabetically();
+                listingAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.sort_price:
+                listingAdapter.getSort().sortPrice();
+                listingAdapter.notifyDataSetChanged();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

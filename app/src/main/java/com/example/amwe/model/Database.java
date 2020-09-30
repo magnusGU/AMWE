@@ -39,7 +39,7 @@ public class Database {
         return getDatabaseReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
-    static public void updateListing(Listing updatedListing) {
+    static public void updateListing(Item updatedListing) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -54,7 +54,7 @@ public class Database {
         db.updateChildren(childUpdates);
     }
 
-    static public void insertNewListing(Listing newEntry) {
+    static public void insertNewListing(Item newEntry) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -86,7 +86,7 @@ public class Database {
         return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
 
-    static public void addListingListener(final List<Listing> bookListings,
+    static public void addListingListener(final List<Item> bookListings,
                                           final ListingAdapter adapter) {
         DatabaseReference listings = getListings();
         ValueEventListener listener = new ValueEventListener() {
@@ -95,7 +95,7 @@ public class Database {
                 bookListings.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
                     final String bookId = item.getKey();
-                    final Listing newListing = item.getValue(Listing.class);
+                    final Book newListing = item.getValue(Book.class);
                     newListing.setId(bookId);
                     bookListings.add(newListing);
                 }
@@ -112,7 +112,7 @@ public class Database {
         listings.addValueEventListener(listener);
     }
 
-    static public void addUserListener(final List<Listing> bookListings,
+    static public void addUserListener(final List<Item> bookListings,
                                        final ListingAdapter adapter){
 
         final DatabaseReference currentUserListings = getCurrentUser().child("listings");
@@ -122,7 +122,7 @@ public class Database {
                 bookListings.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
                         final String bookId = item.getKey();
-                        final Listing newListing = item.getValue(Listing.class);
+                        final Book newListing = item.getValue(Book.class);
                         newListing.setId(bookId);
                         bookListings.add(newListing);
                 }
@@ -138,7 +138,7 @@ public class Database {
         currentUserListings.addValueEventListener(myListingsListener);
     }
 
-    static public void addFavouritesListener(final List<Listing> bookListings,
+    static public void addFavouritesListener(final List<Item> bookListings,
                                              final ListingAdapter adapter){
 
         DatabaseReference allListings = getListings();
@@ -154,7 +154,7 @@ public class Database {
                             for (final DataSnapshot item2 : snapshot.getChildren()){
                                 if (item.getKey().equals(item2.getKey())) {
                                     final String bookId = item.getKey();
-                                    final Listing newListing = item.getValue(Listing.class);
+                                    final Book newListing = item.getValue(Book.class);
                                     newListing.setId(bookId);
                                     bookListings.add(newListing);
                                 }
