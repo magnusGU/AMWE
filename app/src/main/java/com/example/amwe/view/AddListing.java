@@ -22,7 +22,9 @@ import android.widget.Button;
 
 import com.example.amwe.BuildConfig;
 import com.example.amwe.R;
+import com.example.amwe.model.Book;
 import com.example.amwe.model.Database;
+import com.example.amwe.model.Item;
 import com.example.amwe.model.Listing;
 
 import java.io.ByteArrayOutputStream;
@@ -158,7 +160,7 @@ public class AddListing extends AppCompatActivity {
                     return;
                 }
 
-                Listing newBook = new Listing(null,
+                Item newBook = new Book(null,
                         title.getText().toString(),
                         edition.getText().toString(),
                         author.getText().toString(),

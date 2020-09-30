@@ -16,6 +16,7 @@ import android.widget.SearchView;
 
 import com.example.amwe.R;
 import com.example.amwe.controller.ListingAdapter;
+import com.example.amwe.model.Item;
 import com.example.amwe.model.Listing;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*Not the right place for it because of weird references to model but it will have to do for now*/
     private void createList(RecyclerView recyclerView){
-        ArrayList<Listing> currentListings = new ArrayList<>();
+        ArrayList<Item> currentListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

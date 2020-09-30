@@ -10,44 +10,44 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ListingTest {
+public class BookTest {
 
-    private Listing listingTest;
+    private Book bookTest;
     @Before
     public void beforeTests() {
-        listingTest = new Listing();
+        bookTest = new Book();
     }
 
     @Test
     public void testToString_returnsEmptyString() {
-        assertEquals(listingTest.toString(),
+        assertEquals(bookTest.toString(),
                 "Listing{id=null, title='null', edition='null', author='null', isbn=0, description='null', bookImage=null, price=0.0, seller=null}"
                 );
     }
 
     @Test
     public void toMap_OnEmptyClass() {
-        Map<String, Object> listingToMap = listingTest.toMap();
+        Map<String, Object> listingToMap = bookTest.toMap();
         assertEquals(listingToMap, new HashMap<String, Object>());
     }
     
     @Test
     public void toMap_OnFullClass() {
-        listingTest = new Listing("id",
+        bookTest = new Book("id",
                 "author",
                 "edition",
                 "author",
                 1,
                 "description",
-                "bookImage",
+                "imageString",
                 1,
                 "seller",
                 "condition",
                 "date");
-        Map<String, Object> listingToMap = listingTest.toMap();
+        Map<String, Object> listingToMap = bookTest.toMap();
 
         assertTrue(listingToMap.containsKey("author"));
-        assertTrue(listingToMap.containsKey("bookImage"));
+        assertTrue(listingToMap.containsKey("imageString"));
         assertTrue(listingToMap.containsKey("condition"));
         assertTrue(listingToMap.containsKey("date"));
         assertTrue(listingToMap.containsKey("description"));

@@ -6,33 +6,33 @@ import java.util.Comparator;
 
 public class SortFunction {
 
-    ArrayList<Listing> list;
-    ArrayList<Listing> originalList;
+    ArrayList<Item> list;
+    ArrayList<Item> originalList;
 
-    public SortFunction(ArrayList<Listing> list) {
+    public SortFunction(ArrayList<Item> list) {
         this.list = list;
-        this.originalList = new ArrayList<Listing>(list);
+        this.originalList = new ArrayList<>(list);
     }
 
     public void sortPrice() {
-        Collections.sort(list, new Comparator<Listing>() {
+        Collections.sort(list, new Comparator<Item>() {
             @Override
-            public int compare(Listing l1, Listing l2) {
+            public int compare(Item l1, Item l2) {
                 return Double.compare(l1.getPrice(),l2.getPrice());
             }
         });
     }
 
     public void sortAlphabetically() {
-        Collections.sort(list, new Comparator<Listing>() {
+        Collections.sort(list, new Comparator<Item>() {
             @Override
-            public int compare(Listing l1, Listing l2) {
+            public int compare(Item l1, Item l2) {
                 return l1.getTitle().compareToIgnoreCase(l2.getTitle());
             }
         });
     }
 
-    public ArrayList<Listing> getOriginalList() {
+    public ArrayList<Item> getOriginalList() {
         return originalList;
     }
 }

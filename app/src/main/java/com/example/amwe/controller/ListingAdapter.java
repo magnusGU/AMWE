@@ -16,8 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.example.amwe.R;
+import com.example.amwe.model.Book;
 import com.example.amwe.model.Database;
-import com.example.amwe.model.Listing;
+import com.example.amwe.model.Item;
 import com.example.amwe.model.SearchFunction;
 import com.example.amwe.view.ListingPageActivity;
 
@@ -26,7 +27,7 @@ import java.util.List;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
-    private List<Listing> bookListings;
+    private List<Item> bookListings;
     private SearchFunction search;
     private Context context;
 
@@ -50,7 +51,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     }
 
-    public ListingAdapter(final List<Listing> bookListings, final String listName){
+    public ListingAdapter(final List<Item> bookListings, final String listName){
         this.bookListings = bookListings;
         //create database with listener that will update recyclerView
         if(listName.equals("currentListings")) {
@@ -77,12 +78,12 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHold holder, final int position) {
-        final Listing currentListing = bookListings.get(position);
+        final Book currentListing = (Book) bookListings.get(position);
 
         try{
             byte[] decodedString = Base64.decode(currentListing.getBookImage(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holder.bookImage.setImageBitmap(decodedByte);
+              holder.bookImage.setImageBitmap(decodedByte);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,18 +98,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,ListingPageActivity.class);
-                intent.putExtra("Title", currentListing.getTitle());
-                intent.putExtra("Image", currentListing.getBookImage());
-                intent.putExtra("isbn", String.valueOf(currentListing.getIsbn()));
-                intent.putExtra("description", currentListing.getDescription());
-                intent.putExtra("price", String.valueOf(currentListing.getPrice()));
-                intent.putExtra("author", currentListing.getAuthor());
-                intent.putExtra("edition", currentListing.getEdition());
-                intent.putExtra("condition", currentListing.getCondition());
-                intent.putExtra("seller", currentListing.getSeller().toString());
-                intent.putExtra("bookId", currentListing.getId());
+                currentListing.setIntent(intent);
                 context.startActivity(intent);
-
             }
         });
     }
