@@ -92,8 +92,9 @@ public class AddListing extends AppCompatActivity {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 //Uri outputFileUri = Uri.fromFile(new File(getExternalCacheDir().getPath(), "pickImageResult.jpeg"));
                 //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                ImageFile file =new ImageFile(getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
                 try {
-                    photoFile = createImageFile();
+                    photoFile = file.createImageFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -108,25 +109,6 @@ public class AddListing extends AppCompatActivity {
         };
     }
 
-    //SimpleDateFormat requires a newer Api than we are developing for, probably easy to fix but will do later.
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        photoPath = image.getAbsolutePath();
-        return image;
-
-
-    }
 
     private View.OnClickListener submit(final EditText title,
                                         final EditText author,

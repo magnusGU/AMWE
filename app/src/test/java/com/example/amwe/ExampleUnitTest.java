@@ -32,7 +32,7 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void isFilteredListCorrectSize() throws InterruptedException {
+    public void isFilteredListCorrectSize()  {
         ArrayList<Listing> listings = new ArrayList<>();
 
 
@@ -43,8 +43,21 @@ public class ExampleUnitTest {
         ArrayList<Listing> listingsCopy = new ArrayList<>(listings);
         SearchFunction searchFunction = new SearchFunction(listings);
         searchFunction.performFiltering("a");
-        TimeUnit.SECONDS.sleep(1);
         assertEquals(1,listings.size());
+    }
+    @Test
+    public void isFilteredListCorrectSizeWhenEmpty() throws InterruptedException {
+        ArrayList<Listing> listings = new ArrayList<>();
+
+
+        Listing listing1 = new Listing("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
+        Listing listing2 = new Listing("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
+        listings.add(listing1);
+        listings.add(listing2);
+        ArrayList<Listing> listingsCopy = new ArrayList<>(listings);
+        SearchFunction searchFunction = new SearchFunction(listings);
+        searchFunction.performFiltering("");
+        assertEquals(2,listings.size());
     }
 
     @Test

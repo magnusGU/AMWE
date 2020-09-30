@@ -34,7 +34,7 @@ public class SearchFunction {
     }
 
 
-private void publishResults(List<Listing> filtered) {
+    private void publishResults(List<Listing> filtered) {
     list.clear();
     list.addAll(filtered);
 }
