@@ -83,9 +83,11 @@ public abstract class Item {
             result.put("seller", seller.getName());
             result.put("condition", condition);
             result.put("date", date);
-            result.put("BookImage", bookImage);
-            Map<String, Object> moreitems = MoreToMap();
-            result.putAll(moreitems);
+            result.put("bookImage", bookImage);
+            Map<String, Object> moreItems = MoreToMap();
+            if(moreItems != null) {
+                result.putAll(moreItems);
+            }
         } catch (NullPointerException e) {
             return new HashMap<>();
         }
