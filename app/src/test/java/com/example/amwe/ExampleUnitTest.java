@@ -65,7 +65,6 @@ public class ExampleUnitTest {
     public void isSortedByPriceRight() throws InterruptedException {
         ArrayList<Item> listings = new ArrayList<>();
         ArrayList<Item> expected = new ArrayList<>();
-
         Item listing1 = new Book("1","b","b","c",3,"hej","1",300,"säljare","bra","3000");
         Item listing2 = new Book("2","d","b","c",3,"hej","1",200,"säljare","bra","3000");
         Item listing3 = new Book("3","a","b","c",3,"hej","1",400,"säljare","bra","3000");
@@ -120,6 +119,7 @@ public class ExampleUnitTest {
         Item listing4 = new Book("4","baba","b","c",3,"hej","1",500,"säljare","bra","3000");
         Item listing5 = new Book("3","baab","b","c",3,"hej","1",400,"säljare","bra","3000");
         Item listing6 = new Book("4","abba","b","c",3,"hej","1",100,"säljare","bra","3000");
+
         listings.add(listing1);
         listings.add(listing2);
         listings.add(listing3);
@@ -149,6 +149,7 @@ public class ExampleUnitTest {
         Item listing4 = new Book("4","baba","b","c",3,"hej","1",500,"säljare","bra","3000");
         Item listing5 = new Book("3","baab","b","c",3,"hej","1",400,"säljare","bra","3000");
         Item listing6 = new Book("4","abba","b","c",3,"hej","1",100,"säljare","bra","3000");
+
         listings.add(listing1);
         listings.add(listing2);
         listings.add(listing3);
