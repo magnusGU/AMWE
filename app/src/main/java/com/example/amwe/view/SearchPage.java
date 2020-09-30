@@ -3,12 +3,23 @@ package com.example.amwe.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.amwe.R;
+import com.example.amwe.controller.ListingAdapter;
+import com.example.amwe.model.Item;
+
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +32,8 @@ public class SearchPage extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private static ListingAdapter listingAdapter;
 
     public SearchPage() {
 
@@ -60,9 +73,44 @@ public class SearchPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       return inflater.inflate(R.layout.fragment_search_page, container, false);
+       View v = inflater.inflate(R.layout.fragment_search_page, container, false);
+
+       RecyclerView recyclerView = v.findViewById(R.id.RecycleView);
+       createList(recyclerView);
+
+        SearchView search = v.findViewById(R.id.searchBar);
+        search.setOnQueryTextListener(searchListner());
+
+       return v;
+    }
+
+    private SearchView.OnQueryTextListener searchListner() {
+        return new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) { //for updating the search after filling in text completely and submitting it in search bar, not used since we want it updated in real time
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) { //updating search in real time as the user writes
+                listingAdapter.getSearch().performFiltering(s);
+                listingAdapter.notifyDataSetChanged();
+                return false;
+            }
+        };
+    }
 
 
+    private void createList(RecyclerView recyclerView){
+        ArrayList<Item> currentListings = new ArrayList<>();
+
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        //sketchy but we will have to discuss this
+        ListingAdapter adapter = new ListingAdapter(currentListings, "currentListings");
+        this.listingAdapter = adapter;
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
 
