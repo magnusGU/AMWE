@@ -5,6 +5,11 @@ import android.content.Intent;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is the abstract class that represent all the different items in the database.
+ * Setters are needed because the database can not use the constructor for some reason.
+ */
+
 public abstract class Item {
 
     protected String id;
