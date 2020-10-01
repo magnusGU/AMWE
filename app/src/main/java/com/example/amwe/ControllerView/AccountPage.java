@@ -2,17 +2,16 @@ package com.example.amwe.ControllerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.R;
 import com.example.amwe.model.Database;
@@ -32,7 +31,7 @@ public class AccountPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_account_page, container, false);
+        View v = inflater.inflate(R.layout.fragment_account_page, container, false);
         Button logOutButton = v.findViewById(R.id.account_logout_button);
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +49,6 @@ public class AccountPage extends Fragment {
         });
 
 
-
         final RecyclerView myListings = v.findViewById(R.id.MyListings);
         createList(myListings, "myListings");
 
@@ -61,34 +59,42 @@ public class AccountPage extends Fragment {
         initUI(v);
 
         return v;
-        }
+    }
 
 
-    /*Not the right place for it because of weird references to model but it will have to do for now*/
-    private void createList(RecyclerView recyclerView, String listName){
+    /**
+     * Populates the RecyclerView with listings.
+     *
+     * @param recyclerView The RecyclerView that should be populated.
+     * @param listName     The String that decides which method in database is called.
+     */
+    private void createList(RecyclerView recyclerView, String listName) {
         ArrayList<Item> myListings = new ArrayList<>();
-
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-
-        //sketchy but we will have to discuss this
         ListingAdapter adapter = new ListingAdapter(myListings, listName);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
 
-
-    private void logOut(){
+    /**
+     * Signs out the current user from the application.
+     */
+    private void logOut() {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getContext(), Login.class));
     }
 
-    private void initUI(View v){
-        TextView name =v.findViewById(R.id.account_page_name);
+    /**
+     * Initializes the user-interface for AccountPage.
+     *
+     * @param v The view that should be Initialized.
+     */
+    private void initUI(View v) {
+        TextView name = v.findViewById(R.id.account_page_name);
         ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
         //Obviously temporary but works now as a test.
         name.setText(Database.getName());
-
     }
 
     @Override

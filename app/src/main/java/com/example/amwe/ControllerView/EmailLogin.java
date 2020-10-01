@@ -1,8 +1,5 @@
 package com.example.amwe.ControllerView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +39,11 @@ public class EmailLogin extends AppCompatActivity {
         mRegister.setOnClickListener(register());
     }
 
+    /**
+     * Opens the Register activity if the button is pressed.
+     *
+     * @return A View.OnClickListener that should be applied to the register-button.
+     */
     private View.OnClickListener register() {
         return new View.OnClickListener() {
             @Override
@@ -49,6 +54,11 @@ public class EmailLogin extends AppCompatActivity {
     }
 
 
+    /**
+     * Signs in the user if the credentials are correct.
+     *
+     * @return A View.OnClickListener that should be applied to the login-button.
+     */
     private View.OnClickListener login() {
         return new View.OnClickListener() {
             @Override
@@ -56,31 +66,28 @@ public class EmailLogin extends AppCompatActivity {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
-                if (TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     mEmail.setError("E-post är obligatoriskt");
                     return;
                 }
 
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Lösenord är obligatoriskt");
                     return;
                 }
 
 
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             System.out.println("Signed in");
                             startActivity(new Intent(EmailLogin.this, MainActivity.class));
-                        }
-                        else {
+                        } else {
                             Toast.makeText(EmailLogin.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
-                //startActivity(new Intent(EmailLogin.this, Register.class));
             }
         };
     }

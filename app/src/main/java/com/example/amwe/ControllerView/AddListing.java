@@ -1,8 +1,4 @@
 package com.example.amwe.ControllerView;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,10 +10,13 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Button;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.R;
 import com.example.amwe.model.Book;
@@ -26,11 +25,10 @@ import com.example.amwe.model.Database;
 import com.example.amwe.model.Item;
 
 import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.util.Date;
-
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
@@ -67,7 +65,7 @@ public class AddListing extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_PIC_REQUEST) {
-            if(photoURI!=null){
+            if (photoURI != null) {
                 File image = new File(photoFile.toURI());
 
                 Bitmap thumbnail = BitmapFactory.decodeFile(image.getAbsolutePath());
@@ -91,7 +89,7 @@ public class AddListing extends AppCompatActivity {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 //Uri outputFileUri = Uri.fromFile(new File(getExternalCacheDir().getPath(), "pickImageResult.jpeg"));
                 //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                CameraInitializer initializer =new CameraInitializer(getApplicationContext(),getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
+                CameraInitializer initializer = new CameraInitializer(getApplicationContext(), getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
                 try {
                     photoFile = initializer.createPhotoFile();
                 } catch (IOException e) {
@@ -108,6 +106,18 @@ public class AddListing extends AppCompatActivity {
     }
 
 
+    /**
+     * A listener that should be applied to the submit-button.
+     *
+     * @param title       The title of the listing.
+     * @param author      The author of the book.
+     * @param edition     The edition of the book.
+     * @param isbn        The ISBN of the book
+     * @param description The description for the listing.
+     * @param price       The price of the listing.
+     * @param condition   The condition of the book.
+     * @return A View.OnClickListener
+     */
     private View.OnClickListener submit(final EditText title,
                                         final EditText author,
                                         final EditText edition,

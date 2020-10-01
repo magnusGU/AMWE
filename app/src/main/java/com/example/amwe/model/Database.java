@@ -87,8 +87,7 @@ public class Database {
         return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
 
-    static public void addListingListener(final List<Item> bookListings,
-                                          final ListingAdapter adapter) {
+    static public void addListingListener(final List<Item> bookListings, final ListingAdapter adapter) {
         DatabaseReference listings = getListings();
         ValueEventListener listener = new ValueEventListener() {
             @Override
