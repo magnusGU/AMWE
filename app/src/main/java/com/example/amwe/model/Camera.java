@@ -16,13 +16,13 @@ import java.io.IOException;
  * A temprary class to move code out of addListing.
  */
 public class Camera {
-    private Context context;
-    private File storageDir;
-    private Uri photoURI;
+    private final Context context;
+    private final File storageDir;
     private File photoFile;
-    public Camera(Context context, File storagedir){
-        this.context=context;
-        this.storageDir=storagedir;
+
+    public Camera(Context context, File storagedir) {
+        this.context = context;
+        this.storageDir = storagedir;
 
     }
 
@@ -30,11 +30,13 @@ public class Camera {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public File createPhotoFile() throws IOException {
         ImageFile file = new ImageFile(storageDir);
-        this.photoFile=file.createImageFile();
+        this.photoFile = file.createImageFile();
         return photoFile;
 
     }
-    public Uri getURI(){
+
+    public Uri getURI() {
+        Uri photoURI;
         return photoURI = FileProvider.getUriForFile(context,
                 BuildConfig.APPLICATION_ID + ".provider",
                 photoFile);

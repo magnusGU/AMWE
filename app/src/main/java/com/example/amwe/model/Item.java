@@ -1,9 +1,6 @@
 package com.example.amwe.model;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -99,7 +96,7 @@ public abstract class Item {
             result.put("date", date);
             result.put("bookImage", bookImage);
             Map<String, Object> moreItems = MoreToMap();
-            if(moreItems != null) {
+            if (moreItems != null) {
                 result.putAll(moreItems);
             }
         } catch (NullPointerException e) {

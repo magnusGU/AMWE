@@ -1,19 +1,19 @@
 package com.example.amwe.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class SearchFunction {
 
-    private List<Item> list;
-    private List<Item> originalList;
+    private final List<Item> list;
+    private final List<Item> originalList;
 
     /**
      * Constructor
+     *
      * @param listingList, the list of all items in the app.
      */
-    public SearchFunction(List<Item> listingList){
+    public SearchFunction(List<Item> listingList) {
         this.list = listingList;
         this.originalList = new ArrayList<>(listingList);
     }
@@ -21,10 +21,9 @@ public class SearchFunction {
     //filters listings by a given CharSequence
 
     /**
-     *
      * @param charSequence, the sequence of chars that user puts into the searchbar.
-     * The method looks for the title of the item and tries to match the charsequence with
-     * it. An item has this sequence anywhere in its title, gets shown to the user.
+     *                      The method looks for the title of the item and tries to match the charsequence with
+     *                      it. An item has this sequence anywhere in its title, gets shown to the user.
      */
     public void performFiltering(CharSequence charSequence) {
         ArrayList<Item> filteredList = new ArrayList<>();

@@ -13,25 +13,20 @@ import java.util.Date;
  * A class that creates a file and stores it in the storageDir.
  */
 public class ImageFile {
-    private File storageDir;
+    private final File storageDir;
 
     /**
-     *
      * @param storageDir, the place where the file should be stored.
      */
-    public ImageFile(File storageDir){
-        this.storageDir=storageDir;
+    public ImageFile(File storageDir) {
+        this.storageDir = storageDir;
 
     }
 
 
-
-
     /**
-     *
      * @return File. A new file with a unique name that is stored on the internal harddrive.
-     * @throws IOException
-     * SimpleDateFormat requires a newer Api than we are developing for, probably easy to fix but will do later.
+     * @throws IOException SimpleDateFormat requires a newer Api than we are developing for, probably easy to fix but will do later.
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public File createImageFile() throws IOException {
@@ -40,15 +35,13 @@ public class ImageFile {
         String imageFileName = "JPEG_" + timeStamp + "_";
 
 
-        File image = File.createTempFile(
+        // Save a file: path for use with ACTION_VIEW intents
+
+        return File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
-
-        return image;
 
 
     }

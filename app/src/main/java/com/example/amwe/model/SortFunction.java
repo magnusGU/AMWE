@@ -1,6 +1,5 @@
 package com.example.amwe.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -9,10 +8,11 @@ import java.util.List;
  * A class that sorts the items in different ways.
  */
 public class SortFunction {
-    List<Item> list;
+    final List<Item> list;
 
     /**
      * Constructor
+     *
      * @param list of type items that are currently shown to the user.
      */
     public SortFunction(List<Item> list) {
@@ -30,6 +30,7 @@ public class SortFunction {
             }
         });
     }
+
     /**
      * Sorts the current list alphabetically.
      * Not case sensitive.

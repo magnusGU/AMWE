@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Listing {
-    private List<Item> listings;
+    private final List<Item> listings;
 
     public Listing() {
         listings = new ArrayList<>();
