@@ -21,7 +21,7 @@ import android.widget.Button;
 
 import com.example.amwe.R;
 import com.example.amwe.model.Book;
-import com.example.amwe.model.Camera;
+import com.example.amwe.model.CameraInitializer;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Item;
 
@@ -91,14 +91,14 @@ public class AddListing extends AppCompatActivity {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 //Uri outputFileUri = Uri.fromFile(new File(getExternalCacheDir().getPath(), "pickImageResult.jpeg"));
                 //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                Camera camera =new Camera(getApplicationContext(),getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
+                CameraInitializer initializer =new CameraInitializer(getApplicationContext(),getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
                 try {
-                    photoFile = camera.createPhotoFile();
+                    photoFile = initializer.createPhotoFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 if (photoFile != null) {
-                    photoURI = camera.getURI();
+                    photoURI = initializer.getURI();
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
 

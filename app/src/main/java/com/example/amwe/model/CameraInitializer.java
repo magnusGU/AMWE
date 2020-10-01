@@ -13,14 +13,15 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * A temprary class to move code out of addListing.
+ * This class handles the initialization of a file that will contain the image taken by the camera and
+ * also return the file and its location.
  */
-public class Camera {
+public class CameraInitializer {
     private Context context;
     private File storageDir;
     private Uri photoURI;
     private File photoFile;
-    public Camera(Context context, File storagedir){
+    public CameraInitializer(Context context, File storagedir){
         this.context=context;
         this.storageDir=storagedir;
 
