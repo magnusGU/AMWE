@@ -1,4 +1,4 @@
-package com.example.amwe.view;
+package com.example.amwe.ControllerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.amwe.R;
-import com.example.amwe.controller.ListingAdapter;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Item;
-import com.example.amwe.model.Listing;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;

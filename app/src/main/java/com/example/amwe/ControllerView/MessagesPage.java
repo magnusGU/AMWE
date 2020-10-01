@@ -1,4 +1,4 @@
-package com.example.amwe.view;
+package com.example.amwe.ControllerView;
 
 import android.os.Bundle;
 

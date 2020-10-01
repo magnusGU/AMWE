@@ -16,20 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.AddListing"
+            android:name=".ControllerView.AddListing"
             android:exported="true">
         </activity>
-        <activity android:name=".view.Register" />
-        <activity android:name=".view.EmailLogin" />
-        <activity android:name=".view.Login">
+        <activity android:name=".ControllerView.Register" />
+        <activity android:name=".ControllerView.EmailLogin" />
+        <activity android:name=".ControllerView.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity" />
-        <activity android:name=".view.ListingPageActivity" />
+        <activity android:name=".ControllerView.MainActivity" />
+        <activity android:name=".ControllerView.ListingPageActivity" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

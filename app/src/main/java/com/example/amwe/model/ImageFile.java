@@ -1,11 +1,6 @@
-package com.example.amwe.view;
+package com.example.amwe.model;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 import android.os.Build;
-import android.provider.MediaStore;
-import android.view.View;
 
 import androidx.annotation.RequiresApi;
 

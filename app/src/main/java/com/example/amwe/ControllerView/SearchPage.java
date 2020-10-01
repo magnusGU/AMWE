@@ -1,4 +1,4 @@
-package com.example.amwe.view;
+package com.example.amwe.ControllerView;
 
 import android.os.Bundle;
 
@@ -7,19 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.example.amwe.R;
-import com.example.amwe.controller.ListingAdapter;
 import com.example.amwe.model.Item;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
