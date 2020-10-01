@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 public class Database {
     static private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -72,7 +73,7 @@ public class Database {
         db.updateChildren(childUpdates);
     }
 
-    static public void deleteListing(String id){
+    static public void deleteListing(String id) {
         Database.getListings().child(id).removeValue();
         Database.getCurrentUser().child("listings").child(id).removeValue();
     }
@@ -113,7 +114,7 @@ public class Database {
     }
 
     static public void addUserListener(final List<Item> bookListings,
-                                       final ListingAdapter adapter){
+                                       final ListingAdapter adapter) {
 
         final DatabaseReference currentUserListings = getCurrentUser().child("listings");
         ValueEventListener myListingsListener = new ValueEventListener() {
@@ -121,10 +122,10 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 bookListings.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
-                        final String bookId = item.getKey();
-                        final Book newListing = item.getValue(Book.class);
-                        newListing.setId(bookId);
-                        bookListings.add(newListing);
+                    final String bookId = item.getKey();
+                    final Book newListing = item.getValue(Book.class);
+                    newListing.setId(bookId);
+                    bookListings.add(newListing);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -139,7 +140,7 @@ public class Database {
     }
 
     static public void addFavouritesListener(final List<Item> bookListings,
-                                             final ListingAdapter adapter){
+                                             final ListingAdapter adapter) {
 
         DatabaseReference allListings = getListings();
         ValueEventListener listener = new ValueEventListener() {
@@ -151,7 +152,7 @@ public class Database {
                     favouriteListings.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (final DataSnapshot item2 : snapshot.getChildren()){
+                            for (final DataSnapshot item2 : snapshot.getChildren()) {
                                 if (item.getKey().equals(item2.getKey())) {
                                     final String bookId = item.getKey();
                                     final Book newListing = item.getValue(Book.class);

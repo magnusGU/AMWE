@@ -9,7 +9,7 @@ public class SearchFunction {
     private List<Item> list;
     private List<Item> originalList;
 
-    public SearchFunction(List<Item> listingList){
+    public SearchFunction(List<Item> listingList) {
         this.list = listingList;
         this.originalList = new ArrayList<>(listingList);
     }
@@ -35,9 +35,9 @@ public class SearchFunction {
     }
 
 
-private void publishResults(List<Item> filtered) {
-    list.clear();
-    list.addAll(filtered);
-}
+    private void publishResults(List<Item> filtered) {
+        list.clear();
+        list.addAll(filtered);
+    }
 
 }

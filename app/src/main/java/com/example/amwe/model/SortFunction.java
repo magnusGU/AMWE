@@ -18,7 +18,7 @@ public class SortFunction {
         Collections.sort(list, new Comparator<Item>() {
             @Override
             public int compare(Item l1, Item l2) {
-                return Double.compare(l1.getPrice(),l2.getPrice());
+                return Double.compare(l1.getPrice(), l2.getPrice());
             }
         });
     }
