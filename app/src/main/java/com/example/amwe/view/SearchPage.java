@@ -33,6 +33,8 @@ public class SearchPage extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    SearchView search;
+
     private static ListingAdapter listingAdapter;
 
     public SearchPage() {
@@ -78,8 +80,8 @@ public class SearchPage extends Fragment {
        RecyclerView recyclerView = v.findViewById(R.id.RecycleView);
        createList(recyclerView);
 
-        SearchView search = v.findViewById(R.id.searchBar);
-        search.setOnQueryTextListener(searchListner());
+       search = v.findViewById(R.id.searchBar);
+       search.setOnQueryTextListener(searchListner());
 
        return v;
     }
@@ -108,10 +110,9 @@ public class SearchPage extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         //sketchy but we will have to discuss this
         ListingAdapter adapter = new ListingAdapter(currentListings, "currentListings");
-        this.listingAdapter = adapter;
+        listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
-
 
 }

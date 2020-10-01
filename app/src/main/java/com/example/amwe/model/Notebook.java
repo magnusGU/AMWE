@@ -12,6 +12,7 @@ public class Notebook extends Item {
     public Notebook() {
 
     }
+
     public Notebook(String id,
                     String title,
                     String course,
@@ -27,7 +28,7 @@ public class Notebook extends Item {
         this.description = description;
         this.bookImage = bookImage;
         this.price = price;
-        this.seller=new User(seller);
+        this.seller = new User(seller);
         this.condition = condition;
         this.date = date;
 

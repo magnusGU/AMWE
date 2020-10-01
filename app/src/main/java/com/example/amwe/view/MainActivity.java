@@ -25,35 +25,27 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
-    //private ListingAdapter listingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //A SearchView might need to be created too
-        final RecyclerView recyclerView = findViewById(R.id.RecycleView);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new SearchPage()).commit();
 
-        //createList(recyclerView);
         BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()){
                     case R.id.search_page:
-                        //recyclerView.setVisibility(View.VISIBLE);
                         selectedFragment = new SearchPage();
-                        //createList(recyclerView);
                         break;
                     case R.id.message_page:
                         selectedFragment = new MessagesPage();
-                        //recyclerView.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.account_page:
-                        //recyclerView.setVisibility(View.INVISIBLE);
                         selectedFragment = new AccountPage();
                         break;
                 }
@@ -64,70 +56,4 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navListener);
     }
 
-    /*Not the right place for it because of weird references to model but it will have to do for now*/
-    /*
-    private void createList(RecyclerView recyclerView){
-        ArrayList<Item> currentListings = new ArrayList<>();
-
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        //sketchy but we will have to discuss this
-        ListingAdapter adapter = new ListingAdapter(currentListings, "currentListings");
-        this.listingAdapter = adapter;
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-    }
-     */
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        /*
-        MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.search_function, menu);
-        inflater.inflate(R.menu.sort_function,menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) { //for updating the search after filling in text completely and submitting it in search bar, not used since we want it updated in real time
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) { //updating search in real time as the user writes
-                listingAdapter.getSearch().performFiltering(s);
-                try {
-                    TimeUnit.MILLISECONDS.sleep(150); // OBS!!! Temporary! - This is to make sure that search list get updated before notifyDataSetChanged is called.
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                listingAdapter.notifyDataSetChanged();
-                return false;
-            }
-        });
-         */
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        /*
-        switch (item.getItemId()) {
-            case R.id.sort_alphabetically:
-                listingAdapter.getSort().sortAlphabetically();
-                listingAdapter.notifyDataSetChanged();
-                return true;
-            case R.id.sort_price:
-                listingAdapter.getSort().sortPrice();
-                listingAdapter.notifyDataSetChanged();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-         */
-
-        return true;
-
-    }
 }

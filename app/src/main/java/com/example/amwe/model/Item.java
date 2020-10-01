@@ -24,49 +24,63 @@ public abstract class Item {
     public String getId() {
         return id;
     }
+
     public String getTitle() {
         return title;
     }
+
     public double getPrice() {
         return price;
     }
+
     public User getSeller() {
         return seller;
     }
+
     public String getDescription() {
         return description;
     }
+
     public String getCondition() {
         return condition;
     }
+
     public String getDate() {
         return date;
     }
+
     public String getBookImage() {
-         return bookImage;
+        return bookImage;
     }
 
     public void setId(String id) {
         this.id = id;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }
+
     public void setSeller(String seller) {
         this.seller = new User(seller);
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public void setCondition(String condition) {
         this.condition = condition;
     }
+
     public void setDate(String date) {
         this.date = date;
     }
+
     public void setBookImage(String bookImage) {
         this.bookImage = bookImage;
     }
@@ -97,16 +111,16 @@ public abstract class Item {
 
     protected abstract Map<String, Object> MoreToMap();
 
-   // public Bitmap imageStringToImage() {
-   //     Bitmap decodedByte = null;
-   //     try{
-   //         byte[] decodedString = Base64.decode(bookImage, Base64.DEFAULT);
-   //         decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-   //     } catch (Exception e) {
-   //         e.printStackTrace();
-   //     }
-   //     return decodedByte;
-   // }
+    // public Bitmap imageStringToImage() {
+    //     Bitmap decodedByte = null;
+    //     try{
+    //         byte[] decodedString = Base64.decode(bookImage, Base64.DEFAULT);
+    //         decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return decodedByte;
+    // }
 
     //Template method
     public void setIntent(Intent intent) {

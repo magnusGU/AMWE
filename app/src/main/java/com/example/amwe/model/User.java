@@ -3,7 +3,7 @@ package com.example.amwe.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User{
+public class User {
 
     private String name;
     private List<Integer> watchlist;
@@ -21,7 +21,6 @@ public class User{
     public String toString() {
         return "" + name + "";
     }
-
 
 
     public String getName() {
