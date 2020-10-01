@@ -27,17 +27,17 @@ import java.util.List;
 
 /* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold>{
-    private List<Item> bookListings;
+    private final List<Item> bookListings;
     private SearchFunction search;
     private SortFunction sort;
     private Context context;
 
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
-        private TextView textViewDate;
-        private TextView textViewTitle;
-        private TextView textViewPrice;
-        private TextView textViewCondition;
+        private final TextView textViewDate;
+        private final TextView textViewTitle;
+        private final TextView textViewPrice;
+        private final TextView textViewCondition;
 
 
 
@@ -55,14 +55,16 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     public ListingAdapter(final List<Item> bookListings, final String listName){
         this.bookListings = bookListings;
         //create database with listener that will update recyclerView
-        if(listName.equals("currentListings")) {
-            Database.addListingListener(bookListings, this);
-        }
-        else if (listName.equals("myListings")) {
-            Database.addUserListener(bookListings, this);
-        }
-        else if (listName.equals("favourites")){
-            Database.addFavouritesListener(bookListings, this);
+        switch (listName) {
+            case "currentListings":
+                Database.addListingListener(bookListings, this);
+                break;
+            case "myListings":
+                Database.addUserListener(bookListings, this);
+                break;
+            case "favourites":
+                Database.addFavouritesListener(bookListings, this);
+                break;
         }
     }
 

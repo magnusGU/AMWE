@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Database {
-    static private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     private Database() {
         //database = FirebaseDatabase.getInstance();

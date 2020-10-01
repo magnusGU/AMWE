@@ -1,7 +1,5 @@
 package com.example.amwe.model;
 
-import android.util.Log;
-
 import org.junit.Before;
 import org.junit.Test;
 
