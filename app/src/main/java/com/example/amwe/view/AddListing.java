@@ -94,18 +94,17 @@ public class AddListing extends AppCompatActivity {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 //Uri outputFileUri = Uri.fromFile(new File(getExternalCacheDir().getPath(), "pickImageResult.jpeg"));
                 //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                ImageFile file =new ImageFile(getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
+                Camera camera =new Camera(getApplicationContext(),getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
                 try {
-                    photoFile = file.createImageFile();
+                    photoFile = camera.createPhotoFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 if (photoFile != null) {
-                    photoURI = FileProvider.getUriForFile(getApplicationContext(),
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            photoFile);
+                    photoURI = camera.getURI();
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+
                 }
             }
         };
