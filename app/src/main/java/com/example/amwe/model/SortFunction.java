@@ -5,15 +5,23 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * A class that sorts the items in different ways.
+ */
 public class SortFunction {
     List<Item> list;
-    List<Item> originalList;
 
+    /**
+     * Constructor
+     * @param list of type items that are currently shown to the user.
+     */
     public SortFunction(List<Item> list) {
         this.list = list;
-        this.originalList = new ArrayList<>(list);
     }
 
+    /**
+     * Sorts the current list by price, from lowest to highest.
+     */
     public void sortPrice() {
         Collections.sort(list, new Comparator<Item>() {
             @Override
@@ -22,7 +30,10 @@ public class SortFunction {
             }
         });
     }
-
+    /**
+     * Sorts the current list alphabetically.
+     * Not case sensitive.
+     */
     public void sortAlphabetically() {
         Collections.sort(list, new Comparator<Item>() {
             @Override
@@ -32,7 +43,4 @@ public class SortFunction {
         });
     }
 
-    public List<Item> getOriginalList() {
-        return originalList;
-    }
 }

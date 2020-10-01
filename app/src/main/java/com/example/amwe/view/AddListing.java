@@ -94,41 +94,22 @@ public class AddListing extends AppCompatActivity {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 //Uri outputFileUri = Uri.fromFile(new File(getExternalCacheDir().getPath(), "pickImageResult.jpeg"));
                 //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                Camera camera =new Camera(getApplicationContext(),getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
                 try {
-                    photoFile = createImageFile();
+                    photoFile = camera.createPhotoFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 if (photoFile != null) {
-                    photoURI = FileProvider.getUriForFile(getApplicationContext(),
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            photoFile);
+                    photoURI = camera.getURI();
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+
                 }
             }
         };
     }
 
-    //SimpleDateFormat requires a newer Api than we are developing for, probably easy to fix but will do later.
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        photoPath = image.getAbsolutePath();
-        return image;
-
-
-    }
 
     private View.OnClickListener submit(final EditText title,
                                         final EditText author,

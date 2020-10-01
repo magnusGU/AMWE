@@ -9,12 +9,23 @@ public class SearchFunction {
     private List<Item> list;
     private List<Item> originalList;
 
-    public SearchFunction(List<Item> listingList) {
+    /**
+     * Constructor
+     * @param listingList, the list of all items in the app.
+     */
+    public SearchFunction(List<Item> listingList){
         this.list = listingList;
         this.originalList = new ArrayList<>(listingList);
     }
 
     //filters listings by a given CharSequence
+
+    /**
+     *
+     * @param charSequence, the sequence of chars that user puts into the searchbar.
+     * The method looks for the title of the item and tries to match the charsequence with
+     * it. An item has this sequence anywhere in its title, gets shown to the user.
+     */
     public void performFiltering(CharSequence charSequence) {
         ArrayList<Item> filteredList = new ArrayList<>();
 
