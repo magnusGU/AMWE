@@ -1,9 +1,8 @@
-package com.example.amwe.view;
+package com.example.amwe.ControllerView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,16 +19,14 @@ import android.widget.ImageButton;
 import android.widget.Button;
 
 
-import com.example.amwe.BuildConfig;
 import com.example.amwe.R;
 import com.example.amwe.model.Book;
+import com.example.amwe.model.Camera;
 import com.example.amwe.model.Database;
 import com.example.amwe.model.Item;
-import com.example.amwe.model.Listing;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import java.io.File;

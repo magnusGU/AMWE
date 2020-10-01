@@ -1,4 +1,4 @@
-package com.example.amwe.controller;
+package com.example.amwe.ControllerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +21,6 @@ import com.example.amwe.model.Database;
 import com.example.amwe.model.Item;
 import com.example.amwe.model.SearchFunction;
 import com.example.amwe.model.SortFunction;
-import com.example.amwe.view.ListingPageActivity;
 
 import java.text.DecimalFormat;
 import java.util.List;

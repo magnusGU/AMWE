@@ -1,24 +1,14 @@
 package com.example.amwe;
 
-import android.content.Context;
-import android.provider.ContactsContract;
-import android.widget.Filter;
-
-import com.example.amwe.controller.ListingAdapter;
 import com.example.amwe.model.Book;
-import com.example.amwe.model.Database;
 import com.example.amwe.model.Item;
-import com.example.amwe.model.Listing;
 import com.example.amwe.model.SearchFunction;
 import com.example.amwe.model.SortFunction;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
