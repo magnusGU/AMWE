@@ -1,15 +1,14 @@
 package com.example.amwe.ControllerView;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.R;
 import com.example.amwe.model.Item;
@@ -30,17 +29,22 @@ public class SearchPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View v = inflater.inflate(R.layout.fragment_search_page, container, false);
+        View v = inflater.inflate(R.layout.fragment_search_page, container, false);
 
-       RecyclerView recyclerView = v.findViewById(R.id.RecycleView);
-       createList(recyclerView);
+        RecyclerView recyclerView = v.findViewById(R.id.RecycleView);
+        createList(recyclerView);
 
-       search = v.findViewById(R.id.searchBar);
-       search.setOnQueryTextListener(searchListner());
+        search = v.findViewById(R.id.searchBar);
+        search.setOnQueryTextListener(searchListner());
 
-       return v;
+        return v;
     }
 
+    /**
+     * Searches among the listings based on the input to the search bar.
+     *
+     * @return A SearchView.OnQueryTextListener that should be applied to the search bar.
+     */
     private SearchView.OnQueryTextListener searchListner() {
         return new SearchView.OnQueryTextListener() {
             @Override
@@ -57,8 +61,12 @@ public class SearchPage extends Fragment {
         };
     }
 
-
-    private void createList(RecyclerView recyclerView){
+    /**
+     * Populates the SearchPage with listings.
+     *
+     * @param recyclerView The RecyclerView that should be populated.
+     */
+    private void createList(RecyclerView recyclerView) {
         ArrayList<Item> currentListings = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);

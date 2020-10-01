@@ -32,6 +32,9 @@ public class ListingPageActivity extends AppCompatActivity {
         initUI();
     }
 
+    /**
+     * Initializes the user interface.
+     */
     private void initUI() {
         try {
             ImageView bookImage = findViewById(R.id.listing_page_image);
@@ -86,7 +89,7 @@ public class ListingPageActivity extends AppCompatActivity {
      * Makes the a button call the deleteListing method in the Database class.
      *
      * @param bookId The id of the listing.
-     * @return A View.OnClickListener that can be applied to the button that the functionality wants to be added to.
+     * @return A View.OnClickListener that should be applied to the delete-button.
      */
     private View.OnClickListener deleteListing(final String bookId) {
         return new View.OnClickListener() {
@@ -167,7 +170,7 @@ public class ListingPageActivity extends AppCompatActivity {
      *
      * @param bookId    The id of the listing.
      * @param favourite The imageButton whose icon want's to be changed when listing is added to favourites.
-     * @return A View.OnClickListener that can be applied to the button that the functionality wants to be added to.
+     * @return A View.OnClickListener that should be applied the AddToFavourites-button
      */
     private View.OnClickListener addToFavourites(final String bookId, final ImageButton favourite) {
         return new View.OnClickListener() {
