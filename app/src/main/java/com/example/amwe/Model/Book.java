@@ -1,4 +1,4 @@
-package com.example.amwe.model;
+package com.example.amwe.Model;
 
 import android.content.Intent;
 
@@ -32,6 +32,7 @@ public class Book extends Item {
 
     /**
      * The toString method returns a string that is easy for a person to read that "textually represents" the book.
+     *
      * @return A string representation of the object.
      */
     @Override

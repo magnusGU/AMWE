@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.R;
-import com.example.amwe.model.Database;
-import com.example.amwe.model.Item;
+import com.example.amwe.Model.Database;
+import com.example.amwe.Model.Item;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;

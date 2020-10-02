@@ -1,4 +1,4 @@
-package com.example.amwe.model;
+package com.example.amwe.Model;
 
 import android.util.Log;
 
@@ -87,6 +87,7 @@ public class Database {
      * This method makes two inserts in the database, one in the common listing dataset, and one
      * in the user-listings specific dataset, so all users can see the new listing, and so that
      * the user who posted the listing gets an updates list of a listings posted by themselves
+     *
      * @param newEntry The Item to be inserted in the database
      */
     static public void insertNewListing(Item newEntry) {
@@ -108,7 +109,8 @@ public class Database {
     }
 
     /**
-     * remove listing from database both from the common listings, and the user-listing specific entry
+     * Remove listing from database both from the common listings, and the user-listing specific entry
+     *
      * @param id of the listing to be removed, identical in both places
      */
     static public void deleteListing(String id) {
@@ -119,6 +121,7 @@ public class Database {
     /**
      * Add new user to the database, not creating an authorized user, but adding public information
      * to the database, like name
+     *
      * @param uid user id, unique
      * @param name of the user, matches displayName, not unique
      */
@@ -128,6 +131,7 @@ public class Database {
     }
 
     /**
+     * Returns the name of the user that is signed in.
      *
      * @return displayName of user, created when user was created
      */
@@ -136,10 +140,11 @@ public class Database {
     }
 
     /**
-     * listener for the common listings dataset, will notify observers upon creation and
+     * Listener for the common listings dataset, will notify observers upon creation and
      * when dataset has changed
-     * @param bookListings list the observer want data pushed on
-     * @param adapter observer to notify that there is new data
+     *
+     * @param bookListings List the observer want data pushed on
+     * @param adapter Observer to notify that there is new data
      */
     static public void addListingListener(final List<Item> bookListings, final ListingAdapter adapter) {
         DatabaseReference listings = getListings();
@@ -167,11 +172,11 @@ public class Database {
     }
 
     /**
-     * listener for the current logged in user's user-listings, will notify observers upon creation and
+     * Listener for the current logged in user's user-listings, will notify observers upon creation and
      * when dataset has changed
      *
-     * @param bookListings the list the observer want data pushed on
-     * @param adapter observer to notify that there is new data
+     * @param bookListings The list the observer want data pushed on
+     * @param adapter Observer to notify that there is new data
      */
     static public void addUserListener(final List<Item> bookListings,
                                        final ListingAdapter adapter) {
@@ -200,10 +205,10 @@ public class Database {
     }
 
     /**
-     * listener for the current logged in user's favourites, will notify observers upon creation and
-     *  when dataset has changed
-     * @param bookListings the list the observer want data pushed on
-     * @param adapter observer to notify that there is new data
+     * Listener for the current logged in user's favourites, will notify observers upon creation and when dataset has changed
+     *
+     * @param bookListings The list the observer want data pushed on
+     * @param adapter Observer to notify that there is new data
      */
     static public void addFavouritesListener(final List<Item> bookListings,
                                              final ListingAdapter adapter) {

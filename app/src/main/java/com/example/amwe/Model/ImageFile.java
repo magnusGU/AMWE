@@ -1,4 +1,4 @@
-package com.example.amwe.model;
+package com.example.amwe.Model;
 
 import android.os.Build;
 
@@ -16,6 +16,8 @@ public class ImageFile {
     private final File storageDir;
 
     /**
+     * Constructor for ImageFile
+     *
      * @param storageDir, the place where the file should be stored.
      */
     public ImageFile(File storageDir) {
