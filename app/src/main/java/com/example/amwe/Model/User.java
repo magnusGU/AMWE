@@ -1,4 +1,4 @@
-package com.example.amwe.model;
+package com.example.amwe.Model;
 
 public class User {
 

@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.example.amwe.R;
-import com.example.amwe.model.Book;
-import com.example.amwe.model.Database;
-import com.example.amwe.model.Item;
-import com.example.amwe.model.SearchFunction;
-import com.example.amwe.model.SortFunction;
+import com.example.amwe.Model.Book;
+import com.example.amwe.Model.Database;
+import com.example.amwe.Model.Item;
+import com.example.amwe.Model.SearchFunction;
+import com.example.amwe.Model.SortFunction;
 
 import java.text.DecimalFormat;
 import java.util.List;
