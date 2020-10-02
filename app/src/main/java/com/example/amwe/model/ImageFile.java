@@ -16,6 +16,8 @@ public class ImageFile {
     private final File storageDir;
 
     /**
+     * Constructor for ImageFile
+     *
      * @param storageDir, the place where the file should be stored.
      */
     public ImageFile(File storageDir) {
