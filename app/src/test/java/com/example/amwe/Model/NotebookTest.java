@@ -1,4 +1,4 @@
-package com.example.amwe.model;
+package com.example.amwe.Model;
 
 import org.junit.Before;
 import org.junit.Test;

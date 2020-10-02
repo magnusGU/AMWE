@@ -1,4 +1,4 @@
-package com.example.amwe.model;
+package com.example.amwe.Model;
 
 import java.util.Collections;
 import java.util.Comparator;
