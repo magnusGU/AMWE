@@ -16,30 +16,58 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Static class for communicating with the firebase database
+ */
 public class Database {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+    /**
+     * private constructor,
+     * Ensuring no one attempts to initialize class
+     */
     private Database() {
         //database = FirebaseDatabase.getInstance();
     }
 
-
+    /**
+     *
+     * @return the entry point for accessing the firebase database
+     */
     static public FirebaseDatabase getDatabase() {
         return database;
     }
 
+    /**
+     *
+     * @return an firebase reference which allows read and write to database
+     */
     static private DatabaseReference getDatabaseReference() {
         return database.getReference();
     }
 
+    /**
+     *
+     * @return the reference to the specific dataset "listings"
+     */
     static public DatabaseReference getListings() {
         return getDatabaseReference().child("listings");
     }
 
+    /**
+     *
+     * @return the user ID for the user who is currently logged in
+     */
     static public DatabaseReference getCurrentUser() {
         return getDatabaseReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
+    /**
+     * This method makes two updates in the database, one in the common listing dataset, and one
+     * in the user-listings specific dataset, so all users can see the update to a listing, and so that
+     * the user who posted the listing gets the updates
+     * @param updatedListing The item to be updated
+     */
     static public void updateListing(Item updatedListing) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -55,6 +83,12 @@ public class Database {
         db.updateChildren(childUpdates);
     }
 
+    /**
+     * This method makes two inserts in the database, one in the common listing dataset, and one
+     * in the user-listings specific dataset, so all users can see the new listing, and so that
+     * the user who posted the listing gets an updates list of a listings posted by themselves
+     * @param newEntry The Item to be inserted in the database
+     */
     static public void insertNewListing(Item newEntry) {
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -73,20 +107,40 @@ public class Database {
         db.updateChildren(childUpdates);
     }
 
+    /**
+     * remove listing from database both from the common listings, and the user-listing specific entry
+     * @param id of the listing to be removed, identical in both places
+     */
     static public void deleteListing(String id) {
         Database.getListings().child(id).removeValue();
         Database.getCurrentUser().child("listings").child(id).removeValue();
     }
 
+    /**
+     * Add new user to the database, not creating an authorized user, but adding public information
+     * to the database, like name
+     * @param uid user id, unique
+     * @param name of the user, matches displayName, not unique
+     */
     static public void addUser(String uid, String name) {
         User user = new User(name);
         database.getReference().child("users").child(uid).setValue(user);
     }
 
+    /**
+     *
+     * @return displayName of user, created when user was created
+     */
     static public String getName() {
         return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
 
+    /**
+     * listener for the common listings dataset, will notify observers upon creation and
+     * when dataset has changed
+     * @param bookListings list the observer want data pushed on
+     * @param adapter observer to notify that there is new data
+     */
     static public void addListingListener(final List<Item> bookListings, final ListingAdapter adapter) {
         DatabaseReference listings = getListings();
         ValueEventListener listener = new ValueEventListener() {
@@ -112,6 +166,13 @@ public class Database {
         listings.addValueEventListener(listener);
     }
 
+    /**
+     * listener for the current logged in user's user-listings, will notify observers upon creation and
+     * when dataset has changed
+     *
+     * @param bookListings the list the observer want data pushed on
+     * @param adapter observer to notify that there is new data
+     */
     static public void addUserListener(final List<Item> bookListings,
                                        final ListingAdapter adapter) {
 
@@ -138,6 +199,12 @@ public class Database {
         currentUserListings.addValueEventListener(myListingsListener);
     }
 
+    /**
+     * listener for the current logged in user's favourites, will notify observers upon creation and
+     *  when dataset has changed
+     * @param bookListings the list the observer want data pushed on
+     * @param adapter observer to notify that there is new data
+     */
     static public void addFavouritesListener(final List<Item> bookListings,
                                              final ListingAdapter adapter) {
 
