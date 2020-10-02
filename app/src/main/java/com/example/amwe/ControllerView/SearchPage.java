@@ -2,10 +2,15 @@ package com.example.amwe.ControllerView;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,8 +41,25 @@ public class SearchPage extends Fragment {
 
         search = v.findViewById(R.id.searchBar);
         search.setOnQueryTextListener(searchListner());
+        ImageButton sortButton = v.findViewById(R.id.imageButton);
 
         return v;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_alphabetically:
+                listingAdapter.getSort().sortAlphabetically();
+                listingAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.sort_price:
+                listingAdapter.getSort().sortPrice();
+                listingAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
