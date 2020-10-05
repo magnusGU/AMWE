@@ -1,5 +1,6 @@
 package com.example.amwe.ControllerView;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.amwe.EditListing;
 import com.example.amwe.R;
 import com.example.amwe.Model.Database;
 import com.google.firebase.database.DataSnapshot;
@@ -77,12 +79,42 @@ public class ListingPageActivity extends AppCompatActivity {
 
         Button deleteButton = findViewById(R.id.delete_button);
         deleteButton.setOnClickListener(deleteListing(bookId));
+
         Button editButton = findViewById(R.id.edit_button);
+        Bundle bundle = createBundle(titleName, newEdition, newIsbn, newDescription, newAuthor, newCondition, newPrice, bookId, newSeller);
+        editButton.setOnClickListener(editListing(bundle));
+
+
         CardView sellerInfo = findViewById(R.id.sellerInfo);
         TextView sellerLabel = findViewById(R.id.listing_page_seller_label);
 
         myListingView(bookId, favourite, deleteButton, editButton, sellerInfo, sellerLabel);
 
+    }
+
+    Bundle createBundle(String title, String edition, long isbn, String description, String author, String condition, double price, String bookId, String seller){
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putString("edition", edition);
+        bundle.putLong("isbn", isbn);
+        bundle.putString("description", description);
+        bundle.putString("author", author);
+        bundle.putString("condition", condition);
+        bundle.putDouble("price", price);
+        bundle.putString("bookId", bookId);
+        bundle.putString("seller", seller);
+        return bundle;
+    }
+
+    private View.OnClickListener editListing(final Bundle bundle) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ListingPageActivity.this, EditListing.class);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        };
     }
 
     /**
