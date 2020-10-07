@@ -16,9 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.amwe.EditListing;
-import com.example.amwe.R;
 import com.example.amwe.Model.Database;
+import com.example.amwe.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -81,7 +80,7 @@ public class ListingPageActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(deleteListing(bookId));
 
         Button editButton = findViewById(R.id.edit_button);
-        Bundle bundle = createBundle(titleName, newEdition, newIsbn, newDescription, newAuthor, newCondition, newPrice, bookId, newSeller);
+        Bundle bundle = createBundle(titleName, newEdition, newIsbn, newDescription, newAuthor, newCondition, newPrice, bookId, newSeller, Base64.decode(getIntent().getStringExtra("Image"), Base64.DEFAULT));
         editButton.setOnClickListener(editListing(bundle));
 
 
@@ -92,7 +91,22 @@ public class ListingPageActivity extends AppCompatActivity {
 
     }
 
-    Bundle createBundle(String title, String edition, long isbn, String description, String author, String condition, double price, String bookId, String seller){
+    /**
+     * Creates a bundle with information about the listing.
+     *
+     * @param title       The title of the listing.
+     * @param edition     The edition of the book.
+     * @param isbn        The ISBN of the book.
+     * @param description The description of the listing.
+     * @param author      The author of the book.
+     * @param condition   The condition of the book.
+     * @param price       The price of the listing.
+     * @param bookId      The id of the listing.
+     * @param seller      The seller.
+     * @param image       The image of the listing.
+     * @return A bundle with all the information needed in EditListing activity.
+     */
+    Bundle createBundle(String title, String edition, long isbn, String description, String author, String condition, double price, String bookId, String seller, byte[] image) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("edition", edition);
@@ -103,9 +117,16 @@ public class ListingPageActivity extends AppCompatActivity {
         bundle.putDouble("price", price);
         bundle.putString("bookId", bookId);
         bundle.putString("seller", seller);
+        bundle.putByteArray("image", image);
         return bundle;
     }
 
+    /**
+     * Starts the EditListing activity.
+     *
+     * @param bundle All the information about the listing.
+     * @return A View.OnClickListener that should be applied to the edit-button.
+     */
     private View.OnClickListener editListing(final Bundle bundle) {
         return new View.OnClickListener() {
             @Override

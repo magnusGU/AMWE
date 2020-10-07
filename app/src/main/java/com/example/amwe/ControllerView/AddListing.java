@@ -107,7 +107,7 @@ public class AddListing extends AppCompatActivity {
 
 
     /**
-     * A listener that should be applied to the submit-button.
+     * Adds the listing when button is pressed.
      *
      * @param title       The title of the listing.
      * @param author      The author of the book.
@@ -116,7 +116,7 @@ public class AddListing extends AppCompatActivity {
      * @param description The description for the listing.
      * @param price       The price of the listing.
      * @param condition   The condition of the book.
-     * @return A View.OnClickListener
+     * @return A View.OnClickListener that should be applied to the submit-button.
      */
     private View.OnClickListener submit(final EditText title,
                                         final EditText author,

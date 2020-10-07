@@ -1,8 +1,4 @@
-package com.example.amwe;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.amwe.ControllerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,12 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.Model.Book;
 import com.example.amwe.Model.CameraInitializer;
 import com.example.amwe.Model.Database;
 import com.example.amwe.Model.Item;
+import com.example.amwe.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -37,6 +37,7 @@ public class EditListing extends AppCompatActivity {
     private String photoPath;
     private File photoFile;
     private Uri photoURI;
+    private String base64Photo;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -45,6 +46,7 @@ public class EditListing extends AppCompatActivity {
         setContentView(R.layout.activity_edit_listing);
         cameraClick = findViewById(R.id.edit_image);
         cameraClick.setOnClickListener(camera());
+
         initUI();
     }
 
@@ -53,6 +55,18 @@ public class EditListing extends AppCompatActivity {
 
         String bookId = bundle.getString("bookId");
         String seller = bundle.getString("seller");
+
+        Bitmap thumbnail = BitmapFactory.decodeByteArray(bundle.getByteArray("image"), 0, bundle.getByteArray("image").length);
+
+        //Cast because of return type Object
+        //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        cameraClick.setImageBitmap(thumbnail);
+        ViewGroup.LayoutParams params = cameraClick.getLayoutParams();
+        params.height = 1500;
+        cameraClick.setLayoutParams(params);
+
+        base64Photo = Base64.encodeToString(bundle.getByteArray("image"), 0);
+
 
         EditText title = findViewById(R.id.edit_title);
         title.setText(bundle.getString("title"));
@@ -76,9 +90,24 @@ public class EditListing extends AppCompatActivity {
         description.setText(bundle.getString("description"));
 
         Button save = findViewById(R.id.save_changes);
-        save.setOnClickListener(saveChanges(title, author,edition, isbn, condition, price, description, bookId, seller));
+        save.setOnClickListener(saveChanges(title, author, edition, isbn, condition, price, description, bookId, seller));
     }
 
+
+    /**
+     * Saves the changes made when button is pressed.
+     *
+     * @param title       The title of the listing.
+     * @param author      The author of the book.
+     * @param edition     The edition of the book.
+     * @param isbn        The ISBN of the book
+     * @param condition   The condition of the book.
+     * @param price       The price of the listing.
+     * @param description The description for the listing.
+     * @param bookId      The id of the listing.
+     * @param seller      The seller of the listing.
+     * @return A View.OnClickListener that should be applied to the save-button.
+     */
     private View.OnClickListener saveChanges(final EditText title,
                                              final EditText author,
                                              final EditText edition,
@@ -92,12 +121,11 @@ public class EditListing extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DateFormat dateFormat = DateFormat.getDateInstance();
+                String dateString = dateFormat.format(new Date());
 
-                String base64Photo;
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                            getApplicationContext().getContentResolver(),
-                            photoURI);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), photoURI);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 
@@ -109,9 +137,6 @@ public class EditListing extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
-
-                DateFormat dateFormat = DateFormat.getDateInstance();
-                String dateString = dateFormat.format(new Date());
                 Item item = new Book(
                         bookId,
                         title.getText().toString(),
@@ -124,13 +149,12 @@ public class EditListing extends AppCompatActivity {
                         seller,
                         condition.getText().toString(),
                         dateString
-                        );
+                );
                 Database.updateListing(item);
                 finish();
             }
         };
     }
-
 
 
     @Override
@@ -152,6 +176,7 @@ public class EditListing extends AppCompatActivity {
             }
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private View.OnClickListener camera() {
         return new View.OnClickListener() {
