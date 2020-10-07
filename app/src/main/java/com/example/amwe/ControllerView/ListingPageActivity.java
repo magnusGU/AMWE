@@ -252,4 +252,9 @@ public class ListingPageActivity extends AppCompatActivity {
             }
         };
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 }

@@ -1,9 +1,12 @@
 package com.example.amwe.ControllerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
@@ -37,7 +40,20 @@ public class SearchPage extends Fragment {
         search = v.findViewById(R.id.searchBar);
         search.setOnQueryTextListener(searchListner());
 
+        ImageButton filterSort =v.findViewById(R.id.filter_sort);
+        filterSort.setOnClickListener(openFilterSort());
+
         return v;
+    }
+
+    private View.OnClickListener openFilterSort() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), FilterSort.class);
+                startActivity(intent);
+            }
+        };
     }
 
     /**

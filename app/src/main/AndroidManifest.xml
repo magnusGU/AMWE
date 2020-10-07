@@ -13,10 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ControllerView.EditListing"></activity>
+        <activity android:name=".ControllerView.FilterSort"></activity>
+        <activity android:name=".ControllerView.EditListing" />
         <activity
             android:name=".ControllerView.AddListing"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity android:name=".ControllerView.Register" />
         <activity android:name=".ControllerView.EmailLogin" />
         <activity android:name=".ControllerView.Login">
