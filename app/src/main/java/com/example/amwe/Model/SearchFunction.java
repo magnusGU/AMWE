@@ -35,6 +35,11 @@ public class SearchFunction {
             for (Item l : originalList) {
                 if (l.getTitle().toLowerCase().contains(filterPattern)) {
                     filteredList.add(l);
+                } else if (l.getClass()==Book.class) {
+                    String s = String.valueOf(((Book) l).getIsbn());
+                    if (s.contains(filterPattern)) {
+                        filteredList.add(l);
+                    }
                 }
             }
         }
