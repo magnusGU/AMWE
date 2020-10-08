@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.amwe.R;
@@ -18,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.pages, new SearchPage()).commit();
 
         BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
