@@ -99,6 +99,30 @@ public class SortAndSearchTest {
     }
 
     @Test
+    public void isSortedByDateRight() throws InterruptedException {
+        ArrayList<Item> listings = new ArrayList<>();
+        ArrayList<Item> expected = new ArrayList<>();
+
+        Item listing1 = new Book("1","a","b","c",3,"hej","1",100,"säljare","bra", "20-Dec-2019");
+        Item listing2 = new Book("2","a","b","c",3,"hej","1",100,"säljare","bra", "20-Sep-2020");
+        Item listing3 = new Book("3","a","b","c",3,"hej","1",100,"säljare","bra", "19-Dec-2019");
+        Item listing4 = new Book("4","a","b","c",3,"hej","1",100,"säljare","bra", "19-Sep-2020");
+        listings.add(listing1);
+        listings.add(listing2);
+        listings.add(listing3);
+        listings.add(listing4);
+        expected.add(listing3);
+        expected.add(listing1);
+        expected.add(listing4);
+        expected.add(listing2);
+
+        SortFunction sort = new SortFunction(listings);
+        sort.sortDate();
+
+        assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
+    }
+
+    @Test
     public void firstSearchThenSortCorrectly() throws InterruptedException {
         ArrayList<Item> listings = new ArrayList<>();
         ArrayList<Item> expected = new ArrayList<>();
