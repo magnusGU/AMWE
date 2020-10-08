@@ -1,26 +1,27 @@
 package com.example.amwe.Model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class Cryptography {
 
     public byte[] encrypt(String string, PublicKey key) {
 
-        BigInteger stringAsBigInt = new BigInteger(string);
+        BigInteger stringAsBigInt = new BigInteger(string.getBytes());
         return stringAsBigInt.modPow(key.encryptingBigInt,key.n).toByteArray();
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String decrypt(byte[] encrypted, PrivateKey key) {
 
-        StringBuilder string = new StringBuilder();
         byte[] decrypted = (new BigInteger(encrypted)).modPow(key.decryptingBigInt,key.n).toByteArray();
-
-        for (byte b: decrypted) {
-            string.append(b);
-        }
-
-        return string.toString();
+        return new String(decrypted, StandardCharsets.UTF_8);
 
     }
 
