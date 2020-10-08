@@ -1,8 +1,12 @@
 package com.example.amwe.Model;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A class that sorts the items in different ways.
@@ -40,6 +44,27 @@ public class SortFunction {
             @Override
             public int compare(Item l1, Item l2) {
                 return l1.getTitle().compareToIgnoreCase(l2.getTitle());
+            }
+        });
+    }
+
+    /**
+     * Sorts the current list by date.
+     *
+     */
+    public void sortDate() {
+        Collections.sort(list, new Comparator<Item>() {
+            @Override
+            public int compare(Item l1, Item l2) {
+                try {
+                    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
+                    Date date1 = dateFormat.parse(l1.getDate());
+                    Date date2 = dateFormat.parse(l2.getDate());
+                    return date1.compareTo(date2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
             }
         });
     }

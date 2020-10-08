@@ -2,15 +2,14 @@ package com.example.amwe.ControllerView;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +28,11 @@ public class SearchPage extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,28 +43,55 @@ public class SearchPage extends Fragment {
         RecyclerView recyclerView = v.findViewById(R.id.RecycleView);
         createList(recyclerView);
 
+        setHasOptionsMenu(true);
+
         search = v.findViewById(R.id.searchBar);
         search.setOnQueryTextListener(searchListner());
         ImageButton sortButton = v.findViewById(R.id.imageButton);
+        final PopupMenu pm = new PopupMenu(getContext(), sortButton);
+        pm.getMenuInflater().inflate(R.menu.sort_function, pm.getMenu());
+        pm.setOnMenuItemClickListener(popupMenuListener());
+
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pm.show();
+            }
+        });
 
         return v;
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sort_alphabetically:
-                listingAdapter.getSort().sortAlphabetically();
-                listingAdapter.notifyDataSetChanged();
-                return true;
-            case R.id.sort_price:
-                listingAdapter.getSort().sortPrice();
-                listingAdapter.notifyDataSetChanged();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    /**
+     * Sorts the listings based on the menuitem clicked
+     * @return a new menuListener which will handle the menu clicked in the popupMeny
+     */
+    private PopupMenu.OnMenuItemClickListener popupMenuListener() {
+        return new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.sort_alphabetically:
+                        listingAdapter.getSort().sortAlphabetically();
+                        listingAdapter.notifyDataSetChanged();
+                        break;
+                    case R.id.sort_price:
+                        listingAdapter.getSort().sortPrice();
+                        listingAdapter.notifyDataSetChanged();
+                        break;
+                    case R.id.sort_date:
+                        listingAdapter.getSort().sortDate();
+                        listingAdapter.notifyDataSetChanged();
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        };
     }
+
 
     /**
      * Searches among the listings based on the input to the search bar.

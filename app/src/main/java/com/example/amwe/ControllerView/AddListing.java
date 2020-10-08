@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
@@ -128,7 +129,7 @@ public class AddListing extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DateFormat dateFormat = DateFormat.getDateInstance();
+                DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
                 String dateString = dateFormat.format(new Date());
 
                 String base64Photo;
