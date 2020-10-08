@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A class that sorts the items in different ways.
@@ -56,8 +57,9 @@ public class SortFunction {
             @Override
             public int compare(Item l1, Item l2) {
                 try {
-                    Date date1 = DateFormat.getDateInstance().parse(l1.getDate());
-                    Date date2 = DateFormat.getDateInstance().parse(l2.getDate());
+                    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
+                    Date date1 = dateFormat.parse(l1.getDate());
+                    Date date2 = dateFormat.parse(l2.getDate());
                     return date1.compareTo(date2);
                 } catch (ParseException e) {
                     e.printStackTrace();
