@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.amwe.Model.Book;
 import com.example.amwe.Model.Database;
 import com.example.amwe.R;
 import com.google.firebase.database.DataSnapshot;
@@ -37,58 +38,82 @@ public class ListingPageActivity extends AppCompatActivity {
      * Initializes the user interface.
      */
     private void initUI() {
-        try {
-            ImageView bookImage = findViewById(R.id.listing_page_image);
-            byte[] decodedString = Base64.decode(getIntent().getStringExtra("Image"), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            bookImage.setImageBitmap(decodedByte);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        TextView title = findViewById(R.id.textView3);
-        String titleName = getIntent().getStringExtra("Title");
-        title.setText(titleName);
-        TextView isbn = findViewById(R.id.listing_page_isbn);
-        long newIsbn = getIntent().getLongExtra("isbn", 0);
-        isbn.setText(String.valueOf(newIsbn));
-        TextView description = findViewById(R.id.listing_page_description);
-        String newDescription = getIntent().getStringExtra("description");
-        description.setText(newDescription);
-        TextView price = findViewById(R.id.listing_page_price);
-        double newPrice = getIntent().getDoubleExtra("price", 0);
-        DecimalFormat df = new DecimalFormat("0.##");
-        price.setText(df.format(newPrice) + " kr");
-        TextView author = findViewById(R.id.listing_page_author);
-        String newAuthor = getIntent().getStringExtra("author");
-        author.setText(newAuthor);
-        TextView edition = findViewById(R.id.listing_page_edition);
-        String newEdition = getIntent().getStringExtra("edition");
-        edition.setText(newEdition);
-        TextView seller = findViewById(R.id.listing_page_seller);
-        String newSeller = getIntent().getStringExtra("seller");
-        seller.setText(newSeller);
-        TextView condition = findViewById(R.id.listing_page_condition);
-        String newCondition = getIntent().getStringExtra("condition");
-        condition.setText(newCondition);
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        String bookId = getIntent().getStringExtra("bookId");
-        ImageButton favourite = findViewById(R.id.addToFavourites);
-        changeIcon(bookId, favourite);
-        favourite.setOnClickListener(addToFavourites(bookId, favourite));
+                final String bookId = getIntent().getStringExtra("bookId");
+                Book book = snapshot.child(bookId).getValue(Book.class);
 
-        Button deleteButton = findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(deleteListing(bookId));
-
-        Button editButton = findViewById(R.id.edit_button);
-        Bundle bundle = createBundle(titleName, newEdition, newIsbn, newDescription, newAuthor, newCondition, newPrice, bookId, newSeller, Base64.decode(getIntent().getStringExtra("Image"), Base64.DEFAULT));
-        editButton.setOnClickListener(editListing(bundle));
+                try {
+                    ImageView bookImage = findViewById(R.id.listing_page_image);
+                    byte[] decodedString = Base64.decode(book.getBookImage(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    bookImage.setImageBitmap(decodedByte);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
-        CardView sellerInfo = findViewById(R.id.sellerInfo);
-        TextView sellerLabel = findViewById(R.id.listing_page_seller_label);
+                TextView title = findViewById(R.id.textView3);
+                String titleName = book.getTitle();
+                title.setText(titleName);
 
-        myListingView(bookId, favourite, deleteButton, editButton, sellerInfo, sellerLabel);
+                TextView isbn = findViewById(R.id.listing_page_isbn);
+                long newIsbn = book.getIsbn();
+                isbn.setText(String.valueOf(newIsbn));
 
+                TextView description = findViewById(R.id.listing_page_description);
+                String newDescription = book.getDescription();
+                description.setText(newDescription);
+
+                TextView price = findViewById(R.id.listing_page_price);
+                double newPrice = book.getPrice();
+                DecimalFormat df = new DecimalFormat("0.##");
+                price.setText(df.format(newPrice) + " kr");
+
+                TextView author = findViewById(R.id.listing_page_author);
+                String newAuthor = book.getAuthor();
+                author.setText(newAuthor);
+
+                TextView edition = findViewById(R.id.listing_page_edition);
+                String newEdition = book.getEdition();
+                edition.setText(newEdition);
+
+                TextView seller = findViewById(R.id.listing_page_seller);
+                String newSeller = getIntent().getStringExtra("seller");
+                seller.setText(newSeller);
+
+                TextView condition = findViewById(R.id.listing_page_condition);
+                String newCondition = book.getCondition();
+                condition.setText(newCondition);
+
+
+                ImageButton favourite = findViewById(R.id.addToFavourites);
+                changeIcon(bookId, favourite);
+                favourite.setOnClickListener(addToFavourites(bookId, favourite));
+
+                Button deleteButton = findViewById(R.id.delete_button);
+                deleteButton.setOnClickListener(deleteListing(bookId));
+
+                Button editButton = findViewById(R.id.edit_button);
+                Bundle bundle = createBundle(titleName, newEdition, newIsbn, newDescription, newAuthor, newCondition, newPrice, bookId, newSeller, Base64.decode(getIntent().getStringExtra("Image"), Base64.DEFAULT));
+                editButton.setOnClickListener(editListing(bundle));
+
+
+                CardView sellerInfo = findViewById(R.id.sellerInfo);
+                TextView sellerLabel = findViewById(R.id.listing_page_seller_label);
+
+                myListingView(bookId, favourite, deleteButton, editButton, sellerInfo, sellerLabel);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        Database.getListings().addValueEventListener(valueEventListener);
     }
 
     /**
@@ -165,12 +190,7 @@ public class ListingPageActivity extends AppCompatActivity {
      * @param sellerCard The card with seller information.
      * @param label      The label over the card with seller information.
      */
-    private void myListingView(final String bookId,
-                               final ImageButton favourite,
-                               final Button delete,
-                               final Button edit,
-                               final CardView sellerCard,
-                               final TextView label) {
+    private void myListingView(final String bookId, final ImageButton favourite, final Button delete, final Button edit, final CardView sellerCard, final TextView label) {
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -251,5 +271,10 @@ public class ListingPageActivity extends AppCompatActivity {
                 Database.getCurrentUser().addListenerForSingleValueEvent(listener);
             }
         };
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 }

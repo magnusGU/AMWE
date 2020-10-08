@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories_array">
+        <item>Alla</item>
+        <item>Böcker</item>
+        <item>Anteckningar</item>
+    </string-array>
+</resources>

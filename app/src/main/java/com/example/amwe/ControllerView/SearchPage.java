@@ -1,5 +1,6 @@
 package com.example.amwe.ControllerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -59,6 +60,9 @@ public class SearchPage extends Fragment {
             }
         });
 
+        ImageButton filterSort =v.findViewById(R.id.filter_sort);
+        filterSort.setOnClickListener(openFilterSort());
+
         return v;
 
     }
@@ -91,6 +95,18 @@ public class SearchPage extends Fragment {
             }
         };
     }
+
+  /*
+    private View.OnClickListener openFilterSort() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), FilterSort.class);
+                startActivity(intent);
+            }
+        };
+    }
+    */
 
 
     /**

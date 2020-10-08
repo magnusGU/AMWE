@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_array">
+        <item>Nyast först</item>
+        <item>Äldst först</item>
+        <item>Billigast först</item>
+        <item>Dyrast först</item>
+        <item>Namn (A-Ö)</item>
+        <item>Namn (Ö-A)</item>
+    </string-array>
+</resources>
