@@ -48,7 +48,7 @@ public class SearchPage extends Fragment {
 
         search = v.findViewById(R.id.searchBar);
         search.setOnQueryTextListener(searchListner());
-        ImageButton sortButton = v.findViewById(R.id.imageButton);
+        ImageButton sortButton = v.findViewById(R.id.filter_sort);
         final PopupMenu pm = new PopupMenu(getContext(), sortButton);
         pm.getMenuInflater().inflate(R.menu.sort_function, pm.getMenu());
         pm.setOnMenuItemClickListener(popupMenuListener());
@@ -60,8 +60,8 @@ public class SearchPage extends Fragment {
             }
         });
 
-        ImageButton filterSort =v.findViewById(R.id.filter_sort);
-        filterSort.setOnClickListener(openFilterSort());
+        //ImageButton filterSort =v.findViewById(R.id.filter_sort);
+        //filterSort.setOnClickListener(openFilterSort());
 
         return v;
 
