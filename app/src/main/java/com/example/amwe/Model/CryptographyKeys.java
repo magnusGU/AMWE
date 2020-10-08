@@ -6,38 +6,34 @@ import java.util.Random;
 public class CryptographyKeys {
 
     private Random random;
-    private BigInteger p;
-    private BigInteger q;
-    private BigInteger n;
+    private BigInteger prime1;
+    private BigInteger prime2;
+    private BigInteger primesMultiplied;
     private BigInteger phi;
-    private BigInteger e;
-    private BigInteger d;
+    private BigInteger encryptingBigInt;
+    private BigInteger decryptingBigInt;
 
     public CryptographyKeys() {
         random = new Random();
-        p = BigInteger.probablePrime(100,random);
-        q = BigInteger.probablePrime(100,random);
-        n = p.multiply(q);
-        phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
-        e = BigInteger.probablePrime(100,random);
+        prime1 = BigInteger.probablePrime(100,random);
+        prime2 = BigInteger.probablePrime(100,random);
+        primesMultiplied = prime1.multiply(prime2);
+        phi = prime1.subtract(BigInteger.ONE).multiply(prime2.subtract(BigInteger.ONE));
+        encryptingBigInt = BigInteger.probablePrime(100,random);
 
-        while (phi.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(phi) < 0) {
-            e.add(BigInteger.ONE);
+        while (phi.gcd(encryptingBigInt).compareTo(BigInteger.ONE) > 0 && encryptingBigInt.compareTo(phi) < 0) {
+            encryptingBigInt.add(BigInteger.ONE);
         }
 
-        d = e.modInverse(phi);
+        decryptingBigInt = encryptingBigInt.modInverse(phi);
     }
 
-    public BigInteger getE() {
-        return e;
+    public PrivateKey makePrivateKey() {
+        return new PrivateKey(decryptingBigInt, primesMultiplied);
     }
 
-    public BigInteger getD() {
-        return d;
-    }
-
-    public BigInteger getN() {
-        return n;
+    public PublicKey makePublicKey() {
+        return new PublicKey(encryptingBigInt, primesMultiplied);
     }
 
 }

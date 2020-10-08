@@ -4,11 +4,11 @@ import java.math.BigInteger;
 
 public class PublicKey {
 
-    BigInteger e;
+    BigInteger encryptingBigInt;
     BigInteger n;
 
-    public PublicKey(BigInteger e, BigInteger n) {
-        this.e = e;
+    public PublicKey(BigInteger encryptingBigInt, BigInteger n) {
+        this.encryptingBigInt = encryptingBigInt;
         this.n = n;
     }
 
