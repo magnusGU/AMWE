@@ -19,7 +19,7 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-public class CameraInitializerAndImageFileTest {
+public class  CameraInitializerAndImageFileTest {
     Context context =InstrumentationRegistry.getInstrumentation().getContext();
     CameraInitializer initializer = new CameraInitializer(context,context.getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
     @Test
