@@ -91,6 +91,7 @@ public class Database {
      * @param newEntry The Item to be inserted in the database
      */
     static public void insertNewListing(Item newEntry) {
+
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -99,7 +100,6 @@ public class Database {
         DatabaseReference listings = getListings();
         String key = listings.push().getKey();
         Map<String, Object> entryValues = newEntry.toMap();
-
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, entryValues);

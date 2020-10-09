@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.amwe.R;
 import com.example.amwe.Model.Database;
 import com.example.amwe.Model.Item;
+import com.example.amwe.Settings;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -32,13 +34,6 @@ public class AccountPage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_account_page, container, false);
-        Button logOutButton = v.findViewById(R.id.account_logout_button);
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logOut();
-            }
-        });
 
         Button addListing = v.findViewById(R.id.account_page_add_listing_button);
         addListing.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +43,8 @@ public class AccountPage extends Fragment {
             }
         });
 
+        ImageButton settingsButton = v.findViewById(R.id.account_page_settings_button);
+        settingsButton.setOnClickListener(openSettings());
 
         final RecyclerView myListings = v.findViewById(R.id.MyListings);
         createList(myListings, "myListings");
@@ -59,6 +56,15 @@ public class AccountPage extends Fragment {
         initUI(v);
 
         return v;
+    }
+
+    private View.OnClickListener openSettings() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Settings.class));
+            }
+        };
     }
 
 
@@ -77,13 +83,6 @@ public class AccountPage extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    /**
-     * Signs out the current user from the application.
-     */
-    private void logOut() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getContext(), Login.class));
-    }
 
     /**
      * Initializes the user-interface for AccountPage.
