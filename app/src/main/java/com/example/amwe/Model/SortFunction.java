@@ -1,5 +1,9 @@
 package com.example.amwe.Model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Collections;
@@ -24,7 +28,7 @@ public class SortFunction {
     }
 
     /**
-     * Sorts the current list by price, from lowest to highest.
+     * Sorts the current list by price ascending order, from lowest to highest.
      */
     public void sortPrice() {
         Collections.sort(list, new Comparator<Item>() {
@@ -34,9 +38,21 @@ public class SortFunction {
             }
         });
     }
+    /**
+     * Sorts the current list by price descending order, from highest to lowest.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void sortPriceReversed() {
+        Collections.sort(list, new Comparator<Item>() {
+            @Override
+            public int compare(Item l1, Item l2) {
+                return Double.compare(l1.getPrice(), l2.getPrice());
+            }
+        }.reversed());
+    }
 
     /**
-     * Sorts the current list alphabetically.
+     * Sorts the current list alphabetically in ascending order.
      * Not case sensitive.
      */
     public void sortAlphabetically() {
@@ -47,9 +63,22 @@ public class SortFunction {
             }
         });
     }
+    /**
+     * Sorts the current list alphabetically in descending order.
+     * Not case sensitive.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void sortAlphabeticallyReversed() {
+        Collections.sort(list, new Comparator<Item>() {
+            @Override
+            public int compare(Item l1, Item l2) {
+                return l1.getTitle().compareToIgnoreCase(l2.getTitle());
+            }
+        }.reversed());
+    }
 
     /**
-     * Sorts the current list by date.
+     * Sorts the current list by date in ascending order.
      *
      */
     public void sortDate() {
@@ -67,6 +96,27 @@ public class SortFunction {
                 return 0;
             }
         });
+    }
+    /**
+     * Sorts the current list by date in descending order.
+     *
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void sortDateReversed() {
+        Collections.sort(list, new Comparator<Item>() {
+            @Override
+            public int compare(Item l1, Item l2) {
+                try {
+                    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
+                    Date date1 = dateFormat.parse(l1.getDate());
+                    Date date2 = dateFormat.parse(l2.getDate());
+                    return date1.compareTo(date2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        }.reversed());
     }
 
 }
