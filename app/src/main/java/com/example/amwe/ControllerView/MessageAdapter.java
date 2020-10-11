@@ -1,5 +1,8 @@
 package com.example.amwe.ControllerView;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +23,11 @@ import java.util.List;
  */
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHold> {
    private final List messagesList;
+   private Context context;
 
-   public MessageAdapter(List <Message> messages){
+   public MessageAdapter(List <Message> messages, Context context){
        this.messagesList=messages;
-
+       this.context=context;
    }
 
 
@@ -55,6 +59,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public void onBindViewHolder(@NonNull MessageViewHold holder, int position) {
        Message message = (Message) messagesList.get(position);
     holder.textViewTitle.setText(message.getMessage());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MessageListActivity.class);
+
+                context.startActivity(intent);
+            }
+        });
 
     }
 
