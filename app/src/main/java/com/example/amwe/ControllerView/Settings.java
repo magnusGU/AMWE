@@ -1,7 +1,6 @@
-package com.example.amwe;
+package com.example.amwe.ControllerView;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,18 +11,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.ControllerView.Login;
-import com.example.amwe.ControllerView.Register;
 import com.example.amwe.Model.Database;
+import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Settings extends AppCompatActivity {
 
@@ -75,6 +73,9 @@ public class Settings extends AppCompatActivity {
                 String sPassword2 = newPassword2.getText().toString();
 
                 user.updateEmail(eMail.getText().toString());
+
+                UserProfileChangeRequest.Builder updateinfo = new UserProfileChangeRequest.Builder().setDisplayName(sName);
+                user.updateProfile(updateinfo.build());
 
                 Map<String, Object> childUpdates = new HashMap<>();
                 childUpdates.put("/users/" + user.getUid() + "/name/", sName);

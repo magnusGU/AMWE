@@ -17,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.amwe.R;
 import com.example.amwe.Model.Database;
 import com.example.amwe.Model.Item;
-import com.example.amwe.Settings;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -101,5 +99,10 @@ public class AccountPage extends Fragment {
         super.onStart();
         final RecyclerView favourites = getView().findViewById(R.id.Favourites);
         createList(favourites, "favourites");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
