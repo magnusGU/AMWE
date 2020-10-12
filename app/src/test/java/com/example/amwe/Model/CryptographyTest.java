@@ -1,5 +1,10 @@
 package com.example.amwe.Model;
 
+import com.example.amwe.Model.Messaging.Cryptography;
+import com.example.amwe.Model.Messaging.CryptographyKeys;
+import com.example.amwe.Model.Messaging.PrivateKey;
+import com.example.amwe.Model.Messaging.PublicKey;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

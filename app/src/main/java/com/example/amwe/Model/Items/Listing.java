@@ -1,4 +1,6 @@
-package com.example.amwe.Model;
+package com.example.amwe.Model.Items;
+
+import com.example.amwe.Model.Items.Item;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,21 +1,16 @@
 package com.example.amwe.Model;
 
-import android.app.Application;
-import android.app.Instrumentation;
 import android.content.Context;
 import android.provider.MediaStore;
 
-import androidx.core.content.FileProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.amwe.BuildConfig;
+import com.example.amwe.Utilis.CameraInitializer;
 
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 

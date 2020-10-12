@@ -2,6 +2,8 @@ package com.example.amwe.Model;
 
 import android.content.Intent;
 
+import com.example.amwe.Model.Items.Item;
+
 import org.junit.Before;
 import org.junit.Test;
 

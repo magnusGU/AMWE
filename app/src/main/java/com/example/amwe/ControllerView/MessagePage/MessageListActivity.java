@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.example.amwe.ControllerView.MessagePage;
 
 import android.os.Bundle;
 
@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.Model.Database;
-import com.example.amwe.Model.Message;
+import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.R;
 
 import java.util.ArrayList;

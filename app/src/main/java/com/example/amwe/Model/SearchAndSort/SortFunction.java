@@ -1,8 +1,10 @@
-package com.example.amwe.Model;
+package com.example.amwe.Model.SearchAndSort;
 
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.amwe.Model.Items.Item;
 
 import java.text.DateFormat;
 import java.text.ParseException;

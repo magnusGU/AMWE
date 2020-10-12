@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.example.amwe.ControllerView.Login;
 
 import android.content.Intent;
 import android.os.Bundle;

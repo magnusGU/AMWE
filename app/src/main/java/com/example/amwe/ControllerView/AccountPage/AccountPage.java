@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.example.amwe.ControllerView.AccountPage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.amwe.ControllerView.AddListing;
+import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.R;
-import com.example.amwe.Model.Database;
-import com.example.amwe.Model.Item;
+import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Item;
 
 import java.util.ArrayList;
 
