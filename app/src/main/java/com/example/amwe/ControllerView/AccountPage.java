@@ -45,7 +45,7 @@ public class AccountPage extends Fragment {
         settingsButton.setOnClickListener(openSettings());
 
         final RecyclerView myListings = v.findViewById(R.id.MyListings);
-        createList(myListings, "myListings");
+        createList(myListings, "listings");
 
         final RecyclerView favourites = v.findViewById(R.id.Favourites);
         createList(favourites, "favourites");
