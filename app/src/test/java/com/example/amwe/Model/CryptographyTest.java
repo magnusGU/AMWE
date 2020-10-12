@@ -2,7 +2,8 @@ package com.example.amwe.Model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class CryptographyTest {
     @Test
@@ -17,7 +18,7 @@ public class CryptographyTest {
 
         String decryptedString = crypt.decrypt(array, privateKey);
 
-        assertEquals(true,(decryptedString.equals(originalString)));
+        assertTrue((decryptedString.equals(originalString)));
     }
 
     @Test
@@ -34,6 +35,6 @@ public class CryptographyTest {
 
         String decryptedString = crypt.decrypt(array, privateKey2);
 
-        assertEquals(false,(decryptedString.equals(originalString)));
+        assertFalse((decryptedString.equals(originalString)));
     }
 }
