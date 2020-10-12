@@ -1,5 +1,6 @@
 package com.example.amwe.ControllerView;
 
+import android.app.Application;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -27,8 +28,8 @@ public class MessagesPage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_messages_page, container, false);
-        Message one = new Message("Första meddelandet");
-        Message two = new Message("Andra meddelandet");
+        Message one = new Message("Första meddelandet","Test");
+        Message two = new Message("Andra meddelandet","Test1");
         List testList = new ArrayList<Message>();
         testList.add(one);
         testList.add(two);
@@ -38,7 +39,8 @@ public class MessagesPage extends Fragment {
         recyclerView.setHasFixedSize(true);
 
 
-        MessageAdapter messageAdapter = new MessageAdapter(testList);
+
+        MessageAdapter messageAdapter = new MessageAdapter(testList,getContext());
         recyclerView.setAdapter(messageAdapter);
         return v;
     }

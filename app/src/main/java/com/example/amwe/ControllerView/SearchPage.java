@@ -1,6 +1,6 @@
 package com.example.amwe.ControllerView;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,6 +11,7 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +24,11 @@ import java.util.ArrayList;
 public class SearchPage extends Fragment {
 
     SearchView search;
+    PopupMenu popupMenu;
     private static ListingAdapter listingAdapter;
+    private boolean alphabetically = true;
+    private boolean price = true;
+    private boolean date = true;
 
     public SearchPage() {
         // Required empty public constructor
@@ -49,14 +54,14 @@ public class SearchPage extends Fragment {
         search = v.findViewById(R.id.searchBar);
         search.setOnQueryTextListener(searchListner());
         ImageButton sortButton = v.findViewById(R.id.filter_sort);
-        final PopupMenu pm = new PopupMenu(getContext(), sortButton);
-        pm.getMenuInflater().inflate(R.menu.sort_function, pm.getMenu());
-        pm.setOnMenuItemClickListener(popupMenuListener());
+        popupMenu = new PopupMenu(getContext(), sortButton);
+        popupMenu.getMenuInflater().inflate(R.menu.sort_function, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(popupMenuListener());
 
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pm.show();
+                popupMenu.show();
             }
         });
 
@@ -68,25 +73,71 @@ public class SearchPage extends Fragment {
     }
 
     /**
+     * As the name says, this function returns all popup menu names to starting format
+     */
+    private void resetAllPopupMenuNames() {
+        popupMenu.getMenu().getItem(0).setTitle("Namn");
+        popupMenu.getMenu().getItem(1).setTitle("Pris");
+        popupMenu.getMenu().getItem(2).setTitle("Datum");
+    }
+
+    /**
      * Sorts the listings based on the menuitem clicked
      * @return a new menuListener which will handle the menu clicked in the popupMeny
      */
     private PopupMenu.OnMenuItemClickListener popupMenuListener() {
         return new PopupMenu.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                // All names are reset to remove direction, also booleans are reset when another
+                // button is clicked, to make sure the first click always sort in ascending order
+                resetAllPopupMenuNames();
                 switch (menuItem.getItemId()) {
                     case R.id.sort_alphabetically:
-                        listingAdapter.getSort().sortAlphabetically();
-                        listingAdapter.notifyDataSetChanged();
+                        price = true;
+                        date = true;
+                        if (alphabetically) {
+                            listingAdapter.getSort().sortAlphabetically();
+                            menuItem.setTitle("Namn ▼");
+                            listingAdapter.notifyDataSetChanged();
+                            alphabetically = false;
+                        } else {
+                            listingAdapter.getSort().sortAlphabeticallyReversed();
+                            menuItem.setTitle("Namn ▲");
+                            listingAdapter.notifyDataSetChanged();
+                            alphabetically = true;
+                        }
                         break;
                     case R.id.sort_price:
-                        listingAdapter.getSort().sortPrice();
-                        listingAdapter.notifyDataSetChanged();
+                        alphabetically = true;
+                        date = true;
+                        if (price) {
+                            listingAdapter.getSort().sortPrice();
+                            menuItem.setTitle("Pris ▼");
+                            listingAdapter.notifyDataSetChanged();
+                            price = false;
+                        } else {
+                            listingAdapter.getSort().sortPriceReversed();
+                            menuItem.setTitle("Pris ▲");
+                            listingAdapter.notifyDataSetChanged();
+                            price = true;
+                        }
                         break;
                     case R.id.sort_date:
-                        listingAdapter.getSort().sortDate();
-                        listingAdapter.notifyDataSetChanged();
+                        alphabetically = true;
+                        price = true;
+                        if (date) {
+                            listingAdapter.getSort().sortDate();
+                            menuItem.setTitle("Datum ▼");
+                            listingAdapter.notifyDataSetChanged();
+                            date = false;
+                        } else {
+                            listingAdapter.getSort().sortDateReversed();
+                            menuItem.setTitle("Datum ▲");
+                            listingAdapter.notifyDataSetChanged();
+                            date = true;
+                        }
                         break;
                     default:
                         break;
