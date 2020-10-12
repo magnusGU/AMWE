@@ -13,16 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.Model.Book;
-import com.example.amwe.Model.CameraInitializer;
-import com.example.amwe.Model.Database;
-import com.example.amwe.Model.Item;
+import com.example.amwe.Model.Items.Book;
+import com.example.amwe.Utilis.CameraInitializer;
+import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Item;
 import com.example.amwe.R;
 
 import java.io.ByteArrayOutputStream;

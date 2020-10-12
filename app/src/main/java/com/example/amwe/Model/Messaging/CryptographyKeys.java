@@ -1,4 +1,4 @@
-package com.example.amwe.Model;
+package com.example.amwe.Model.Messaging;
 
 import java.math.BigInteger;
 import java.util.Random;

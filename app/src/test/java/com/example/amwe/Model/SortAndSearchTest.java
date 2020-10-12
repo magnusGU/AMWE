@@ -1,5 +1,10 @@
 package com.example.amwe.Model;
 
+import com.example.amwe.Model.Items.Book;
+import com.example.amwe.Model.Items.Item;
+import com.example.amwe.Model.SearchAndSort.SearchFunction;
+import com.example.amwe.Model.SearchAndSort.SortFunction;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

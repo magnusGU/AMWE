@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.example.amwe.ControllerView.MessagePage;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.Model.Database;
-import com.example.amwe.Model.Message;
+import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.R;
 
 import java.util.List;

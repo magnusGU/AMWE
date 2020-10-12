@@ -1,5 +1,8 @@
 package com.example.amwe.Model;
 
+import com.example.amwe.Model.Items.Book;
+import com.example.amwe.Model.Items.Item;
+
 import org.junit.Before;
 import org.junit.Test;
 
