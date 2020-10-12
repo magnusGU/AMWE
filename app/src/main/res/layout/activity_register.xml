@@ -53,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_password_2" />
+            app:layout_constraintTop_toBottomOf="@+id/new_password1" />
 
         <EditText
             android:id="@+id/change_name"
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/register_password_2"
+            android:id="@+id/new_password1"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="16dp"
@@ -80,7 +80,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_password_1" />
+            app:layout_constraintTop_toBottomOf="@+id/old_password" />
 
         <EditText
             android:id="@+id/change_email"
@@ -97,7 +97,7 @@
             app:layout_constraintTop_toBottomOf="@+id/change_name" />
 
         <EditText
-            android:id="@+id/register_password_1"
+            android:id="@+id/old_password"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="16dp"

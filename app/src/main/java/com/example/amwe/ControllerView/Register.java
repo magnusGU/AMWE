@@ -30,8 +30,8 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         mName = findViewById(R.id.change_name);
         mEmail = findViewById(R.id.change_email);
-        mPassword1 = findViewById(R.id.register_password_1);
-        mPassword2 = findViewById(R.id.register_password_2);
+        mPassword1 = findViewById(R.id.old_password);
+        mPassword2 = findViewById(R.id.new_password1);
         Button mConfirm = findViewById(R.id.save_button);
 
         fAuth = FirebaseAuth.getInstance();

@@ -52,7 +52,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_password_2" />
+            app:layout_constraintTop_toBottomOf="@+id/new_password2" />
 
         <EditText
             android:id="@+id/change_name"
@@ -68,18 +68,33 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/register_password_2"
+            android:id="@+id/new_password1"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/et_bg"
             android:ems="10"
-            android:hint="Bekräfta lösenord"
+            android:hint="Nytt lösenord"
             android:inputType="textPassword"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_password_1" />
+            app:layout_constraintTop_toBottomOf="@+id/change_email" />
+
+        <EditText
+            android:id="@+id/new_password2"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/et_bg"
+            android:ems="10"
+            android:hint="Bekräfta nytt lösenord"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/new_password1" />
 
         <EditText
             android:id="@+id/change_email"
@@ -95,19 +110,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/change_name" />
 
-        <EditText
-            android:id="@+id/register_password_1"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/et_bg"
-            android:ems="10"
-            android:hint="Lösenord"
-            android:inputType="textPassword"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/change_email" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
