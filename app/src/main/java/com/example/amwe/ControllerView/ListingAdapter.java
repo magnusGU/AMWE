@@ -68,11 +68,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
             case "currentListings":
                 Database.addListingListener(bookListings, this);
                 break;
-            case "myListings":
-                Database.addUserListener(bookListings, this);
-                break;
+            case "listings":
             case "favourites":
-                Database.addFavouritesListener(bookListings, this);
+                Database.addUserListener(bookListings, this, listName);
                 break;
         }
     }

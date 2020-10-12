@@ -31,7 +31,6 @@ public class Database {
     }
 
     /**
-     *
      * @return the entry point for accessing the firebase database
      */
     static public FirebaseDatabase getDatabase() {
@@ -39,7 +38,6 @@ public class Database {
     }
 
     /**
-     *
      * @return an firebase reference which allows read and write to database
      */
     static private DatabaseReference getDatabaseReference() {
@@ -47,7 +45,6 @@ public class Database {
     }
 
     /**
-     *
      * @return the reference to the specific dataset "listings"
      */
     static public DatabaseReference getListings() {
@@ -55,7 +52,6 @@ public class Database {
     }
 
     /**
-     *
      * @return the user ID for the user who is currently logged in
      */
     static public DatabaseReference getCurrentUser() {
@@ -66,6 +62,7 @@ public class Database {
      * This method makes two updates in the database, one in the common listing dataset, and one
      * in the user-listings specific dataset, so all users can see the update to a listing, and so that
      * the user who posted the listing gets the updates
+     *
      * @param updatedListing The item to be updated
      */
     static public void updateListing(Item updatedListing) {
@@ -78,8 +75,6 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, updatedValues);
-        childUpdates.put("/users/" + currentUid + "/listings/" + key, updatedValues);
-
         db.updateChildren(childUpdates);
     }
 
@@ -91,21 +86,34 @@ public class Database {
      * @param newEntry The Item to be inserted in the database
      */
     static public void insertNewListing(Item newEntry) {
+
         DatabaseReference db = getDatabaseReference();
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         String displayName = getName();
         newEntry.setSeller(displayName);
         DatabaseReference listings = getListings();
-        String key = listings.push().getKey();
+        final String key = listings.push().getKey();
         Map<String, Object> entryValues = newEntry.toMap();
-
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/listings/" + key, entryValues);
-        childUpdates.put("/users/" + currentUid + "/listings/" + key, entryValues);
-
         db.updateChildren(childUpdates);
+
+        final DatabaseReference currentUserListings = getCurrentUser().child("listings");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentUserListings.child(key).setValue(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        };
+        currentUserListings.addValueEventListener(valueEventListener);
     }
 
     /**
@@ -122,7 +130,7 @@ public class Database {
      * Add new user to the database, not creating an authorized user, but adding public information
      * to the database, like name
      *
-     * @param uid user id, unique
+     * @param uid  user id, unique
      * @param name of the user, matches displayName, not unique
      */
     static public void addUser(String uid, String name) {
@@ -144,7 +152,7 @@ public class Database {
      * when dataset has changed
      *
      * @param bookListings List the observer want data pushed on
-     * @param adapter Observer to notify that there is new data
+     * @param adapter      Observer to notify that there is new data
      */
     static public void addListingListener(final List<Item> bookListings, final ListingAdapter adapter) {
         DatabaseReference listings = getListings();
@@ -172,46 +180,15 @@ public class Database {
     }
 
     /**
-     * Listener for the current logged in user's user-listings, will notify observers upon creation and
+     * Listener for the current logged in user's own listings and favourites, will notify observers upon creation and
      * when dataset has changed
      *
      * @param bookListings The list the observer want data pushed on
-     * @param adapter Observer to notify that there is new data
+     * @param adapter      Observer to notify that there is new data
+     * @param child        Name of the child in the database that needs to be accessed.
      */
     static public void addUserListener(final List<Item> bookListings,
-                                       final ListingAdapter adapter) {
-
-        final DatabaseReference currentUserListings = getCurrentUser().child("listings");
-        ValueEventListener myListingsListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                bookListings.clear();
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    final String bookId = item.getKey();
-                    final Book newListing = item.getValue(Book.class);
-                    newListing.setId(bookId);
-                    bookListings.add(newListing);
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        };
-        currentUserListings.addValueEventListener(myListingsListener);
-    }
-
-    /**
-     * Listener for the current logged in user's favourites, will notify observers upon creation and when dataset has changed
-     *
-     * @param bookListings The list the observer want data pushed on
-     * @param adapter Observer to notify that there is new data
-     */
-    static public void addFavouritesListener(final List<Item> bookListings,
-                                             final ListingAdapter adapter) {
+                                       final ListingAdapter adapter, final String child) {
 
         DatabaseReference allListings = getListings();
         ValueEventListener listener = new ValueEventListener() {
@@ -219,7 +196,7 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 bookListings.clear();
                 for (final DataSnapshot item : snapshot.getChildren()) {
-                    DatabaseReference favouriteListings = getCurrentUser().child("favourites");
+                    DatabaseReference favouriteListings = getCurrentUser().child(child);
                     favouriteListings.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -250,6 +227,8 @@ public class Database {
             }
         };
         allListings.addValueEventListener(listener);
+
     }
+
 
 }
