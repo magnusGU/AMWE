@@ -69,12 +69,33 @@ public class AddListing extends AppCompatActivity {
             if (photoURI != null) {
                 File image = new File(photoFile.toURI());
 
-                Bitmap thumbnail = BitmapFactory.decodeFile(image.getAbsolutePath());
+                Bitmap srcBmp = BitmapFactory.decodeFile(image.getAbsolutePath());
+
+                Bitmap dstBmp;
+                if (srcBmp.getWidth() >= srcBmp.getHeight()){
+
+                    dstBmp = Bitmap.createBitmap(
+                            srcBmp,
+                            srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                            0,
+                            srcBmp.getHeight(),
+                            srcBmp.getHeight()
+                    );
+
+                }else{
+                    dstBmp = Bitmap.createBitmap(
+                            srcBmp,
+                            0,
+                            srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                            srcBmp.getWidth(),
+                            srcBmp.getWidth()
+                    );
+                }
 
 
                 //Cast because of return type Object
                 //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                cameraClick.setImageBitmap(thumbnail);
+                cameraClick.setImageBitmap(dstBmp);
                 ViewGroup.LayoutParams params = cameraClick.getLayoutParams();
                 params.height = 1500;
                 cameraClick.setLayoutParams(params);
@@ -137,6 +158,7 @@ public class AddListing extends AppCompatActivity {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getApplicationContext().getContentResolver(),
                             photoURI);
+
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 

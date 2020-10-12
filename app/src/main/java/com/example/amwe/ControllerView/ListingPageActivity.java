@@ -48,8 +48,32 @@ public class ListingPageActivity extends AppCompatActivity {
                 try {
                     ImageView bookImage = findViewById(R.id.listing_page_image);
                     byte[] decodedString = Base64.decode(book.getBookImage(), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    bookImage.setImageBitmap(decodedByte);
+                    Bitmap srcBmp = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                    Bitmap dstBmp;
+                    if (srcBmp.getWidth() >= srcBmp.getHeight()){
+
+                        dstBmp = Bitmap.createBitmap(
+                                srcBmp,
+                                srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                                0,
+                                srcBmp.getHeight(),
+                                srcBmp.getHeight()
+                        );
+
+                    }else{
+                        dstBmp = Bitmap.createBitmap(
+                                srcBmp,
+                                0,
+                                srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                                srcBmp.getWidth(),
+                                srcBmp.getWidth()
+                        );
+                    }
+
+                    bookImage.setImageBitmap(dstBmp);
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -115,6 +139,7 @@ public class ListingPageActivity extends AppCompatActivity {
         };
         Database.getListings().addValueEventListener(valueEventListener);
     }
+
 
     /**
      * Creates a bundle with information about the listing.
