@@ -1,6 +1,8 @@
 package com.example.amwe.ControllerView.MessagePage;
 
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.view.View;
 import android.widget.EditText;
 
@@ -17,6 +19,8 @@ import java.util.List;
 
 public class MessageListActivity extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
+    private TextView nameText;
+    ImageView profileImage;
     private MessageListAdapter mMessageAdapter;
     @Override
 
@@ -30,6 +34,12 @@ public class MessageListActivity extends AppCompatActivity {
         messageList.add(m1);
         messageList.add(m2);
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
+
+        nameText = findViewById(R.id.text_message_name);
+        nameText.setText(m2.getAuthorId());
+
+        profileImage = findViewById(R.id.image_message_profile);
+
         mMessageRecycler.setHasFixedSize(true);
         mMessageAdapter = new MessageListAdapter(messageList);
         mMessageRecycler.setAdapter(mMessageAdapter);

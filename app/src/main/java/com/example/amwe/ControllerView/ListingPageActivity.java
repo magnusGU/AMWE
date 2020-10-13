@@ -48,8 +48,32 @@ public class ListingPageActivity extends AppCompatActivity {
                 try {
                     ImageView bookImage = findViewById(R.id.listing_page_image);
                     byte[] decodedString = Base64.decode(book.getBookImage(), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    bookImage.setImageBitmap(decodedByte);
+                    Bitmap srcBmp = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                    Bitmap dstBmp;
+                    if (srcBmp.getWidth() >= srcBmp.getHeight()){
+
+                        dstBmp = Bitmap.createBitmap(
+                                srcBmp,
+                                srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                                0,
+                                srcBmp.getHeight(),
+                                srcBmp.getHeight()
+                        );
+
+                    }else{
+                        dstBmp = Bitmap.createBitmap(
+                                srcBmp,
+                                0,
+                                srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                                srcBmp.getWidth(),
+                                srcBmp.getWidth()
+                        );
+                    }
+
+                    bookImage.setImageBitmap(dstBmp);
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -104,8 +128,9 @@ public class ListingPageActivity extends AppCompatActivity {
                 CardView sellerInfo = findViewById(R.id.sellerInfo);
                 TextView sellerLabel = findViewById(R.id.listing_page_seller_label);
 
-                myListingView(bookId, favourite, deleteButton, editButton, sellerInfo, sellerLabel);
+                sellerCard(bookId);
 
+                myListingView(bookId, favourite, deleteButton, editButton, sellerInfo, sellerLabel);
             }
 
             @Override
@@ -114,6 +139,37 @@ public class ListingPageActivity extends AppCompatActivity {
             }
         };
         Database.getListings().addValueEventListener(valueEventListener);
+    }
+
+    private void sellerCard(final String bookId) {
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                TextView sellerName = findViewById(R.id.listing_page_seller);
+
+                for (DataSnapshot item : snapshot.getChildren()){
+                    if (item.child("listings").hasChild(bookId)){
+                        sellerName.setText((String) item.child("name").getValue());
+                        try {
+                            ImageView sellerPicture = findViewById(R.id.seller_picture);
+                            byte[] decodedString = Base64.decode((String) item.child("userImage").getValue(), Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            sellerPicture.setImageBitmap(bitmap);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        Database.getDatabaseReference().child("users").addValueEventListener(valueEventListener);
     }
 
     /**

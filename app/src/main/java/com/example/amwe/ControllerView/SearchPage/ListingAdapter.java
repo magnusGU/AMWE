@@ -93,8 +93,30 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
         try {
             byte[] decodedString = Base64.decode(currentListing.getBookImage(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holder.bookImage.setImageBitmap(decodedByte);
+            Bitmap srcBmp = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            Bitmap dstBmp;
+            if (srcBmp.getWidth() >= srcBmp.getHeight()){
+
+                dstBmp = Bitmap.createBitmap(
+                        srcBmp,
+                        srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                        0,
+                        srcBmp.getHeight(),
+                        srcBmp.getHeight()
+                );
+
+            }else{
+                dstBmp = Bitmap.createBitmap(
+                        srcBmp,
+                        0,
+                        srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                        srcBmp.getWidth(),
+                        srcBmp.getWidth()
+                );
+            }
+
+            holder.bookImage.setImageBitmap(dstBmp);
 
         } catch (Exception e) {
             e.printStackTrace();
