@@ -95,15 +95,14 @@ public class AccountPage extends Fragment {
      */
     private void initUI(final View v) {
 
-        TextView name = v.findViewById(R.id.account_page_name);
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 TextView name = v.findViewById(R.id.account_page_name);
                 name.setText((String) snapshot.child("name").getValue());
+                ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
 
                 try {
-                    ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
                     byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                     profilePicture.setImageBitmap(bitmap);
