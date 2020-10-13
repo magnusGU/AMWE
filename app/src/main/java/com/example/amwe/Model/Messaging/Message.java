@@ -1,4 +1,4 @@
-package com.example.amwe.Model;
+package com.example.amwe.Model.Messaging;
 
 public class Message {
     private String message;

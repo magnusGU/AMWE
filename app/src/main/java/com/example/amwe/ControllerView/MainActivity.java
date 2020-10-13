@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.amwe.ControllerView.AccountPage.AccountPage;
+import com.example.amwe.ControllerView.MessagePage.MessagesPage;
+import com.example.amwe.ControllerView.SearchPage.SearchPage;
 import com.example.amwe.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

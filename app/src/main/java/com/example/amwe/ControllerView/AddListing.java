@@ -19,10 +19,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.R;
-import com.example.amwe.Model.Book;
-import com.example.amwe.Model.CameraInitializer;
-import com.example.amwe.Model.Database;
-import com.example.amwe.Model.Item;
+import com.example.amwe.Model.Items.Book;
+import com.example.amwe.Utilis.CameraInitializer;
+import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Item;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

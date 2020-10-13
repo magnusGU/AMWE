@@ -1,6 +1,8 @@
-package com.example.amwe.Model;
+package com.example.amwe.Model.Items;
 
 import android.content.Intent;
+
+import com.example.amwe.Model.User;
 
 import java.util.HashMap;
 import java.util.Map;

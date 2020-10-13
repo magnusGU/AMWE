@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.example.amwe.ControllerView.SearchPage;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.R;
-import com.example.amwe.Model.Item;
+import com.example.amwe.Model.Items.Item;
 
 import java.util.ArrayList;
 

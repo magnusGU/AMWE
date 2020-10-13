@@ -16,8 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.amwe.Model.Book;
-import com.example.amwe.Model.Database;
+import com.example.amwe.Model.Items.Book;
+import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

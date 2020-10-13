@@ -13,15 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ControllerView.Settings"></activity>
-        <activity android:name=".ControllerView.FilterSort" />
+        <activity android:name=".ControllerView.AccountPage.Settings"></activity>
+        <activity android:name=".ControllerView.SearchPage.FilterSort" />
         <activity android:name=".ControllerView.EditListing" />
         <activity
             android:name=".ControllerView.AddListing"
             android:exported="true" />
-        <activity android:name=".ControllerView.Register" />
-        <activity android:name=".ControllerView.EmailLogin" />
-        <activity android:name=".ControllerView.Login">
+        <activity android:name=".ControllerView.Login.Register" />
+        <activity android:name=".ControllerView.Login.EmailLogin" />
+        <activity android:name=".ControllerView.Login.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
         </activity>
         <activity android:name=".ControllerView.MainActivity" />
         <activity android:name=".ControllerView.ListingPageActivity" />
-        <activity android:name=".ControllerView.MessageListActivity" />
+        <activity android:name=".ControllerView.MessagePage.MessageListActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -1,6 +1,5 @@
-package com.example.amwe.ControllerView;
+package com.example.amwe.ControllerView.MessagePage;
 
-import android.app.Application;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.amwe.Model.Message;
+import com.example.amwe.ControllerView.MessagePage.MessageAdapter;
+import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.R;
 
 import java.util.ArrayList;

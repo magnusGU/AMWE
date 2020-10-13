@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.example.amwe.ControllerView.AccountPage;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,7 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.Model.Database;
+import com.example.amwe.ControllerView.Login.Login;
+import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

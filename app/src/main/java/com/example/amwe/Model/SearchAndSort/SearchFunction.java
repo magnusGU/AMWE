@@ -1,4 +1,7 @@
-package com.example.amwe.Model;
+package com.example.amwe.Model.SearchAndSort;
+
+import com.example.amwe.Model.Items.Book;
+import com.example.amwe.Model.Items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ public class SearchFunction {
             for (Item l : originalList) {
                 if (l.getTitle().toLowerCase().contains(filterPattern)) {
                     filteredList.add(l);
-                } else if (l.getClass()==Book.class) {
+                } else if (l.getClass()== Book.class) {
                     String s = String.valueOf(((Book) l).getIsbn());
                     if (s.contains(filterPattern)) {
                         filteredList.add(l);

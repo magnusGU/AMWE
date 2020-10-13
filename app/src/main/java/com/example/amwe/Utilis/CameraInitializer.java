@@ -1,4 +1,4 @@
-package com.example.amwe.Model;
+package com.example.amwe.Utilis;
 
 import android.content.Context;
 import android.net.Uri;

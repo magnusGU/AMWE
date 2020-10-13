@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.example.amwe.ControllerView.SearchPage;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import com.example.amwe.ControllerView.ListingPageActivity;
 import com.example.amwe.R;
-import com.example.amwe.Model.Book;
-import com.example.amwe.Model.Database;
-import com.example.amwe.Model.Item;
-import com.example.amwe.Model.SearchFunction;
-import com.example.amwe.Model.SortFunction;
+import com.example.amwe.Model.Items.Book;
+import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Item;
+import com.example.amwe.Model.SearchAndSort.SearchFunction;
+import com.example.amwe.Model.SearchAndSort.SortFunction;
 
 import java.text.DecimalFormat;
 import java.util.List;
