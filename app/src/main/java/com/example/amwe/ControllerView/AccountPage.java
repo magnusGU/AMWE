@@ -1,7 +1,10 @@
 package com.example.amwe.ControllerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.amwe.R;
 import com.example.amwe.Model.Database;
 import com.example.amwe.Model.Item;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -32,6 +39,8 @@ public class AccountPage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_account_page, container, false);
+
+        initUI(v);
 
         Button addListing = v.findViewById(R.id.account_page_add_listing_button);
         addListing.setOnClickListener(new View.OnClickListener() {
@@ -49,9 +58,6 @@ public class AccountPage extends Fragment {
 
         final RecyclerView favourites = v.findViewById(R.id.Favourites);
         createList(favourites, "favourites");
-
-
-        initUI(v);
 
         return v;
     }
@@ -87,11 +93,33 @@ public class AccountPage extends Fragment {
      *
      * @param v The view that should be Initialized.
      */
-    private void initUI(View v) {
+    private void initUI(final View v) {
+
         TextView name = v.findViewById(R.id.account_page_name);
-        ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
-        //Obviously temporary but works now as a test.
-        name.setText(Database.getName());
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                TextView name = v.findViewById(R.id.account_page_name);
+                name.setText((String) snapshot.child("name").getValue());
+
+                try {
+                    ImageView profilePicture = v.findViewById(R.id.account_page_profile_picture);
+                    byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    profilePicture.setImageBitmap(bitmap);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        Database.getCurrentUser().addValueEventListener(valueEventListener);
     }
 
     @Override

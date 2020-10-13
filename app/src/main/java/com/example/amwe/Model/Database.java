@@ -129,13 +129,14 @@ public class Database {
     /**
      * Add new user to the database, not creating an authorized user, but adding public information
      * to the database, like name
-     *
-     * @param uid  user id, unique
+     *  @param uid  user id, unique
      * @param name of the user, matches displayName, not unique
+     * @param base64Photo
      */
-    static public void addUser(String uid, String name) {
+    static public void addUser(String uid, String name, String base64Photo) {
         User user = new User(name);
         database.getReference().child("users").child(uid).setValue(user);
+        database.getReference().child("users").child(uid).child("userImage").setValue(base64Photo);
     }
 
     /**
