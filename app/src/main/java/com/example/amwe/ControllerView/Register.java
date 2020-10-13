@@ -98,7 +98,6 @@ public class Register extends AppCompatActivity {
             }
 
             mProfilePicture.setImageBitmap(dstBmp);
-            
         } catch (IOException e){
             e.printStackTrace();
         }

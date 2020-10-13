@@ -40,7 +40,7 @@ public class Database {
     /**
      * @return an firebase reference which allows read and write to database
      */
-    static private DatabaseReference getDatabaseReference() {
+    static public DatabaseReference getDatabaseReference() {
         return database.getReference();
     }
 

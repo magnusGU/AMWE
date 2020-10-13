@@ -128,8 +128,9 @@ public class ListingPageActivity extends AppCompatActivity {
                 CardView sellerInfo = findViewById(R.id.sellerInfo);
                 TextView sellerLabel = findViewById(R.id.listing_page_seller_label);
 
-                myListingView(bookId, favourite, deleteButton, editButton, sellerInfo, sellerLabel);
+                sellerCard(bookId);
 
+                myListingView(bookId, favourite, deleteButton, editButton, sellerInfo, sellerLabel);
             }
 
             @Override
@@ -140,6 +141,36 @@ public class ListingPageActivity extends AppCompatActivity {
         Database.getListings().addValueEventListener(valueEventListener);
     }
 
+    private void sellerCard(final String bookId) {
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                TextView sellerName = findViewById(R.id.listing_page_seller);
+
+                for (DataSnapshot item : snapshot.getChildren()){
+                    if (item.child("listings").hasChild(bookId)){
+                        sellerName.setText((String) item.child("name").getValue());
+                        try {
+                            ImageView sellerPicture = findViewById(R.id.seller_picture);
+                            byte[] decodedString = Base64.decode((String) item.child("userImage").getValue(), Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            sellerPicture.setImageBitmap(bitmap);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        Database.getDatabaseReference().child("users").addValueEventListener(valueEventListener);
+    }
 
     /**
      * Creates a bundle with information about the listing.
