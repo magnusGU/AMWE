@@ -58,12 +58,12 @@
             android:maxLines="6"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_chatbox_send2"
+            app:layout_constraintEnd_toStartOf="@+id/button_chatbox_send"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/button_chatbox_send2"
+            android:id="@+id/button_chatbox_send"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_marginEnd="8dp"
