@@ -62,6 +62,12 @@ public class AddListing extends AppCompatActivity {
     }
 
 
+    /**
+     *This method is called automatically when the camera activity is done. It converts the file stored into a compressed and viewable image.
+     * @param requestCode A code that differentiates between different possible actions taken when method is called.
+     * @param resultCode  A code that shows the result of the operation.
+     * @param data Android functionality that transfers data between activities.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -72,6 +78,8 @@ public class AddListing extends AppCompatActivity {
                 Bitmap srcBmp = BitmapFactory.decodeFile(image.getAbsolutePath());
 
                 Bitmap dstBmp;
+                //This is to handle if the camera app is closed before photo is taken
+                if (srcBmp!=null){
                 if (srcBmp.getWidth() >= srcBmp.getHeight()){
 
                     dstBmp = Bitmap.createBitmap(
@@ -99,7 +107,7 @@ public class AddListing extends AppCompatActivity {
                 ViewGroup.LayoutParams params = cameraClick.getLayoutParams();
                 params.height = 1500;
                 cameraClick.setLayoutParams(params);
-            }
+            }}
         }
     }
 
