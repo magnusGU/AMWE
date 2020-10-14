@@ -205,8 +205,8 @@ public class Database {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (final DataSnapshot item2 : snapshot.getChildren()) {
-                                if (item.getKey().equals(item2.getKey())) {
-                                    final String bookId = item.getKey();
+                                final String bookId = item.getKey();
+                                if (bookId.equals(item2.getKey()) && uniqueListing(bookId, bookListings)) {
                                     final Book newListing = item.getValue(Book.class);
                                     newListing.setId(bookId);
                                     bookListings.add(newListing);
@@ -233,6 +233,13 @@ public class Database {
         allListings.addValueEventListener(listener);
 
     }
-
+    static private boolean uniqueListing(String itemID, List<Item> bookListings) {
+        for (Item i: bookListings) {
+            if (itemID.equals(i.getId())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
