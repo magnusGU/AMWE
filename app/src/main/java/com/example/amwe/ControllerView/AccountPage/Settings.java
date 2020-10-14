@@ -1,14 +1,22 @@
 package com.example.amwe.ControllerView.AccountPage;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.ControllerView.Login.Login;
@@ -21,16 +29,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Settings extends AppCompatActivity {
 
-    EditText name;
-    EditText eMail;
-    EditText newPassword1;
-    EditText newPassword2;
+    private ImageView mProfilePicture;
+    private EditText name;
+    private EditText eMail;
+    private EditText newPassword1;
+    private EditText newPassword2;
 
+    private static final int PICK_IMAGE = 1;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +55,17 @@ public class Settings extends AppCompatActivity {
         Database.getCurrentUser().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mProfilePicture = findViewById(R.id.edit_profile_picture);
+                mProfilePicture.setOnClickListener(uploadImage());
+
+                try {
+                    byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    mProfilePicture.setImageBitmap(bitmap);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 name = findViewById(R.id.change_name);
                 name.setText((CharSequence) snapshot.child("name").getValue());
 
@@ -62,6 +86,52 @@ public class Settings extends AppCompatActivity {
         });
     }
 
+    private View.OnClickListener uploadImage() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent gallery = new Intent();
+                gallery.setType("image/*");
+                gallery.setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(gallery, "Välj profilbild"), PICK_IMAGE);
+            }
+        };
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imageUri = data.getData();
+        try {
+            Bitmap srcBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+
+            Bitmap dstBmp;
+            if (srcBmp.getWidth() >= srcBmp.getHeight()){
+
+                dstBmp = Bitmap.createBitmap(
+                        srcBmp,
+                        srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                        0,
+                        srcBmp.getHeight(),
+                        srcBmp.getHeight()
+                );
+
+            }else{
+                dstBmp = Bitmap.createBitmap(
+                        srcBmp,
+                        0,
+                        srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                        srcBmp.getWidth(),
+                        srcBmp.getWidth()
+                );
+            }
+            mProfilePicture.setImageBitmap(srcBmp);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     private View.OnClickListener save(final DataSnapshot snapshot) {
         return new View.OnClickListener() {
             @Override
@@ -75,12 +145,29 @@ public class Settings extends AppCompatActivity {
 
                 user.updateEmail(eMail.getText().toString());
 
-                UserProfileChangeRequest.Builder updateinfo = new UserProfileChangeRequest.Builder().setDisplayName(sName);
-                user.updateProfile(updateinfo.build());
+                Database.getCurrentUser().child("name").setValue(sName);
+                final String base64Photo;
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getApplicationContext().getContentResolver(),
+                            imageUri);
 
-                Map<String, Object> childUpdates = new HashMap<>();
-                childUpdates.put("/users/" + user.getUid() + "/name/", sName);
-                Database.getDatabase().getReference().updateChildren(childUpdates);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+
+                    byte[] array = stream.toByteArray();
+                    base64Photo = Base64.encodeToString(array, 0);
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                    return;
+                }
+
+                Database.getCurrentUser().child("userImage").setValue(base64Photo);
 
                 updatePassword(sEMail, sPassword, sPassword2, user);
 

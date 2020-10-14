@@ -5,8 +5,9 @@
     android:id="@+id/account_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context=".ControllerView.AccountPage.AccountPage" >
+    android:background="@color/colorCard"
+    tools:context=".ControllerView.AccountPage">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="0dp"
-                android:layout_height="144dp"
+                android:layout_height="128dp"
                 android:background="@drawable/gradient"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,7 @@
                 android:layout_height="120dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="48dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
@@ -55,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="Förnamn Efternamn"
@@ -65,24 +66,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintStart_toEndOf="@+id/account_page_profile_picture"
                 app:layout_constraintTop_toBottomOf="@+id/account_page_settings_button" />
-
-            <TextView
-                android:id="@+id/account_page_program"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="Program"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/account_page_profile_picture"
-                app:layout_constraintTop_toBottomOf="@+id/account_page_name" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -136,6 +119,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@color/colorCard"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -146,6 +132,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:background="@color/colorCard"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
