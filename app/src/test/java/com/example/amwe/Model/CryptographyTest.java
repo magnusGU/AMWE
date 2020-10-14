@@ -7,8 +7,8 @@ import com.example.amwe.Model.Messaging.PublicKey;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class CryptographyTest {
     @Test
@@ -23,7 +23,7 @@ public class CryptographyTest {
 
         String decryptedString = crypt.decrypt(array, privateKey);
 
-        assertTrue((decryptedString.equals(originalString)));
+        assertEquals(decryptedString, originalString);
     }
 
     @Test
@@ -40,6 +40,6 @@ public class CryptographyTest {
 
         String decryptedString = crypt.decrypt(array, privateKey2);
 
-        assertFalse((decryptedString.equals(originalString)));
+        assertNotEquals(decryptedString, originalString);
     }
 }
