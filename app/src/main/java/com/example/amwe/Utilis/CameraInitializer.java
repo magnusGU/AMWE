@@ -27,7 +27,11 @@ public class CameraInitializer {
         this.storageDir=storagedir;
     }
 
-
+    /**
+     *
+     * @return a .jpg File that is unique and used to store an image
+     * @throws IOException Exception that is needed to access hard drive of device, because of createImageFile().
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public File createPhotoFile() throws IOException {
         ImageFile file = new ImageFile(storageDir);
@@ -36,6 +40,10 @@ public class CameraInitializer {
 
     }
 
+    /**
+     *
+     * @return a file path to the stored file.
+     */
     public Uri getURI() {
         Uri photoURI;
         return photoURI = FileProvider.getUriForFile(context,
