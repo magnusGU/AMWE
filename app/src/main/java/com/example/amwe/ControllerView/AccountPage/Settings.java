@@ -3,7 +3,6 @@ package com.example.amwe.ControllerView.AccountPage;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,15 +23,12 @@ import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Settings extends AppCompatActivity {
 
@@ -75,7 +71,7 @@ public class Settings extends AppCompatActivity {
                 newPassword1 = findViewById(R.id.new_password1);
                 newPassword2 = findViewById(R.id.new_password2);
 
-                Button saveButton = findViewById(R.id.save_button);
+                Button saveButton = findViewById(R.id.register_button);
                 saveButton.setOnClickListener(save(snapshot));
             }
 

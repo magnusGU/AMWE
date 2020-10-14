@@ -2,6 +2,9 @@ package com.example.amwe.ControllerView.Login;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,8 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.R;
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -49,7 +52,7 @@ public class Register extends AppCompatActivity {
         mEmail = findViewById(R.id.change_email);
         mPassword1 = findViewById(R.id.old_password);
         mPassword2 = findViewById(R.id.new_password1);
-        Button mConfirm = findViewById(R.id.save_button);
+        Button mConfirm = findViewById(R.id.register_button);
 
         fAuth = FirebaseAuth.getInstance();
 
@@ -77,28 +80,30 @@ public class Register extends AppCompatActivity {
             Bitmap srcBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
 
             Bitmap dstBmp;
-            if (srcBmp.getWidth() >= srcBmp.getHeight()){
+            if (srcBmp.getWidth() >= srcBmp.getHeight()) {
 
                 dstBmp = Bitmap.createBitmap(
                         srcBmp,
-                        srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                        srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
                         0,
                         srcBmp.getHeight(),
                         srcBmp.getHeight()
                 );
 
-            }else{
+            } else {
                 dstBmp = Bitmap.createBitmap(
                         srcBmp,
                         0,
-                        srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                        srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
                         srcBmp.getWidth(),
                         srcBmp.getWidth()
                 );
             }
 
             mProfilePicture.setImageBitmap(dstBmp);
-        } catch (IOException e){
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
             e.printStackTrace();
         }
     }
@@ -117,43 +122,50 @@ public class Register extends AppCompatActivity {
                 String password1 = mPassword1.getText().toString().trim();
                 String password2 = mPassword2.getText().toString().trim();
 
-                conditions(email, password1, password2);
+                //conditions(email, password1, password2);
 
-                final String base64Photo;
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                            getApplicationContext().getContentResolver(),
-                            imageUri);
+                if (conditions(name, email, password1, password2)) {
+                    final String base64Photo;
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                                getApplicationContext().getContentResolver(),
+                                imageUri);
 
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 
-                    byte[] array = stream.toByteArray();
-                    base64Photo = Base64.encodeToString(array, 0);
+                        byte[] array = stream.toByteArray();
 
+                        base64Photo = Base64.encodeToString(array, 0);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }
-
-
-                fAuth.createUserWithEmailAndPassword(email, password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        System.out.println("Registered");
-                        if (task.isSuccessful()) {
-                            UserProfileChangeRequest.Builder updateinfo = new UserProfileChangeRequest
-                                    .Builder().setDisplayName(name);
-                            task.getResult().getUser().updateProfile(updateinfo.build());
-                            Database.addUser(fAuth.getCurrentUser().getUid(), name, base64Photo);
-                            startActivity(new Intent(Register.this, EmailLogin.class));
-                            fAuth.signOut();
-                        } else {
-                            Toast.makeText(Register.this, "Failed", Toast.LENGTH_SHORT).show();
-                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return;
+                    } catch (NullPointerException e){
+                        e.printStackTrace();
+                        return;
                     }
-                });
+
+
+                    fAuth.createUserWithEmailAndPassword(email, password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                UserProfileChangeRequest.Builder updateinfo = new UserProfileChangeRequest
+                                        .Builder().setDisplayName(name);
+                                task.getResult().getUser().updateProfile(updateinfo.build());
+                                Database.addUser(fAuth.getCurrentUser().getUid(), name, base64Photo);
+                                startActivity(new Intent(Register.this, EmailLogin.class));
+                                fAuth.signOut();
+                            } else {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Registrering misslyckades", Toast.LENGTH_SHORT);
+                                View view = toast.getView();
+                                view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+                                toast.show();
+                            }
+                        }
+                    });
+                }
 
             }
         };
@@ -161,11 +173,71 @@ public class Register extends AppCompatActivity {
 
     /**
      * Checks if the conditions to create an account are fulfilled.
-     *
-     * @param email     The email address that the user wants to register.
+     * @param name The complete name of the user.
+     * @param email The email address that the user wants to register.
      * @param password1 The password that the user wants to have.
      * @param password2 The confirmation of the password that the user wants to have.
+     * @return True if conditions are fulfilled, else false.
      */
+    private boolean conditions(String name, String email, String password1, String password2) {
+        if (name.isEmpty() || !name.contains(" ")) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Fullständigt namn är obligatoriskt", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+            toast.show();
+            return false;
+        }
+        if (!name.matches(("^[a-zA-Z\\s]*$"))) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Namn får endast innehålla bokstäver", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+            toast.show();
+            return false;
+        }
+        if (email.isEmpty()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "E-post är obligatorisk", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+            toast.show();
+            return false;
+        }
+        if (!email.contains("@") || !email.contains(".")) {
+            Toast toast = Toast.makeText(getApplicationContext(), "E-post ej korrekt", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+            toast.show();
+            return false;
+        }
+        if (password1.isEmpty()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Lösenord är obligatoriskt", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+            toast.show();
+            return false;
+        }
+        if (password2.isEmpty()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Bekräfta lösenord", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+            toast.show();
+            return false;
+        }
+        if (!password1.equals(password2)) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Lösenord ej samma", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+            toast.show();
+            return false;
+        }
+
+        Toast toast = Toast.makeText(getApplicationContext(), "Konto registrerat", Toast.LENGTH_SHORT);
+        View view = toast.getView();
+        view.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
+        toast.show();
+        return true;
+    }
+
+    /*
     private void conditions(String email, String password1, String password2) {
         if (TextUtils.isEmpty(email)) {
             mEmail.setError("E-post är obligatoriskt");
@@ -191,4 +263,6 @@ public class Register extends AppCompatActivity {
             mPassword1.setError("Lösenord måste vara mer än 6 tecken");
         }
     }
+     */
+
 }
