@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 
 public class AccountPage extends Fragment {
-
+    RecyclerView myListings;
     public AccountPage() {
         // Required empty public constructor
     }
@@ -55,7 +55,7 @@ public class AccountPage extends Fragment {
         ImageButton settingsButton = v.findViewById(R.id.account_page_settings_button);
         settingsButton.setOnClickListener(openSettings());
 
-        final RecyclerView myListings = v.findViewById(R.id.MyListings);
+        myListings = v.findViewById(R.id.MyListings);
         createList(myListings, "listings");
 
         final RecyclerView favourites = v.findViewById(R.id.Favourites);
@@ -133,5 +133,7 @@ public class AccountPage extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        myListings.getAdapter().notifyDataSetChanged();
+
     }
 }

@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 
 public class ListingPageActivity extends AppCompatActivity {
+    ValueEventListener valueEventListener;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,7 @@ public class ListingPageActivity extends AppCompatActivity {
      * Initializes the user interface.
      */
     private void initUI() {
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -229,6 +230,7 @@ public class ListingPageActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Database.getListings().removeEventListener(valueEventListener);
                 Database.deleteListing(bookId);
                 finish();
             }
