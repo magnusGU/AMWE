@@ -17,10 +17,17 @@ import static org.junit.Assert.assertEquals;
 public class  CameraInitializerAndImageFileTest {
     Context context =InstrumentationRegistry.getInstrumentation().getContext();
     CameraInitializer initializer = new CameraInitializer(context,context.getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
+    File temp;
     @Test
     public void createNewFileCreatesAFile() throws IOException {
-        File temp =initializer.createPhotoFile();
+        this.temp =initializer.createPhotoFile();
         assertEquals(true,temp.exists());
+    }
+
+    @Test
+    public void isFileReadable() throws IOException {
+        File temp =initializer.createPhotoFile();
+        assertEquals(true,temp.canRead());
     }
   /*  @Test
     public void checkFileName() throws IOException {
