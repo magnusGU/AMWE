@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
+import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -240,6 +241,11 @@ public class Database {
             }
         }
         return true;
+    }
+
+    static public void addChat(String text, String uid) {
+        Message message = new Message (text, uid);
+        database.getReference().child("chat").child(uid).setValue(message);
     }
 
 }

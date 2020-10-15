@@ -13,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.R;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MessageListActivity extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
@@ -48,12 +51,19 @@ public class MessageListActivity extends AppCompatActivity {
         findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editText=findViewById(R.id.edittext_chatbox);
-                Message newMessage = new Message(editText.getText().toString(),Database.getCurrentUser().toString());
-                //Kryptering, skicka upp till databasen här
-                messageList.add(newMessage);
-                editText.setText("");
-                mMessageAdapter.notifyDataSetChanged();
+                EditText editText = findViewById(R.id.edittext_chatbox);
+                String messageText = editText.toString();
+
+                if (!messageText.equals("")) {
+                    Database.addChat(messageText, Database.getCurrentUser().toString());
+                }
+                /*
+                Message newMessage = new Message(editText.getText().toString(), Database.getCurrentUser().toString());
+                    //Kryptering, skicka upp till databasen här
+                    messageList.add(newMessage);
+                    editText.setText("");
+                    mMessageAdapter.notifyDataSetChanged();
+                 */
             }
         });
 
