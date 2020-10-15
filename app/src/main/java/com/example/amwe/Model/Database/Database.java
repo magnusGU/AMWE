@@ -258,7 +258,7 @@ public class Database {
         DatabaseReference chats = getDatabaseReference().child("chat_room");
         final String key = chats.push().getKey();
 
-        Message message = new Message (text, sender);
+        //Message message = new Message (text, sender);
         Map<String, String> map = new HashMap<>();
         map.put("message", text);
         map.put("sender", sender);

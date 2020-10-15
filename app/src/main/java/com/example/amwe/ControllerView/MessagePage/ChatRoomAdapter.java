@@ -90,10 +90,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             if (i.child("sender").getValue()!=null&&FirebaseAuth.getInstance().getCurrentUser().getUid()!=null) {
 
                 holder.lastMessageText.setText((String) i.child("message").getValue());
-           if (i.child("sender").getValue()!=FirebaseAuth.getInstance().getCurrentUser().getUid()){
-               contact= (String) i.child("sender").getValue();
+                if (i.child("sender").getValue()!=FirebaseAuth.getInstance().getCurrentUser().getUid()){
+                    contact= (String) i.child("sender").getValue();
 
-           }
+                }
 
                 contact = (String) i.child("reciever").getValue();
 

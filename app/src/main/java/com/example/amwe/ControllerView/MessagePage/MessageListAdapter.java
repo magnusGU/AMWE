@@ -13,17 +13,19 @@ import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.List;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
-    private List <Message> messages;
+    private List <DataSnapshot> messages;
     private static final int MESSAGE_SENT = 1;
     private static final int MESSAGE_RECEIVED = 2;
-    public MessageListAdapter(List<Message> messages){
-        this.messages=messages;
 
+    public MessageListAdapter(List<DataSnapshot> messages){
+        this.messages = messages;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
@@ -45,7 +47,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Message message = (Message) messages.get(position);
+        DataSnapshot message = (DataSnapshot) messages.get(position);
 
         switch (holder.getItemViewType()) {
             case MESSAGE_SENT:
@@ -65,7 +67,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
     /*If messages author is current user, place it to the right otherwise place it to the left
     * */
-    Message message = messages.get(position);
+    DataSnapshot message = messages.get(position);
     if(message.getAuthorId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
         return MESSAGE_SENT;
     }
