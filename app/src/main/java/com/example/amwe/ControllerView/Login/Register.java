@@ -2,13 +2,9 @@ package com.example.amwe.ControllerView.Login;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +20,6 @@ import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -174,18 +169,14 @@ public class Register extends AppCompatActivity {
                                         .Builder().setDisplayName(name);
                                 task.getResult().getUser().updateProfile(updateinfo.build());
                                 Database.addUser(fAuth.getCurrentUser().getUid(), name, base64Photo);
-                                startActivity(new Intent(Register.this, EmailLogin.class));
+                                startActivity(new Intent(Register.this, Login.class));
                                 fAuth.signOut();
 
-                                Toast toast = new Toast(getApplicationContext());
-                                toast.setText("Konto registrerat");
-                                toast.show();
+                                Toast.makeText(getApplicationContext(), "Konto registrerat", Toast.LENGTH_SHORT).show();
 
 
                             } else {
-                                Toast toast = new Toast(getApplicationContext());
-                                toast.setText("Registrering misslyckades");
-                                toast.show();
+                                Toast.makeText(getApplicationContext(), "Registrering misslyckades", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
