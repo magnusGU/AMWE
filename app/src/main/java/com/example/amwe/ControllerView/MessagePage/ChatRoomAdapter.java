@@ -87,17 +87,18 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         });*/
         for (DataSnapshot i:item.getChildren()) {
             DatabaseReference databaseReference = Database.getDatabase().getReference();
+            if (i.child("sender").getValue()!=null&&FirebaseAuth.getInstance().getCurrentUser().getUid()!=null) {
 
-           holder.lastMessageText.setText((String)i.child("message").getValue());
+                holder.lastMessageText.setText((String) i.child("message").getValue());
            if (i.child("sender").getValue()!=FirebaseAuth.getInstance().getCurrentUser().getUid()){
                contact= (String) i.child("sender").getValue();
 
            }
-           else {
-               contact=(String) i.child("reciever").getValue();
 
+                contact = (String) i.child("reciever").getValue();
 
-           }
+            }
+
         /*        if (i.child("reciever").getValue().equals(i.child("sender").getValue())){
                     throw new IllegalArgumentException("Database Error... Sender and reciever cant be the same person");
             }*/
