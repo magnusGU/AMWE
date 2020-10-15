@@ -44,11 +44,6 @@ public class MessagesPage extends Fragment {
 
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_messages_page, container, false);
-        Message one = new Message("Första meddelandet","Test");
-        Message two = new Message("Andra meddelandet","Test1");
-        List testList = new ArrayList<Message>();
-        testList.add(one);
-        testList.add(two);
         RecyclerView recyclerView = v.findViewById(R.id.message_Recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -62,26 +57,23 @@ public class MessagesPage extends Fragment {
         return v;
     }
     private void getChatRooms(){
-        DatabaseReference databaseReference =Database.getDatabase().getReference("/chat_room/");
+        DatabaseReference databaseReference = Database.getDatabase().getReference("/chat_room/");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item:snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()){
                     if (item.toString().contains(FirebaseAuth.getInstance().getUid())){
                          items.add(item);
-                        }
                     }
+                }
                 chatRoomAdapter.notifyDataSetChanged();
 
-                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
-        }
-
-        );
-}
+        });
+    }
 }
