@@ -14,7 +14,9 @@ import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     public static class MessageViewHold extends RecyclerView.ViewHolder {
         private final TextView textViewTitle;
         private final TextView lastMessageText;
+        private final TextView messageContact;
         private String contact;
 
 
@@ -50,6 +53,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.messageContact);
             lastMessageText=itemView.findViewById(R.id.lastMessageText);
+            messageContact=itemView.findViewById(R.id.messageContact);
         }
 
     }
@@ -113,6 +117,19 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             }*/
         }
         holder.contact=contact;
+        DatabaseReference reference = Database.getDatabaseReference();
+        reference=reference.child("users").child(contact);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                holder.messageContact.setText((String)snapshot.child("name").getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         //Message message = (Message) itemList.get(position);
