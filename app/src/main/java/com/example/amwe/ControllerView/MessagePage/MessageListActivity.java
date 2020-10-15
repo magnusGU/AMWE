@@ -63,6 +63,7 @@ public class MessageListActivity extends AppCompatActivity {
                     //Database.addChat(messageText, FirebaseAuth.getInstance().getCurrentUser().getUid());
                     Database.useChat(messageText, FirebaseAuth.getInstance().getCurrentUser().getUid(), sellerUid);
                 }
+                editText.setText("");
                 /*
                 Message newMessage = new Message(editText.getText().toString(), Database.getCurrentUser().toString());
                     //Kryptering, skicka upp till databasen här

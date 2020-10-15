@@ -70,10 +70,7 @@ public class MessagesPage extends Fragment {
                 for (DataSnapshot item:snapshot.getChildren()){
                     if (item.toString().contains(FirebaseAuth.getInstance().getUid())){
                          items.add(item);
-
-
                         }
-
                     }
                 chatRoomAdapter.notifyDataSetChanged();
 

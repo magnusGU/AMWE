@@ -91,11 +91,16 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
            holder.lastMessageText.setText((String)i.child("message").getValue());
            if (i.child("sender").getValue()!=FirebaseAuth.getInstance().getCurrentUser().getUid()){
                contact= (String) i.child("sender").getValue();
+
            }
            else {
-               contact=(String) i.child("receiver").getValue();
-           }
+               contact=(String) i.child("reciever").getValue();
 
+
+           }
+        /*        if (i.child("reciever").getValue().equals(i.child("sender").getValue())){
+                    throw new IllegalArgumentException("Database Error... Sender and reciever cant be the same person");
+            }*/
         }
 
 
@@ -105,7 +110,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageListActivity.class);
-                System.out.println(contact + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("Receiver" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println(contact);
+                System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
                 intent.putExtra("sellerUid",contact);
 
                 context.startActivity(intent);
