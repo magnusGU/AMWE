@@ -48,6 +48,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         DataSnapshot message = (DataSnapshot) messages.get(position);
+        message.child("message");
 
         switch (holder.getItemViewType()) {
             case MESSAGE_SENT:
@@ -68,7 +69,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     /*If messages author is current user, place it to the right otherwise place it to the left
     * */
     DataSnapshot message = messages.get(position);
-    if(message.getAuthorId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+    if((message.child("sender").getValue()).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
         return MESSAGE_SENT;
     }
     else return MESSAGE_RECEIVED;
@@ -84,8 +85,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
-        void bind(Message message) {
-            messageText.setText(message.getMessage());
+        void bind(DataSnapshot message) {
+            messageText.setText((String) message.child("message").getValue());
 
             // Format the stored timestamp into a readable String using method.
 
@@ -105,8 +106,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             //profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
         }
 
-        void bind(Message message) {
-            messageText.setText(message.getMessage());
+        void bind(DataSnapshot message) {
+            messageText.setText((String) message.child("message").getValue());
 
             // Format the stored timestamp into a readable String using method.
             //timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
