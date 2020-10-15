@@ -226,6 +226,10 @@ public class AddListing extends AppCompatActivity {
                     Database.insertNewListing(newBook);
                     finish();
 
+                    Toast toast = Toast.makeText(getApplicationContext(), "Annons uppladad", Toast.LENGTH_SHORT);
+                    View toastView = toast.getView();
+                    toastView.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
+                    toast.show();
                 }
             }
         };

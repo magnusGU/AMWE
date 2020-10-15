@@ -3,6 +3,8 @@ package com.example.amwe.ControllerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -121,43 +124,95 @@ public class EditListing extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
-                String dateString = dateFormat.format(new Date());
 
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), photoURI);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+                if (conditions(title, author, edition, isbn, price, condition)) {
 
-                    byte[] array = stream.toByteArray();
-                    base64Photo = Base64.encodeToString(array, 0);
+                    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
+                    String dateString = dateFormat.format(new Date());
+
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), photoURI);
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+
+                        byte[] array = stream.toByteArray();
+                        base64Photo = Base64.encodeToString(array, 0);
 
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                } catch (NullPointerException e){
-                    e.printStackTrace();
-                    return;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return;
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                    Item item = new Book(
+                            bookId,
+                            title.getText().toString(),
+                            edition.getText().toString(),
+                            author.getText().toString(),
+                            Long.parseLong(isbn.getText().toString()),
+                            description.getText().toString(),
+                            base64Photo,
+                            Double.parseDouble(price.getText().toString()),
+                            seller,
+                            condition.getText().toString(),
+                            dateString
+                    );
+                    Database.updateListing(item);
+                    finish();
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Annons uppdaterad", Toast.LENGTH_SHORT);
+                    View toastView = toast.getView();
+                    toastView.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
+                    toast.show();
                 }
-                Item item = new Book(
-                        bookId,
-                        title.getText().toString(),
-                        edition.getText().toString(),
-                        author.getText().toString(),
-                        Long.parseLong(isbn.getText().toString()),
-                        description.getText().toString(),
-                        base64Photo,
-                        Double.parseDouble(price.getText().toString()),
-                        seller,
-                        condition.getText().toString(),
-                        dateString
-                );
-                Database.updateListing(item);
-
-                finish();
             }
         };
+    }
+
+    private boolean conditions(EditText title, EditText author, EditText edition, EditText isbn, EditText price, EditText condition) {
+        String sTitle = title.getText().toString();
+        String sAuthor = author.getText().toString();
+        String sEdition = edition.getText().toString();
+        String sIsbn = isbn.getText().toString();
+        String sPrice = price.getText().toString();
+        String sCondition = condition.getText().toString();
+
+        if (sTitle.isEmpty()){
+            title.setError("Titel är obligatorisk");
+            return false;
+        }
+        if (sAuthor.isEmpty()){
+            author.setError("Författare är obligatorisk");
+            return false;
+        }
+        if (!sAuthor.matches(("^[a-zA-Z\\s]*$"))) {
+            author.setError("Författare får endast innehålla bokstäver");
+            return false;
+        }
+        if (sEdition.isEmpty()){
+            edition.setError("Upplaga är obligatorisk");
+            return false;
+        }
+        if (sIsbn.isEmpty()){
+            isbn.setError("ISBN är obligatoriskt");
+            return false;
+        }
+        if (sIsbn.length() != 13 && sIsbn.length() != 10){
+            isbn.setError("ISBN ej korrekt");
+            return false;
+        }
+        if (sCondition.isEmpty()){
+            condition.setError("Skick är obligatorisk");
+            return false;
+        }
+        if (sPrice.isEmpty()){
+            price.setError("Pris är obligatoriskt");
+            return false;
+        }
+
+        return true;
     }
 
 
