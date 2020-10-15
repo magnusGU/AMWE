@@ -155,15 +155,13 @@ public class Register extends AppCompatActivity {
                                 startActivity(new Intent(Register.this, EmailLogin.class));
                                 fAuth.signOut();
 
-                                Toast toast = Toast.makeText(getApplicationContext(), "Konto registrerat", Toast.LENGTH_SHORT);
-                                View view = toast.getView();
-                                view.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
+                                Toast toast = new Toast(getApplicationContext());
+                                toast.setText("Konto registrerat");
                                 toast.show();
 
                             } else {
-                                Toast toast = Toast.makeText(getApplicationContext(), "Registrering misslyckades", Toast.LENGTH_SHORT);
-                                View view = toast.getView();
-                                view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+                                Toast toast = new Toast(getApplicationContext());
+                                toast.setText("Registrering misslyckades");
                                 toast.show();
                             }
                         }
