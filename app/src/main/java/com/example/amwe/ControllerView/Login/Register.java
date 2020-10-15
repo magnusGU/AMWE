@@ -24,6 +24,7 @@ import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -124,12 +125,33 @@ public class Register extends AppCompatActivity {
                 if (conditions(name, email, password1, password2)) {
                     final String base64Photo;
                     try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                        Bitmap srcBmp = MediaStore.Images.Media.getBitmap(
                                 getApplicationContext().getContentResolver(),
                                 imageUri);
 
+                        Bitmap dstBmp;
+                        if (srcBmp.getWidth() >= srcBmp.getHeight()) {
+
+                            dstBmp = Bitmap.createBitmap(
+                                    srcBmp,
+                                    srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
+                                    0,
+                                    srcBmp.getHeight(),
+                                    srcBmp.getHeight()
+                            );
+
+                        } else {
+                            dstBmp = Bitmap.createBitmap(
+                                    srcBmp,
+                                    0,
+                                    srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
+                                    srcBmp.getWidth(),
+                                    srcBmp.getWidth()
+                            );
+                        }
+
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+                        dstBmp.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 
                         byte[] array = stream.toByteArray();
 
@@ -159,6 +181,7 @@ public class Register extends AppCompatActivity {
                                 View view = toast.getView();
                                 view.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
                                 toast.show();
+
 
                             } else {
                                 Toast toast = Toast.makeText(getApplicationContext(), "Registrering misslyckades", Toast.LENGTH_SHORT);

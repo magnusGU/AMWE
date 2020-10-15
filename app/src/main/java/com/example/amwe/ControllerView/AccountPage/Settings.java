@@ -122,7 +122,7 @@ public class Settings extends AppCompatActivity {
                         srcBmp.getWidth()
                 );
             }
-            mProfilePicture.setImageBitmap(srcBmp);
+            mProfilePicture.setImageBitmap(dstBmp);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -144,12 +144,33 @@ public class Settings extends AppCompatActivity {
                 Database.getCurrentUser().child("name").setValue(sName);
                 final String base64Photo;
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                    Bitmap srcBmp = MediaStore.Images.Media.getBitmap(
                             getApplicationContext().getContentResolver(),
                             imageUri);
 
+                    Bitmap dstBmp;
+                    if (srcBmp.getWidth() >= srcBmp.getHeight()) {
+
+                        dstBmp = Bitmap.createBitmap(
+                                srcBmp,
+                                srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
+                                0,
+                                srcBmp.getHeight(),
+                                srcBmp.getHeight()
+                        );
+
+                    } else {
+                        dstBmp = Bitmap.createBitmap(
+                                srcBmp,
+                                0,
+                                srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
+                                srcBmp.getWidth(),
+                                srcBmp.getWidth()
+                        );
+                    }
+
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+                    dstBmp.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 
                     byte[] array = stream.toByteArray();
                     base64Photo = Base64.encodeToString(array, 0);
