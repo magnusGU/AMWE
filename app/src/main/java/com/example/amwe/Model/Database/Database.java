@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
+import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -240,6 +241,32 @@ public class Database {
             }
         }
         return true;
+    }
+
+    static public void addChat(String sender, String receiver) {
+        DatabaseReference db = getDatabaseReference();
+        DatabaseReference chats = getDatabaseReference().child("chat_room");
+
+        final String key = sender + receiver;
+
+        db.child("/chat_room/" + key).setValue(true);
+    }
+
+    static public void useChat(String text, String sender, String receiver) {
+
+        DatabaseReference db = getDatabaseReference();
+        DatabaseReference chats = getDatabaseReference().child("chat_room");
+        final String key = chats.push().getKey();
+
+        Message message = new Message (text, sender);
+        Map<String, String> map = new HashMap<>();
+        map.put("message", text);
+        map.put("sender", sender);
+        map.put("reciever", receiver);
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, map);
+        db.updateChildren(childUpdates);
     }
 
 }

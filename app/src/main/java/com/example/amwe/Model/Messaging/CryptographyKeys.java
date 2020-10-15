@@ -13,6 +13,9 @@ public class CryptographyKeys {
     private BigInteger encryptingBigInt;
     private BigInteger decryptingBigInt;
 
+    /**
+     * Generates variables needed for RSA cryptography, these variables later get put into corresponding public & private keys for functional encryption & decryption.
+     */
     public CryptographyKeys() {
         random = new Random();
         prime1 = BigInteger.probablePrime(100,random);
@@ -28,10 +31,18 @@ public class CryptographyKeys {
         decryptingBigInt = encryptingBigInt.modInverse(phi);
     }
 
+    /**
+     * Creates a new private key that will be corresponding with any public key created by the same CryptographyKeys object.
+     * @return private key created.
+     */
     public PrivateKey makePrivateKey() {
         return new PrivateKey(decryptingBigInt, primesMultiplied);
     }
 
+    /**
+     * Creates a new public key that will be corresponding with any private key created by the same CryptographyKeys object.
+     * @return public key created.
+     */
     public PublicKey makePublicKey() {
         return new PublicKey(encryptingBigInt, primesMultiplied);
     }
