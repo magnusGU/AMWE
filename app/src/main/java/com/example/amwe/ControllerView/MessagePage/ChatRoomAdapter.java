@@ -38,6 +38,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     public static class MessageViewHold extends RecyclerView.ViewHolder {
         private final TextView textViewTitle;
         private final TextView lastMessageText;
+        private String contact;
 
 
         /**
@@ -90,12 +91,20 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             if (i.child("sender").getValue()!=null&&FirebaseAuth.getInstance().getCurrentUser().getUid()!=null) {
 
                 holder.lastMessageText.setText((String) i.child("message").getValue());
+
            if (i.child("sender").getValue()!=FirebaseAuth.getInstance().getCurrentUser().getUid()){
+
                contact= (String) i.child("sender").getValue();
+               System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+               System.out.println(contact);
+               System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
            }
             else{
                 contact = (String) i.child("reciever").getValue();
+               System.out.println("Reciever" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+               System.out.println(contact);
+               System.out.println("Reciever" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
             }}
 
@@ -103,6 +112,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                     throw new IllegalArgumentException("Database Error... Sender and reciever cant be the same person");
             }*/
         }
+        holder.contact=contact;
 
 
         //Message message = (Message) itemList.get(position);
@@ -111,11 +121,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageListActivity.class);
-                System.out.println("Receiver" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("Intent" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 System.out.println(contact);
-                System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("Intent" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-                intent.putExtra("sellerUid",contact);
+                intent.putExtra("sellerUid",holder.contact);
 
                 context.startActivity(intent);
             }
