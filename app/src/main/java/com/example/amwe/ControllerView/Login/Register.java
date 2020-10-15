@@ -122,8 +122,6 @@ public class Register extends AppCompatActivity {
                 String password1 = mPassword1.getText().toString().trim();
                 String password2 = mPassword2.getText().toString().trim();
 
-                //conditions(email, password1, password2);
-
                 if (conditions(name, email, password1, password2)) {
                     final String base64Photo;
                     try {
@@ -157,6 +155,12 @@ public class Register extends AppCompatActivity {
                                 Database.addUser(fAuth.getCurrentUser().getUid(), name, base64Photo);
                                 startActivity(new Intent(Register.this, EmailLogin.class));
                                 fAuth.signOut();
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "Konto registrerat", Toast.LENGTH_SHORT);
+                                View view = toast.getView();
+                                view.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
+                                toast.show();
+
                             } else {
                                 Toast toast = Toast.makeText(getApplicationContext(), "Registrering misslyckades", Toast.LENGTH_SHORT);
                                 View view = toast.getView();
@@ -181,88 +185,38 @@ public class Register extends AppCompatActivity {
      */
     private boolean conditions(String name, String email, String password1, String password2) {
         if (name.isEmpty() || !name.contains(" ")) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Fullständigt namn är obligatoriskt", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
-            toast.show();
+            mName.setError("Fullständigt namn är obligatoriskt");
             return false;
         }
         if (!name.matches(("^[a-zA-Z\\s]*$"))) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Namn får endast innehålla bokstäver", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
-            toast.show();
+            mName.setError("Namn får endast innehålla bokstäver");
             return false;
         }
         if (email.isEmpty()) {
-            Toast toast = Toast.makeText(getApplicationContext(), "E-post är obligatorisk", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
-            toast.show();
+            mEmail.setError("E-post är obligatorisk");
             return false;
         }
         if (!email.contains("@") || !email.contains(".")) {
-            Toast toast = Toast.makeText(getApplicationContext(), "E-post ej korrekt", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
-            toast.show();
+            mEmail.setError("E-post ej korrekt");
             return false;
         }
         if (password1.isEmpty()) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Lösenord är obligatoriskt", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
-            toast.show();
+            mPassword1.setError("Lösenord är obligatoriskt");
+            return false;
+        }
+        if (password1.length() < 6) {
+            mPassword1.setError("Lösenord måste vara minst 6 tecken långt");
             return false;
         }
         if (password2.isEmpty()) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Bekräfta lösenord", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
-            toast.show();
+            mPassword2.setError("Bekräfta lösenord");
             return false;
         }
-        if (!password1.equals(password2)) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Lösenord ej samma", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
-            toast.show();
-            return false;
-        }
-
-        Toast toast = Toast.makeText(getApplicationContext(), "Konto registrerat", Toast.LENGTH_SHORT);
-        View view = toast.getView();
-        view.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
-        toast.show();
-        return true;
-    }
-
-    /*
-    private void conditions(String email, String password1, String password2) {
-        if (TextUtils.isEmpty(email)) {
-            mEmail.setError("E-post är obligatoriskt");
-            return;
-        }
-
-        if (TextUtils.isEmpty(password1)) {
-            mPassword1.setError("Lösenord är obligatoriskt");
-            return;
-        }
-
-        if (TextUtils.isEmpty(password2)) {
-            mPassword2.setError("Lösenord är obligatoriskt");
-            return;
-        }
-
         if (!password1.equals(password2)) {
             mPassword2.setError("Lösenord ej samma");
-            return;
+            return false;
         }
-
-        if (password1.length() <= 6) {
-            mPassword1.setError("Lösenord måste vara mer än 6 tecken");
-        }
+        return true;
     }
-     */
 
 }
