@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
@@ -204,9 +205,8 @@ public class AddListing extends AppCompatActivity {
                         e.printStackTrace();
                         return;
                     } catch (NullPointerException e){
-                        Toast toast = Toast.makeText(getApplicationContext(), "Foto är obligatoriskt", Toast.LENGTH_SHORT);
-                        View toastView = toast.getView();
-                        toastView.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setText("Foto är obligatoriskt");
                         toast.show();
                         return;
                     }
@@ -226,9 +226,8 @@ public class AddListing extends AppCompatActivity {
                     Database.insertNewListing(newBook);
                     finish();
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Annons uppladad", Toast.LENGTH_SHORT);
-                    View toastView = toast.getView();
-                    toastView.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setText("Annons uppladdad");
                     toast.show();
                 }
             }

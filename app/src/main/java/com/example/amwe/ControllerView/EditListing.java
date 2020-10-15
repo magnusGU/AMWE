@@ -162,9 +162,8 @@ public class EditListing extends AppCompatActivity {
                     Database.updateListing(item);
                     finish();
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Annons uppdaterad", Toast.LENGTH_SHORT);
-                    View toastView = toast.getView();
-                    toastView.getBackground().setColorFilter(Color.rgb(139, 195, 74), PorterDuff.Mode.SRC_IN);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setText("Annons uppdaterad");
                     toast.show();
                 }
             }
