@@ -78,7 +78,6 @@ public class Register extends AppCompatActivity {
         imageUri = data.getData();
         try {
             Bitmap srcBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-
             Bitmap dstBmp;
             if (srcBmp.getWidth() >= srcBmp.getHeight()) {
 

@@ -1,6 +1,8 @@
 package com.example.amwe.ControllerView.Login;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -85,7 +87,10 @@ public class EmailLogin extends AppCompatActivity {
                             System.out.println("Signed in");
                             startActivity(new Intent(EmailLogin.this, MainActivity.class));
                         } else {
-                            Toast.makeText(EmailLogin.this, "Failed", Toast.LENGTH_SHORT).show();
+                            Toast toast = Toast.makeText(getApplicationContext(), "Inloggning misslyckades", Toast.LENGTH_SHORT);
+                            View toastView = toast.getView();
+                            toastView.getBackground().setColorFilter(Color.rgb(244, 67, 54), PorterDuff.Mode.SRC_IN);
+                            toast.show();
                         }
                     }
                 });
