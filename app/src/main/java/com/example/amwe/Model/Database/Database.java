@@ -255,7 +255,7 @@ public class Database {
     static public void useChat(String text, String sender, String receiver) {
 
         DatabaseReference db = getDatabaseReference();
-        DatabaseReference chats = getDatabaseReference().child("chat");
+        DatabaseReference chats = getDatabaseReference().child("chat_room");
         final String key = chats.push().getKey();
 
         Message message = new Message (text, sender);
@@ -265,7 +265,7 @@ public class Database {
         map.put("reciever", receiver);
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/chat/" + key, map);
+        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, map);
         db.updateChildren(childUpdates);
     }
 

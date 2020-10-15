@@ -1,5 +1,6 @@
 package com.example.amwe.ControllerView.MessagePage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,11 +27,14 @@ public class MessageListActivity extends AppCompatActivity {
     private TextView nameText;
     ImageView profileImage;
     private MessageListAdapter mMessageAdapter;
-    @Override
+    private String sellerUid;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
+        Intent intent = getIntent();
+        sellerUid = intent.getStringExtra("sellerUid");
 
         final List <Message> messageList = new ArrayList<>();
         Message m1 = new Message("Hejsan", Database.getCurrentUser().toString());
@@ -56,7 +60,8 @@ public class MessageListActivity extends AppCompatActivity {
                 String messageText = editText.getText().toString();
 
                 if (!messageText.equals("")) {
-                    Database.addChat(messageText, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    //Database.addChat(messageText, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    Database.useChat(messageText, FirebaseAuth.getInstance().getCurrentUser().getUid(), sellerUid);
                 }
                 /*
                 Message newMessage = new Message(editText.getText().toString(), Database.getCurrentUser().toString());

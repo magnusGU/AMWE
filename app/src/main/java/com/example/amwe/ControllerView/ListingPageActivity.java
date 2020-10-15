@@ -1,5 +1,7 @@
 package com.example.amwe.ControllerView;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.amwe.ControllerView.MessagePage.MessageListActivity;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
@@ -29,9 +32,12 @@ import java.text.DecimalFormat;
 public class ListingPageActivity extends AppCompatActivity {
     ValueEventListener valueEventListener;
     String sellerUid;
+    private Context context;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.context = this;
 
         setContentView(R.layout.listing_page);
         initUI();
@@ -347,6 +353,9 @@ public class ListingPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Database.addChat(FirebaseAuth.getInstance().getCurrentUser().getUid(), sellerUid);
+                Intent intent = new Intent(context, MessageListActivity.class);
+                intent.putExtra("sellerUid", sellerUid);
+                startActivity(intent);
             }
         };
     }
