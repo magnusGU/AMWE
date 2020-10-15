@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -26,7 +27,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         if(viewType==MESSAGE_SENT){
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_sent_message, parent, false);
@@ -66,7 +66,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     /*If messages author is current user, place it to the right otherwise place it to the left
     * */
     Message message = messages.get(position);
-    if(message.getAuthorId().equals(Database.getCurrentUser().toString())){
+    if(message.getAuthorId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
         return MESSAGE_SENT;
     }
     else return MESSAGE_RECEIVED;

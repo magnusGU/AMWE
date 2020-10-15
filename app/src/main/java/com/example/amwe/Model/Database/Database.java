@@ -243,9 +243,30 @@ public class Database {
         return true;
     }
 
-    static public void addChat(String text, String uid) {
-        Message message = new Message (text, uid);
-        database.getReference().child("chat").child(uid).setValue(message);
+    static public void addChat(String sender, String receiver) {
+        DatabaseReference db = getDatabaseReference();
+        DatabaseReference chats = getDatabaseReference().child("chat_room");
+
+        final String key = sender + receiver;
+
+        db.child("/chat_room/" + key).setValue(true);
+    }
+
+    static public void useChat(String text, String sender, String receiver) {
+
+        DatabaseReference db = getDatabaseReference();
+        DatabaseReference chats = getDatabaseReference().child("chat");
+        final String key = chats.push().getKey();
+
+        Message message = new Message (text, sender);
+        Map<String, String> map = new HashMap<>();
+        map.put("message", text);
+        map.put("sender", sender);
+        map.put("reciever", receiver);
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/chat/" + key, map);
+        db.updateChildren(childUpdates);
     }
 
 }

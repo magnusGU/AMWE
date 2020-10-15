@@ -19,6 +19,7 @@ import androidx.cardview.widget.CardView;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -27,6 +28,7 @@ import java.text.DecimalFormat;
 
 public class ListingPageActivity extends AppCompatActivity {
     ValueEventListener valueEventListener;
+    String sellerUid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +120,9 @@ public class ListingPageActivity extends AppCompatActivity {
                 changeIcon(bookId, favourite);
                 favourite.setOnClickListener(addToFavourites(bookId, favourite));
 
+                ImageButton messageButton = findViewById(R.id.messageSellerButton);
+                messageButton.setOnClickListener(startConversation());
+
                 Button deleteButton = findViewById(R.id.delete_button);
                 deleteButton.setOnClickListener(deleteListing(bookId));
 
@@ -151,6 +156,7 @@ public class ListingPageActivity extends AppCompatActivity {
                 for (DataSnapshot item : snapshot.getChildren()){
                     if (item.child("listings").hasChild(bookId)){
                         sellerName.setText((String) item.child("name").getValue());
+                        sellerUid = item.getKey();
                         try {
                             ImageView sellerPicture = findViewById(R.id.seller_picture);
                             byte[] decodedString = Base64.decode((String) item.child("userImage").getValue(), Base64.DEFAULT);
@@ -334,5 +340,14 @@ public class ListingPageActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+    }
+
+    private View.OnClickListener startConversation() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Database.addChat(FirebaseAuth.getInstance().getCurrentUser().getUid(), sellerUid);
+            }
+        };
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -52,10 +53,10 @@ public class MessageListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText editText = findViewById(R.id.edittext_chatbox);
-                String messageText = editText.toString();
+                String messageText = editText.getText().toString();
 
                 if (!messageText.equals("")) {
-                    Database.addChat(messageText, Database.getCurrentUser().toString());
+                    Database.addChat(messageText, FirebaseAuth.getInstance().getCurrentUser().getUid());
                 }
                 /*
                 Message newMessage = new Message(editText.getText().toString(), Database.getCurrentUser().toString());
