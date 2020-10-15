@@ -94,10 +94,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                contact= (String) i.child("sender").getValue();
 
            }
-
+            else{
                 contact = (String) i.child("reciever").getValue();
 
-            }
+            }}
 
         /*        if (i.child("reciever").getValue().equals(i.child("sender").getValue())){
                     throw new IllegalArgumentException("Database Error... Sender and reciever cant be the same person");
