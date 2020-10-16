@@ -167,7 +167,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_condition" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_condition_parent" />
 
             <EditText
                 android:id="@+id/input_ISBN"
@@ -189,24 +189,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/input_edition" />
 
-            <EditText
-                android:id="@+id/input_condition"
-                android:layout_width="0dp"
+
+            <RelativeLayout
+                android:id="@+id/edit_condition_parent"
+                android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:background="@drawable/et_bg"
-                android:ems="10"
-                android:hint="Skick"
-                android:inputType="textPersonName"
-                android:padding="16dp"
-                android:textSize="18sp"
+                android:paddingLeft="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_ISBN" />
+                app:layout_constraintTop_toBottomOf="@+id/input_ISBN">
+
+                <Spinner
+                    android:id="@+id/edit_condition"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:dropDownWidth="match_parent"
+                    android:spinnerMode="dialog"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </RelativeLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

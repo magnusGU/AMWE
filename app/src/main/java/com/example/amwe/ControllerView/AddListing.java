@@ -3,8 +3,6 @@ package com.example.amwe.ControllerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,9 +10,11 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,9 +31,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
@@ -56,7 +57,16 @@ public class AddListing extends AppCompatActivity {
         EditText isbn = findViewById(R.id.input_ISBN);
         EditText description = findViewById(R.id.input_description);
         EditText price = findViewById(R.id.input_price);
-        EditText condition = findViewById(R.id.input_condition);
+
+        List<String> bookConditions = new ArrayList<>();
+        bookConditions.add("Nyskick");
+        bookConditions.add("Använd");
+        bookConditions.add("Sliten");
+        Spinner condition = findViewById(R.id.edit_condition);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bookConditions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        condition.setAdapter(adapter);
+
 
         //TODO: Some blanks to fill in: image, price, condition
 
@@ -157,12 +167,15 @@ public class AddListing extends AppCompatActivity {
                                         final EditText isbn,
                                         final EditText description,
                                         final EditText price,
-                                        final EditText condition) {
+                                        final Spinner condition) {
+
+        System.out.println(condition.getSelectedItem());
+
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (conditions(title, author, edition, isbn, price, condition)) {
+                if (conditions(title, author, edition, isbn, price)) {
 
                     DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
                     String dateString = dateFormat.format(new Date());
@@ -205,9 +218,7 @@ public class AddListing extends AppCompatActivity {
                         e.printStackTrace();
                         return;
                     } catch (NullPointerException e){
-                        Toast toast = new Toast(getApplicationContext());
-                        toast.setText("Foto är obligatoriskt");
-                        toast.show();
+                        Toast.makeText(getApplicationContext(), "Foto är obligatoriskt", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -220,27 +231,23 @@ public class AddListing extends AppCompatActivity {
                             base64Photo,
                             Integer.parseInt(price.getText().toString()),
                             null,
-                            condition.getText().toString(),
+                            (String) condition.getSelectedItem(),
                             dateString);
 
                     Database.insertNewListing(newBook);
+                    Toast.makeText(getApplicationContext(), "Annons uppladdad", Toast.LENGTH_SHORT).show();
                     finish();
-
-                    Toast toast = new Toast(getApplicationContext());
-                    toast.setText("Annons uppladdad");
-                    toast.show();
                 }
             }
         };
     }
 
-    private boolean conditions(EditText title, EditText author, EditText edition, EditText isbn, EditText price, EditText condition){
+    private boolean conditions(EditText title, EditText author, EditText edition, EditText isbn, EditText price){
         String sTitle = title.getText().toString();
         String sAuthor = author.getText().toString();
         String sEdition = edition.getText().toString();
         String sIsbn = isbn.getText().toString();
         String sPrice = price.getText().toString();
-        String sCondition = condition.getText().toString();
 
         if (sTitle.isEmpty()){
             title.setError("Titel är obligatorisk");
@@ -264,10 +271,6 @@ public class AddListing extends AppCompatActivity {
         }
         if (sIsbn.length() != 13 && sIsbn.length() != 10){
             isbn.setError("ISBN ej korrekt");
-            return false;
-        }
-        if (sCondition.isEmpty()){
-            condition.setError("Skick är obligatorisk");
             return false;
         }
         if (sPrice.isEmpty()){
