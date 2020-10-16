@@ -36,7 +36,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/lastMessageText"
                 app:layout_constraintEnd_toStartOf="@+id/textView9"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toEndOf="@+id/message_Profile"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -53,10 +53,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textView9"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView5" />
+                app:layout_constraintStart_toEndOf="@+id/message_Profile" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/message_Profile"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="8dp"

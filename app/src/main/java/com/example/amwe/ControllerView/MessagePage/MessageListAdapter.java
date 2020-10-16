@@ -40,8 +40,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             return new ReceivedMessageHolder(v);
         }
 
-        //Temporary
-    return null;
+
+    throw new IllegalArgumentException("ViewType is not defined. Message was not sent or received");
     }
 
 

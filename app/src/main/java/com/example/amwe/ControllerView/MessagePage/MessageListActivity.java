@@ -84,6 +84,7 @@ public class MessageListActivity extends AppCompatActivity {
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messageList.clear();
                 for (DataSnapshot item : snapshot.getChildren()){
                     messageList.add(item);
                 }

@@ -2,9 +2,14 @@ package com.example.amwe.ControllerView.MessagePage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.SplittableRandom;
 
 /**
  * This class is intended as the adapter of the recycleview that will show recent messages by Author.
@@ -41,7 +47,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         private final TextView textViewTitle;
         private final TextView lastMessageText;
         private final TextView messageContact;
+        private final ImageView messageProfile;
         private String contact;
+        private CharSequence lastMessage;
+        private boolean isLastSenderCurrentUser;
 
 
         /**
@@ -54,6 +63,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             textViewTitle = itemView.findViewById(R.id.messageContact);
             lastMessageText=itemView.findViewById(R.id.lastMessageText);
             messageContact=itemView.findViewById(R.id.messageContact);
+            messageProfile=itemView.findViewById(R.id.message_Profile);
+
         }
 
     }
@@ -91,10 +102,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             }
         });*/
         for (DataSnapshot i:item.getChildren()) {
+
             DatabaseReference databaseReference = Database.getDatabase().getReference();
             if (i.child("sender").getValue()!=null&&FirebaseAuth.getInstance().getCurrentUser().getUid()!=null) {
 
-                holder.lastMessageText.setText((String) i.child("message").getValue());
+
 
            if (i.child("sender").getValue().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                System.out.println("Detta är sändaren " + i.child("sender").getValue() + "Detta är mottagaren" + FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -102,19 +114,23 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                System.out.println(contact);
                System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
+               holder.isLastSenderCurrentUser=true;
            }
             else{
                contact= (String) i.child("sender").getValue();
                System.out.println("Reciever" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                System.out.println(contact);
                System.out.println("Reciever" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
+               holder.isLastSenderCurrentUser=false;
             }}
 
         /*        if (i.child("reciever").getValue().equals(i.child("sender").getValue())){
                     throw new IllegalArgumentException("Database Error... Sender and reciever cant be the same person");
             }*/
+
+            holder.lastMessage= (CharSequence) i.child("message").getValue();
+
+
         }
         holder.contact=contact;
         DatabaseReference reference = Database.getDatabaseReference();
@@ -122,7 +138,27 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String prefix;
+                if (holder.isLastSenderCurrentUser){
+                    prefix="Du: ";
+                }
+                else {
+                    prefix= (String)snapshot.child("name").getValue() + ":" + " ";
+                }
+
+                holder.lastMessageText.setText(prefix+holder.lastMessage);
                 holder.messageContact.setText((String)snapshot.child("name").getValue());
+                if (snapshot.child("userImage").getValue()!=null) {
+                byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
+
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                    holder.messageProfile.setImageBitmap(bitmap);
+                }
+                else{
+                    Drawable d = context.getResources().getDrawable(R.drawable.ic_baseline_person_24);
+                    holder.messageProfile.setImageDrawable(d);
+                }
             }
 
             @Override
