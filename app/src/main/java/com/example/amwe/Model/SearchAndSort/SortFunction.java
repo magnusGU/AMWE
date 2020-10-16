@@ -1,9 +1,5 @@
 package com.example.amwe.Model.SearchAndSort;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.example.amwe.Model.Items.Item;
 
 import java.text.DateFormat;
@@ -43,7 +39,6 @@ public class SortFunction {
     /**
      * Sorts the current list by price descending order, from highest to lowest.
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void sortPriceReversed() {
         Collections.sort(list, new Comparator<Item>() {
             @Override
@@ -69,7 +64,6 @@ public class SortFunction {
      * Sorts the current list alphabetically in descending order.
      * Not case sensitive.
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void sortAlphabeticallyReversed() {
         Collections.sort(list, new Comparator<Item>() {
             @Override
@@ -103,7 +97,6 @@ public class SortFunction {
      * Sorts the current list by date in descending order.
      *
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void sortDateReversed() {
         Collections.sort(list, new Comparator<Item>() {
             @Override

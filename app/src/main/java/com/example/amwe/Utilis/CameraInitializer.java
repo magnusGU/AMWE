@@ -2,9 +2,7 @@ package com.example.amwe.Utilis;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 
 import com.example.amwe.BuildConfig;
@@ -32,7 +30,6 @@ public class CameraInitializer {
      * @return a .jpg File that is unique and used to store an image
      * @throws IOException Exception that is needed to access hard drive of device, because of createImageFile().
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public File createPhotoFile() throws IOException {
         ImageFile file = new ImageFile(storageDir);
         this.photoFile = file.createImageFile();
