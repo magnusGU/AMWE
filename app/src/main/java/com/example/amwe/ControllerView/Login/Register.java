@@ -55,6 +55,11 @@ public class Register extends AppCompatActivity {
         mConfirm.setOnClickListener(register());
     }
 
+    /**
+     * Opens the gallery on the phone from where user can choose an image.
+     *
+     * @return A View.OnClickListener that should be applied to the UploadImage-button.
+     */
     private View.OnClickListener uploadImage() {
         return new View.OnClickListener() {
             @Override
@@ -98,7 +103,7 @@ public class Register extends AppCompatActivity {
             mProfilePicture.setImageBitmap(dstBmp);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -155,7 +160,7 @@ public class Register extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                         return;
-                    } catch (NullPointerException e){
+                    } catch (NullPointerException e) {
                         e.printStackTrace();
                         return;
                     }
@@ -188,8 +193,9 @@ public class Register extends AppCompatActivity {
 
     /**
      * Checks if the conditions to create an account are fulfilled.
-     * @param name The complete name of the user.
-     * @param email The email address that the user wants to register.
+     *
+     * @param name      The complete name of the user.
+     * @param email     The email address that the user wants to register.
      * @param password1 The password that the user wants to have.
      * @param password2 The confirmation of the password that the user wants to have.
      * @return True if conditions are fulfilled, else false.
@@ -199,7 +205,7 @@ public class Register extends AppCompatActivity {
             mName.setError("Fullständigt namn är obligatoriskt");
             return false;
         }
-        if (!name.matches(("^[a-zA-Z\\s]*$"))) {
+        if (!name.matches(("^[a-zA-ZåäöÅÄÖ\\s]*$"))) {
             mName.setError("Namn får endast innehålla bokstäver");
             return false;
         }

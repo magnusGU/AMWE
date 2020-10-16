@@ -40,6 +40,7 @@ public class Settings extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     Uri imageUri;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +82,12 @@ public class Settings extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Opens the gallery on the phone from where user can choose an image.
+     *
+     * @return A View.OnClickListener that should be applied to the UploadImage-button.
+     */
     private View.OnClickListener uploadImage() {
         return new View.OnClickListener() {
             @Override
@@ -93,6 +100,7 @@ public class Settings extends AppCompatActivity {
             }
         };
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -124,9 +132,17 @@ public class Settings extends AppCompatActivity {
             mProfilePicture.setImageBitmap(dstBmp);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
+
+    /**
+     * Saves the changes made to the profile.
+     *
+     * @return A View.OnClickListner that should be applied to the save-button.
+     */
     private View.OnClickListener save() {
         return new View.OnClickListener() {
             @Override
@@ -194,6 +210,7 @@ public class Settings extends AppCompatActivity {
         };
     }
 
+
     /**
      * Checks if the conditions to create an account are fulfilled.
      *
@@ -249,6 +266,7 @@ public class Settings extends AppCompatActivity {
 
         return true;
     }
+
 
     /**
      * Signs out the current user from the application.
