@@ -1,6 +1,7 @@
 package com.example.amwe.ControllerView.MessagePage;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,6 +61,7 @@ public class MessageListActivity extends AppCompatActivity {
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 EditText editText = findViewById(R.id.edittext_chatbox);

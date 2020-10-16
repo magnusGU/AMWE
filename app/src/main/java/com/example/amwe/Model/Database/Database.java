@@ -249,12 +249,14 @@ public class Database {
     }
 
     static public void addChat(String sender, String receiver) {
+        List<String> sortList= new ArrayList<>();
         DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
+        sortList.add(sender);
+        sortList.add(receiver);
+        Collections.sort(sortList);
 
-        final String key = sender + receiver;
-
-        db.child("/chat_room/" + key).setValue(true);
+        db.child("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/").setValue(true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
