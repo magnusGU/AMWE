@@ -67,13 +67,11 @@ public class MessagesPage extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                items.clear();
                 for (DataSnapshot item:snapshot.getChildren()){
                     if (item.toString().contains(FirebaseAuth.getInstance().getUid())){
                          items.add(item);
-
-
                         }
-
                     }
                 chatRoomAdapter.notifyDataSetChanged();
 
