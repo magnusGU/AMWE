@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -58,7 +57,7 @@ public class Settings extends AppCompatActivity {
                     byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                     mProfilePicture.setImageBitmap(bitmap);
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -72,7 +71,7 @@ public class Settings extends AppCompatActivity {
                 newPassword2 = findViewById(R.id.new_password2);
 
                 Button saveButton = findViewById(R.id.register_button);
-                saveButton.setOnClickListener(save(snapshot));
+                saveButton.setOnClickListener(save());
             }
 
             @Override
@@ -103,70 +102,94 @@ public class Settings extends AppCompatActivity {
             Bitmap srcBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
 
             Bitmap dstBmp;
-            if (srcBmp.getWidth() >= srcBmp.getHeight()){
+            if (srcBmp.getWidth() >= srcBmp.getHeight()) {
 
                 dstBmp = Bitmap.createBitmap(
                         srcBmp,
-                        srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                        srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
                         0,
                         srcBmp.getHeight(),
                         srcBmp.getHeight()
                 );
 
-            }else{
+            } else {
                 dstBmp = Bitmap.createBitmap(
                         srcBmp,
                         0,
-                        srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                        srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
                         srcBmp.getWidth(),
                         srcBmp.getWidth()
                 );
             }
-            mProfilePicture.setImageBitmap(srcBmp);
-        } catch (IOException e){
+            mProfilePicture.setImageBitmap(dstBmp);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private View.OnClickListener save(final DataSnapshot snapshot) {
+    private View.OnClickListener save() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                String sName = name.getText().toString();
-                String sEMail = eMail.getText().toString();
-                String sPassword = newPassword1.getText().toString();
-                String sPassword2 = newPassword2.getText().toString();
+                if (conditions()) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                user.updateEmail(eMail.getText().toString());
+                    String sName = name.getText().toString();
+                    String sPassword1 = newPassword1.getText().toString();
+                    String sPassword2 = newPassword2.getText().toString();
 
-                Database.getCurrentUser().child("name").setValue(sName);
-                final String base64Photo;
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                            getApplicationContext().getContentResolver(),
-                            imageUri);
+                    user.updateEmail(eMail.getText().toString());
 
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+                    if (!sPassword1.isEmpty() || !sPassword2.isEmpty()) {
+                        updatePassword(sPassword1, sPassword2, user);
+                    }
 
-                    byte[] array = stream.toByteArray();
-                    base64Photo = Base64.encodeToString(array, 0);
+                    Database.getCurrentUser().child("name").setValue(sName);
+                    final String base64Photo;
+                    try {
+                        Bitmap srcBmp = MediaStore.Images.Media.getBitmap(
+                                getApplicationContext().getContentResolver(),
+                                imageUri);
+
+                        Bitmap dstBmp;
+                        if (srcBmp.getWidth() >= srcBmp.getHeight()) {
+
+                            dstBmp = Bitmap.createBitmap(
+                                    srcBmp,
+                                    srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
+                                    0,
+                                    srcBmp.getHeight(),
+                                    srcBmp.getHeight()
+                            );
+
+                        } else {
+                            dstBmp = Bitmap.createBitmap(
+                                    srcBmp,
+                                    0,
+                                    srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
+                                    srcBmp.getWidth(),
+                                    srcBmp.getWidth()
+                            );
+                        }
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        dstBmp.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+
+                        byte[] array = stream.toByteArray();
+                        base64Photo = Base64.encodeToString(array, 0);
 
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }catch (NullPointerException e){
-                    e.printStackTrace();
-                    return;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return;
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    Database.getCurrentUser().child("userImage").setValue(base64Photo);
                 }
-
-                Database.getCurrentUser().child("userImage").setValue(base64Photo);
-
-                updatePassword(sEMail, sPassword, sPassword2, user);
-
             }
         };
     }
@@ -174,40 +197,57 @@ public class Settings extends AppCompatActivity {
     /**
      * Checks if the conditions to create an account are fulfilled.
      *
-     * @param email     The email address that the user wants to register.
-     * @param password1 The password that the user wants to have.
-     * @param password2 The confirmation of the password that the user wants to have.
+     * @param sPassword1 The password that the user wants to have.
+     * @param sPassword2 The confirmation of the password that the user wants to have.
      */
-    private void updatePassword(String email, String password1, String password2, FirebaseUser user) {
-        if (TextUtils.isEmpty(email)) {
-            eMail.setError("E-post är obligatoriskt");
+    private void updatePassword(String sPassword1, String sPassword2, FirebaseUser user) {
+
+        if (sPassword1.length() < 6) {
+            newPassword1.setError("Lösenord måste vara minst 6 tecken långt");
             return;
         }
 
-        if (TextUtils.isEmpty(password1)) {
-            newPassword1.setError("Lösenord är obligatoriskt");
-            return;
-        }
-
-        if (password1.length() <= 6) {
-            newPassword1.setError("Lösenord måste vara mer än 6 tecken");
-        }
-
-        if (TextUtils.isEmpty(password2)) {
-            newPassword2.setError("Lösenord är obligatoriskt");
-            return;
-        }
-
-        if (!password1.equals(password2)) {
+        if (!sPassword1.equals(sPassword2)) {
             newPassword2.setError("Lösenord ej samma");
             return;
         }
 
-        user.updatePassword(password1);
-        Toast.makeText(Settings.this, "Ändringar har sparats", Toast.LENGTH_SHORT).show();
-
+        user.updatePassword(sPassword1);
         newPassword1.setText(null);
         newPassword2.setText(null);
+        Toast.makeText(getApplicationContext(), "Lösenord sparat", Toast.LENGTH_SHORT).show();
+    }
+
+
+    /**
+     * Checks if the conditions to update an account are fulfilled.
+     *
+     * @return True if conditions are fulfilled, else false.
+     */
+    private boolean conditions() {
+        String sName = name.getText().toString();
+        String sEmail = eMail.getText().toString();
+
+        if (sName.isEmpty() || !sName.contains(" ")) {
+            name.setError("Fullständigt namn är obligatoriskt");
+            return false;
+        }
+        if (!sName.matches(("^[a-zA-ZåäöÅÄÖ\\s]*$"))) {
+            name.setError("Namn får endast innehålla bokstäver");
+            return false;
+        }
+        if (sEmail.isEmpty()) {
+            eMail.setError("E-post är obligatorisk");
+            return false;
+        }
+        if (!sEmail.contains("@") || !sEmail.contains(".")) {
+            eMail.setError("E-post ej korrekt");
+            return false;
+        }
+
+        Toast.makeText(getApplicationContext(), "Ändringar sparade", Toast.LENGTH_SHORT).show();
+
+        return true;
     }
 
     /**

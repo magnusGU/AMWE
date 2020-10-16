@@ -2,13 +2,9 @@ package com.example.amwe.ControllerView.Login;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -124,12 +120,33 @@ public class Register extends AppCompatActivity {
                 if (conditions(name, email, password1, password2)) {
                     final String base64Photo;
                     try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                        Bitmap srcBmp = MediaStore.Images.Media.getBitmap(
                                 getApplicationContext().getContentResolver(),
                                 imageUri);
 
+                        Bitmap dstBmp;
+                        if (srcBmp.getWidth() >= srcBmp.getHeight()) {
+
+                            dstBmp = Bitmap.createBitmap(
+                                    srcBmp,
+                                    srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
+                                    0,
+                                    srcBmp.getHeight(),
+                                    srcBmp.getHeight()
+                            );
+
+                        } else {
+                            dstBmp = Bitmap.createBitmap(
+                                    srcBmp,
+                                    0,
+                                    srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
+                                    srcBmp.getWidth(),
+                                    srcBmp.getWidth()
+                            );
+                        }
+
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+                        dstBmp.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 
                         byte[] array = stream.toByteArray();
 
@@ -152,17 +169,14 @@ public class Register extends AppCompatActivity {
                                         .Builder().setDisplayName(name);
                                 task.getResult().getUser().updateProfile(updateinfo.build());
                                 Database.addUser(fAuth.getCurrentUser().getUid(), name, base64Photo);
-                                startActivity(new Intent(Register.this, EmailLogin.class));
+                                startActivity(new Intent(Register.this, Login.class));
                                 fAuth.signOut();
 
-                                Toast toast = new Toast(getApplicationContext());
-                                toast.setText("Konto registrerat");
-                                toast.show();
+                                Toast.makeText(getApplicationContext(), "Konto registrerat", Toast.LENGTH_SHORT).show();
+
 
                             } else {
-                                Toast toast = new Toast(getApplicationContext());
-                                toast.setText("Registrering misslyckades");
-                                toast.show();
+                                Toast.makeText(getApplicationContext(), "Registrering misslyckades", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

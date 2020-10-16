@@ -96,16 +96,16 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
                 holder.lastMessageText.setText((String) i.child("message").getValue());
 
-           if (i.child("sender").getValue()!=FirebaseAuth.getInstance().getCurrentUser().getUid()){
-
-               contact= (String) i.child("sender").getValue();
+           if (i.child("sender").getValue().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+               System.out.println("Detta är sändaren " + i.child("sender").getValue() + "Detta är mottagaren" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+               contact = (String) i.child("reciever").getValue();
                System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                System.out.println(contact);
                System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
            }
             else{
-                contact = (String) i.child("reciever").getValue();
+               contact= (String) i.child("sender").getValue();
                System.out.println("Reciever" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                System.out.println(contact);
                System.out.println("Reciever" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");

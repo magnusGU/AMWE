@@ -1,8 +1,10 @@
 package com.example.amwe.Model.Database;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
@@ -16,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,7 @@ import java.util.Map;
  */
 public class Database {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static private boolean chatAlreadyExists=false;
 
     /**
      * private constructor,
@@ -252,8 +257,9 @@ public class Database {
         db.child("/chat_room/" + key).setValue(true);
     }
 
-    static public void useChat(String text, String sender, String receiver) {
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    static public void useChat(String text, final String sender, final String receiver) {
+        List<String> sortList= new ArrayList<>();
         DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
         final String key = chats.push().getKey();
@@ -264,9 +270,21 @@ public class Database {
         map.put("sender", sender);
         map.put("reciever", receiver);
 
+        sortList.add(sender);
+        sortList.add(receiver);
+        Collections.sort(sortList);
+
+
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, map);
+
+
+
+        if(!chatAlreadyExists){
+        childUpdates.put("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/" + key, map);}
+
+
         db.updateChildren(childUpdates);
     }
+
 
 }
