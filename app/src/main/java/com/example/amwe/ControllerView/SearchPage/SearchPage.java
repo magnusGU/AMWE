@@ -1,6 +1,5 @@
 package com.example.amwe.ControllerView.SearchPage;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,7 +10,6 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -87,7 +85,6 @@ public class SearchPage extends Fragment {
      */
     private PopupMenu.OnMenuItemClickListener popupMenuListener() {
         return new PopupMenu.OnMenuItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 // All names are reset to remove direction, also booleans are reset when another

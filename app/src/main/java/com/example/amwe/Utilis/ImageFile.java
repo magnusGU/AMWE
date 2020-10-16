@@ -1,9 +1,5 @@
 package com.example.amwe.Utilis;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -30,7 +26,6 @@ public class ImageFile {
      * @return File. A new file with a unique name that is stored on the internal hard drive.
      * @throws IOException because of accessing the hard drive of the device.
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());

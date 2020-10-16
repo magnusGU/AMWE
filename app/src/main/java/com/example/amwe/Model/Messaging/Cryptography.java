@@ -1,9 +1,5 @@
 package com.example.amwe.Model.Messaging;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
@@ -28,7 +24,6 @@ public class Cryptography {
      * @param key - the receiver's private key.
      * @return - the message decrypted turned into a string.
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String decrypt(byte[] encrypted, PrivateKey key) {
 
         byte[] decrypted = (new BigInteger(encrypted)).modPow(key.decryptingBigInt,key.n).toByteArray();
