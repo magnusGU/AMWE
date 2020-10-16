@@ -4,7 +4,6 @@ import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
@@ -259,7 +258,6 @@ public class Database {
         db.child("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/").setValue(true);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     static public void useChat(String text, final String sender, final String receiver) {
         List<String> sortList= new ArrayList<>();
         DatabaseReference db = getDatabaseReference();

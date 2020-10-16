@@ -18,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.R;
@@ -33,7 +32,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
@@ -42,8 +40,6 @@ public class AddListing extends AppCompatActivity {
     private File photoFile;
     private Uri photoURI;
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +110,6 @@ public class AddListing extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private View.OnClickListener camera() {
         return new View.OnClickListener() {
             @Override

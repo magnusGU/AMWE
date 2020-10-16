@@ -1,12 +1,14 @@
 package com.example.amwe.Model.Messaging;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Author: William
+ *
+ * Class used for encryption and decryption according to RSA cryptography.
+ * Objects of this class are created and used in code where cryptography needs to be used.
+ */
 public class Cryptography {
 
     /**
@@ -28,7 +30,6 @@ public class Cryptography {
      * @param key - the receiver's private key.
      * @return - the message decrypted turned into a string.
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String decrypt(byte[] encrypted, PrivateKey key) {
 
         byte[] decrypted = (new BigInteger(encrypted)).modPow(key.decryptingBigInt,key.n).toByteArray();
