@@ -82,10 +82,9 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            System.out.println("Signed in");
                             startActivity(new Intent(Login.this, MainActivity.class));
                         } else {
-                            Toast.makeText(getApplicationContext(), "Inloggning misslyckades", Toast.LENGTH_SHORT);
+                            Toast.makeText(getApplicationContext(), "Inloggning misslyckades", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
