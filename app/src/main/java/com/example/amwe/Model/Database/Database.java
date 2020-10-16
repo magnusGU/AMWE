@@ -1,8 +1,10 @@
 package com.example.amwe.Model.Database;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
@@ -16,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -253,8 +257,9 @@ public class Database {
         db.child("/chat_room/" + key).setValue(true);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     static public void useChat(String text, final String sender, final String receiver) {
-
+        List<String> sortList= new ArrayList<>();
         DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
         final String key = chats.push().getKey();
@@ -265,28 +270,18 @@ public class Database {
         map.put("sender", sender);
         map.put("reciever", receiver);
 
+        sortList.add(sender);
+        sortList.add(receiver);
+        Collections.sort(sortList);
+
+
         Map<String, Object> childUpdates = new HashMap<>();
 
-        //Tanken med detta är att kolla om en chat redan existerar men den kallas ej på.
-        DatabaseReference currentChat = getDatabaseReference().child("chat_room").child(receiver+sender);
-        currentChat.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot!=null){
-                    chatAlreadyExists=true;
-                }
-            }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         if(!chatAlreadyExists){
-        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, map);}
-       else {childUpdates.put("/chat_room/" + "/" + receiver+sender + "/" + key, map);}
+        childUpdates.put("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/" + key, map);}
+
 
         db.updateChildren(childUpdates);
     }
