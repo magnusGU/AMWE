@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +75,11 @@ public class MessageListActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/"+ senderUid + "" + receiverUid);
+        List<String> sortList= new ArrayList<>();
+        sortList.add(senderUid);
+        sortList.add(receiverUid);
+        Collections.sort(sortList);
+        DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/"+ "/" + sortList.get(0) + sortList.get(1) + "/");
 
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
