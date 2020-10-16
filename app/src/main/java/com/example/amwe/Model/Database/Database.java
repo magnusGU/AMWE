@@ -25,6 +25,7 @@ import java.util.Map;
  */
 public class Database {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static private boolean chatAlreadyExists=false;
 
     /**
      * private constructor,
@@ -252,7 +253,7 @@ public class Database {
         db.child("/chat_room/" + key).setValue(true);
     }
 
-    static public void useChat(String text, String sender, String receiver) {
+    static public void useChat(String text, final String sender, final String receiver) {
 
         DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
@@ -265,8 +266,30 @@ public class Database {
         map.put("reciever", receiver);
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, map);
+
+        //Tanken med detta är att kolla om en chat redan existerar men den kallas ej på.
+        DatabaseReference currentChat = getDatabaseReference().child("chat_room").child(receiver+sender);
+        currentChat.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot!=null){
+                    chatAlreadyExists=true;
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        if(!chatAlreadyExists){
+        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, map);}
+       else {childUpdates.put("/chat_room/" + "/" + receiver+sender + "/" + key, map);}
+
         db.updateChildren(childUpdates);
     }
+
 
 }
