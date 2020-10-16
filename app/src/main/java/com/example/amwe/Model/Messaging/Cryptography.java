@@ -7,6 +7,12 @@ import androidx.annotation.RequiresApi;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Author: William
+ *
+ * Class used for encryption and decryption according to RSA cryptography.
+ * Objects of this class are created and used in code where cryptography needs to be used.
+ */
 public class Cryptography {
 
     /**
