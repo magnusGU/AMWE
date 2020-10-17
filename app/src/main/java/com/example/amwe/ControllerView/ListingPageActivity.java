@@ -90,6 +90,10 @@ public class ListingPageActivity extends AppCompatActivity {
                 String titleName = book.getTitle();
                 title.setText(titleName);
 
+                TextView timeStamp = findViewById(R.id.listing_timestamp);
+                String time=book.getDate();
+                timeStamp.setText(time);
+
                 TextView isbn = findViewById(R.id.listing_page_isbn);
                 long newIsbn = book.getIsbn();
                 isbn.setText(String.valueOf(newIsbn));
