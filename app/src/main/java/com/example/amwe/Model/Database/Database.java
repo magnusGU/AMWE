@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.amwe.ControllerView.MessagePage.ChatRoomAdapter;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
@@ -59,12 +60,18 @@ public class Database {
     }
 
     /**
-     * @return the user ID for the user who is currently logged in
+     * @return the the databaseReference for user ID for the user who is currently logged in
      */
-    static public DatabaseReference getCurrentUser() {
+    static public DatabaseReference getRefCurrentUser() {
         return getDatabaseReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
+    /**
+     * @return the String user ID for the user who is currently logged in
+     */
+    static public String getCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
     /**
      * This method makes two updates in the database, one in the common listing dataset, and one
      * in the user-listings specific dataset, so all users can see the update to a listing, and so that
@@ -107,7 +114,7 @@ public class Database {
         childUpdates.put("/listings/" + key, entryValues);
         db.updateChildren(childUpdates);
 
-        final DatabaseReference currentUserListings = getCurrentUser().child("listings");
+        final DatabaseReference currentUserListings = getRefCurrentUser().child("listings");
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -130,7 +137,7 @@ public class Database {
      */
     static public void deleteListing(String id) {
         Database.getListings().child(id).removeValue();
-        Database.getCurrentUser().child("listings").child(id).removeValue();
+        Database.getRefCurrentUser().child("listings").child(id).removeValue();
     }
 
     /**
@@ -203,7 +210,7 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 bookListings.clear();
                 for (final DataSnapshot item : snapshot.getChildren()) {
-                    DatabaseReference favouriteListings = getCurrentUser().child(child);
+                    DatabaseReference favouriteListings = getRefCurrentUser().child(child);
                     favouriteListings.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -246,14 +253,25 @@ public class Database {
     }
 
     static public void addChat(String sender, String receiver) {
-        List<String> sortList= new ArrayList<>();
-        DatabaseReference db = getDatabaseReference();
-        DatabaseReference chats = getDatabaseReference().child("chat_room");
+        final List<String> sortList= new ArrayList<>();
+        final DatabaseReference chats = getDatabaseReference().child("chat_room");
         sortList.add(sender);
         sortList.add(receiver);
         Collections.sort(sortList);
 
-        db.child("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/").setValue(true);
+        chats.orderByChild("/" + sortList.get(0) + sortList.get(1) + "/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Log.d("TAG", "onDataChange: 1");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     static public void useChat(String text, final String sender, final String receiver) {
@@ -284,5 +302,26 @@ public class Database {
         db.updateChildren(childUpdates);
     }
 
+    static public void getChatRooms(final List<DataSnapshot> items, final ChatRoomAdapter chatRoomAdapter) {
+        DatabaseReference databaseReference =Database.getDatabase().getReference("/chat_room/");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                items.clear();
+                for (DataSnapshot item:snapshot.getChildren()){
+                    if (item.toString().contains(FirebaseAuth.getInstance().getUid())){
+                        items.add(item);
+                    }
+                }
+                chatRoomAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 }

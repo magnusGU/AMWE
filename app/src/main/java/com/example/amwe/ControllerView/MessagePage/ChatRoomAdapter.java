@@ -17,34 +17,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
-import java.util.SplittableRandom;
 
 /**
  * This class is intended as the adapter of the recycleview that will show recent messages by Author.
  * Sort of like Facebook Messenger
  */
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MessageViewHold> {
-    private final List itemList;
+    private final List<DataSnapshot> itemList;
     private Context context;
     private String contact;
-   // private DatabaseReference chatRoomReference;
 
     public ChatRoomAdapter(List<DataSnapshot> messages, Context context) {
         this.itemList = messages;
         this.context = context;
-
+        Database.getChatRooms(messages, this);
     }
 
-
     public static class MessageViewHold extends RecyclerView.ViewHolder {
-        private final TextView textViewTitle;
+        //private final TextView textViewTitle;
         private final TextView lastMessageText;
         private final TextView messageContact;
         private final ImageView messageProfile;
@@ -60,7 +56,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
          */
         public MessageViewHold(@NonNull View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.messageContact);
+            //textViewTitle = itemView.findViewById(R.id.messageContact);
             lastMessageText=itemView.findViewById(R.id.lastMessageText);
             messageContact=itemView.findViewById(R.id.messageContact);
             messageProfile=itemView.findViewById(R.id.message_Profile);
@@ -68,7 +64,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         }
 
     }
-
 
     @NonNull
     @Override
@@ -81,35 +76,16 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     public void onBindViewHolder(@NonNull final MessageViewHold holder, int position) {
         DataSnapshot item= (DataSnapshot) itemList.get(position);
 
-        String receiver;
-
-
-     /*   Query lastQuery=messages.
-
-        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                holder.lastMessageText.setText((String)snapshot.child("message").getValue());
-                if (snapshot.child("sender").getValue()!= FirebaseAuth.getInstance().getCurrentUser().getUid()){
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
         for (DataSnapshot i:item.getChildren()) {
 
             DatabaseReference databaseReference = Database.getDatabase().getReference();
-            if (i.child("sender").getValue()!=null&&FirebaseAuth.getInstance().getCurrentUser().getUid()!=null) {
+            String currentUserName = Database.getCurrentUser();
+            if (i.child("sender").getValue()!=null&&currentUserName!=null) {
 
 
 
-           if (i.child("sender").getValue().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-               System.out.println("Detta är sändaren " + i.child("sender").getValue() + "Detta är mottagaren" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+           if (i.child("sender").getValue().equals(currentUserName)){
+               System.out.println("Detta är sändaren " + i.child("sender").getValue() + "Detta är mottagaren" + currentUserName);
                contact = (String) i.child("reciever").getValue();
                System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                System.out.println(contact);
@@ -129,12 +105,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             }*/
 
             holder.lastMessage= (CharSequence) i.child("message").getValue();
-
-
         }
         holder.contact=contact;
         DatabaseReference reference = Database.getDatabaseReference();
-        reference=reference.child("users").child(contact);
+        reference = reference.child("users").child(contact);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -185,7 +159,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         });
 
     }
-
 
     @Override
     public int getItemCount() {

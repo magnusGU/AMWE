@@ -47,7 +47,7 @@ public class Settings extends AppCompatActivity {
 
         Button logOutButton = findViewById(R.id.sign_out);
         logOutButton.setOnClickListener(logOut());
-        Database.getCurrentUser().addValueEventListener(new ValueEventListener() {
+        Database.getRefCurrentUser().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mProfilePicture = findViewById(R.id.edit_profile_picture);
@@ -145,7 +145,7 @@ public class Settings extends AppCompatActivity {
                         updatePassword(sPassword1, sPassword2, user);
                     }
 
-                    Database.getCurrentUser().child("name").setValue(sName);
+                    Database.getRefCurrentUser().child("name").setValue(sName);
                     final String base64Photo;
                     try {
                         Bitmap srcBmp = MediaStore.Images.Media.getBitmap(
@@ -188,7 +188,7 @@ public class Settings extends AppCompatActivity {
                         return;
                     }
 
-                    Database.getCurrentUser().child("userImage").setValue(base64Photo);
+                    Database.getRefCurrentUser().child("userImage").setValue(base64Photo);
                 }
             }
         };
