@@ -1,6 +1,5 @@
 package com.example.amwe.Model.Database;
 
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -8,8 +7,6 @@ import androidx.annotation.NonNull;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
-import com.example.amwe.Model.Messaging.Message;
-import com.example.amwe.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Author: Ali, Elias, Magnus, William
+ *
  * Static class for communicating with the firebase database
  */
 public class Database {
@@ -142,8 +141,7 @@ public class Database {
      * @param base64Photo
      */
     static public void addUser(String uid, String name, String base64Photo) {
-        User user = new User(name);
-        database.getReference().child("users").child(uid).setValue(user);
+        database.getReference().child("users").child(uid).setValue(name);
         database.getReference().child("users").child(uid).child("userImage").setValue(base64Photo);
     }
 

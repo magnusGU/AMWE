@@ -22,14 +22,22 @@ public class NotebookTest {
     @Test
     public void testToString_returnsEmptyString() {
         assertEquals(notebookTest.toString(),
-                "Listing{id=null, title='null', course='null', description='null', bookImage=null, price=0.0, condition=null, seller=null, date=null}"
+                "Listing{id=null, title='null', course='null', description='null', bookImage=null, price=0.0, condition=null, seller='null', date=null}"
         );
     }
 
     @Test
     public void toMap_OnEmptyClass() {
         Map<String, Object> listingToMap = notebookTest.toMap();
-        assertEquals(listingToMap, new HashMap<String, Object>());
+
+        assertTrue(listingToMap.containsKey("bookImage"));
+        assertTrue(listingToMap.containsKey("condition"));
+        assertTrue(listingToMap.containsKey("date"));
+        assertTrue(listingToMap.containsKey("description"));
+        assertTrue(listingToMap.containsKey("course"));
+        assertTrue(listingToMap.containsKey("price"));
+        assertTrue(listingToMap.containsKey("seller"));
+        assertTrue(listingToMap.containsKey("title"));
     }
 
     @Test
