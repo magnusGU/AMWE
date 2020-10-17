@@ -65,7 +65,14 @@ public class ItemTest {
     @Test
     public void toMap_OnEmptyClass() {
         Map<String, Object> listingToMap = itemMock.toMap();
-        assertEquals(listingToMap, new HashMap<String, Object>());
+        
+        assertTrue(listingToMap.containsKey("title"));
+        assertTrue(listingToMap.containsKey("price"));
+        assertTrue(listingToMap.containsKey("seller"));
+        assertTrue(listingToMap.containsKey("description"));
+        assertTrue(listingToMap.containsKey("condition"));
+        assertTrue(listingToMap.containsKey("date"));
+        assertTrue(listingToMap.containsKey("bookImage"));
     }
 
     @Test
