@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class Database {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    static private boolean chatAlreadyExists=false;
+
 
     /**
      * private constructor,
@@ -295,8 +295,8 @@ public class Database {
 
 
 
-        if(!chatAlreadyExists){
-        childUpdates.put("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/" + key, map);}
+
+        childUpdates.put("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/" + key, map);
 
 
         db.updateChildren(childUpdates);
