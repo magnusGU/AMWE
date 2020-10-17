@@ -350,7 +350,7 @@ public class ListingPageActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Database.addChat(Database.getCurrentUser(), sellerUid);
+                //Database.addChat(Database.getCurrentUser(), sellerUid);
                 Intent intent = new Intent(context, MessageListActivity.class);
                 intent.putExtra("sellerUid", sellerUid);
                 startActivity(intent);

@@ -252,7 +252,7 @@ public class Database {
         return true;
     }
 
-    static public void addChat(String sender, String receiver) {
+    /*static public void addChat(String sender, String receiver) {
         final List<String> sortList= new ArrayList<>();
         final DatabaseReference chats = getDatabaseReference().child("chat_room");
         sortList.add(sender);
@@ -272,7 +272,7 @@ public class Database {
 
             }
         });
-    }
+    }*/
 
     static public void useChat(String text, final String sender, final String receiver) {
         List<String> sortList= new ArrayList<>();
