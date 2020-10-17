@@ -20,9 +20,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MessageListActivity extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
@@ -61,8 +65,13 @@ public class MessageListActivity extends AppCompatActivity {
                 EditText editText = findViewById(R.id.edittext_chatbox);
                 String messageText = editText.getText().toString();
 
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
+                String dateString = df.format(new Date());
+
+
+
                 if (!messageText.equals("")) {
-                    Database.useChat(messageText, senderUid, receiverUid);
+                    Database.useChat(messageText, senderUid, receiverUid,dateString);
                 }
                 editText.setText("");
             }

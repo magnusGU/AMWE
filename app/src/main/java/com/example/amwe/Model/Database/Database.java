@@ -274,7 +274,7 @@ public class Database {
         });
     }*/
 
-    static public void useChat(String text, final String sender, final String receiver) {
+    static public void useChat(String text, final String sender, final String receiver,String timeStamp) {
         List<String> sortList= new ArrayList<>();
         DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
@@ -285,6 +285,7 @@ public class Database {
         map.put("message", text);
         map.put("sender", sender);
         map.put("reciever", receiver);
+        map.put("timeStamp",timeStamp);
 
         sortList.add(sender);
         sortList.add(receiver);

@@ -44,9 +44,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         private final TextView lastMessageText;
         private final TextView messageContact;
         private final ImageView messageProfile;
+        private final TextView messageTimeStamp;
         private String contact;
         private CharSequence lastMessage;
         private boolean isLastSenderCurrentUser;
+        private String timeStamp;
 
 
         /**
@@ -60,6 +62,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             lastMessageText=itemView.findViewById(R.id.lastMessageText);
             messageContact=itemView.findViewById(R.id.messageContact);
             messageProfile=itemView.findViewById(R.id.message_Profile);
+            messageTimeStamp=itemView.findViewById(R.id.message_timeStamp);
 
         }
 
@@ -85,18 +88,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
 
            if (i.child("sender").getValue().equals(currentUserName)){
-               System.out.println("Detta är sändaren " + i.child("sender").getValue() + "Detta är mottagaren" + currentUserName);
                contact = (String) i.child("reciever").getValue();
-               System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-               System.out.println(contact);
-               System.out.println("Sender" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                holder.isLastSenderCurrentUser=true;
            }
             else{
                contact= (String) i.child("sender").getValue();
-               System.out.println("Reciever" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-               System.out.println(contact);
-               System.out.println("Reciever" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                holder.isLastSenderCurrentUser=false;
             }}
 
@@ -105,6 +101,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             }*/
 
             holder.lastMessage= (CharSequence) i.child("message").getValue();
+            holder.timeStamp=(String) i.child("timeStamp").getValue();
         }
         holder.contact=contact;
         DatabaseReference reference = Database.getDatabaseReference();
@@ -122,6 +119,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
                 holder.lastMessageText.setText(prefix+holder.lastMessage);
                 holder.messageContact.setText((String)snapshot.child("name").getValue());
+                holder.messageTimeStamp.setText(holder.timeStamp);
+
                 if (snapshot.child("userImage").getValue()!=null) {
                 byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
 
@@ -148,10 +147,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageListActivity.class);
-                System.out.println("Intent" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                System.out.println(contact);
-                System.out.println("Intent" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
                 intent.putExtra("sellerUid",holder.contact);
 
                 context.startActivity(intent);
