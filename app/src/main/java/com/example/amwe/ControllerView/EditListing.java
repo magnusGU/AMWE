@@ -26,7 +26,6 @@ import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.R;
-import com.example.amwe.Utilis.CameraInitializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
