@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -18,8 +17,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.amwe.R;
+import com.example.amwe.Model.Items.Book;
+import com.example.amwe.Utils.CameraInitializer;
 
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Items.Book;
@@ -50,8 +52,6 @@ public class AddListing extends AppCompatActivity {
     private File photoFile;
     private Uri photoURI;
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,7 +133,6 @@ public class AddListing extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private View.OnClickListener camera() {
         return new View.OnClickListener() {
             @Override

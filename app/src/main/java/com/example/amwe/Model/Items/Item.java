@@ -2,12 +2,12 @@ package com.example.amwe.Model.Items;
 
 import android.content.Intent;
 
-import com.example.amwe.Model.User;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Author: Magnus
+ *
  * This class is the abstract class that represent all the different items in the database.
  * Setters are needed because the database can not use the constructor for some reason.
  */
@@ -17,7 +17,7 @@ public abstract class Item {
     protected String id;
     protected String title;
     protected double price;
-    protected User seller;
+    protected String seller;
     protected String description;
     protected String condition;
     protected String date;
@@ -37,7 +37,7 @@ public abstract class Item {
         return price;
     }
 
-    public User getSeller() {
+    public String getSeller() {
         return seller;
     }
 
@@ -70,7 +70,7 @@ public abstract class Item {
     }
 
     public void setSeller(String seller) {
-        this.seller = new User(seller);
+        this.seller = seller;
     }
 
     public void setDescription(String description) {
@@ -98,7 +98,7 @@ public abstract class Item {
             result.put("title", title);
             result.put("description", description);
             result.put("price", price);
-            result.put("seller", seller.getName());
+            result.put("seller", seller);
             result.put("condition", condition);
             result.put("date", date);
             result.put("bookImage", bookImage);
@@ -132,7 +132,7 @@ public abstract class Item {
         intent.putExtra("bookId", id);
         intent.putExtra("Title", title);
         intent.putExtra("price", price);
-        intent.putExtra("seller", seller.getName());
+        intent.putExtra("seller", seller);
         intent.putExtra("description", description);
         intent.putExtra("condition", condition);
         intent.putExtra("Image", bookImage);

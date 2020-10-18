@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.amwe"
-        minSdkVersion 16
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -47,6 +47,9 @@ dependencies {
 
 android {
     // ...
+    lintOptions {
+        abortOnError false
+    }
     testOptions {
         unitTests.returnDefaultValues = true
     }

@@ -5,7 +5,7 @@ import android.provider.MediaStore;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.amwe.Utilis.CameraInitializer;
+import com.example.amwe.Utils.CameraInitializer;
 
 import org.junit.Test;
 

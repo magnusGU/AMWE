@@ -2,15 +2,14 @@ package com.example.amwe.Model.Items;
 
 import android.content.Intent;
 
-import com.example.amwe.Model.Items.Item;
-import com.example.amwe.Model.User;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Book is a subclass and realization of Item with unique behaviour.
- * @author
+ * Author: Magnus
+ *
+ * This class represents lecture books, therefore authors, edition and isbn are needed extensions
+ * of the superclass
  */
 public class Book extends Item {
 
@@ -33,7 +32,7 @@ public class Book extends Item {
         this.price = price;
         this.condition = condition;
         this.date = date;
-        this.seller = new User(seller);
+        this.seller = seller;
     }
 
 
@@ -53,7 +52,7 @@ public class Book extends Item {
                 ", description='" + description + '\'' +
                 ", bookImage=" + bookImage +
                 ", price=" + price +
-                ", seller=" + seller +
+                ", seller='" + seller + '\'' +
                 '}';
     }
 

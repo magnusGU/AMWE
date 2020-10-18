@@ -9,21 +9,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.List;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
-    private List <Message> messages;
+    private List <DataSnapshot> messages;
     private static final int MESSAGE_SENT = 1;
     private static final int MESSAGE_RECEIVED = 2;
-    public MessageListAdapter(List<Message> messages){
-        this.messages=messages;
 
+    public MessageListAdapter(List<DataSnapshot> messages){
+        this.messages = messages;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
@@ -38,14 +38,15 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             return new ReceivedMessageHolder(v);
         }
 
-        //Temporary
-    return null;
+
+    throw new IllegalArgumentException("ViewType is not defined. Message was not sent or received");
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Message message = (Message) messages.get(position);
+        DataSnapshot message = (DataSnapshot) messages.get(position);
+        message.child("message");
 
         switch (holder.getItemViewType()) {
             case MESSAGE_SENT:
@@ -65,8 +66,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
     /*If messages author is current user, place it to the right otherwise place it to the left
     * */
-    Message message = messages.get(position);
-    if(message.getAuthorId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+    DataSnapshot message = messages.get(position);
+    if((message.child("sender").getValue()).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
         return MESSAGE_SENT;
     }
     else return MESSAGE_RECEIVED;
@@ -82,8 +83,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
-        void bind(Message message) {
-            messageText.setText(message.getMessage());
+        void bind(DataSnapshot message) {
+            messageText.setText((String) message.child("message").getValue());
 
             // Format the stored timestamp into a readable String using method.
 
@@ -103,8 +104,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             //profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
         }
 
-        void bind(Message message) {
-            messageText.setText(message.getMessage());
+        void bind(DataSnapshot message) {
+            messageText.setText((String) message.child("message").getValue());
 
             // Format the stored timestamp into a readable String using method.
             //timeText.setText(Utils.formatDateTime(message.getCreatedAt()));

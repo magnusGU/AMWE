@@ -131,7 +131,9 @@ public class AccountPage extends Fragment {
 
             }
         };
-        Database.getCurrentUser().addValueEventListener(valueEventListener);
+      
+        Database.getRefCurrentUser().addValueEventListener(valueEventListener);
+
     }
 
     @Override

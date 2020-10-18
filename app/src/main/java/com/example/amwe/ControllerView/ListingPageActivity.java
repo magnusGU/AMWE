@@ -21,7 +21,6 @@ import com.example.amwe.ControllerView.MessagePage.MessageListActivity;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -99,6 +98,10 @@ public class ListingPageActivity extends AppCompatActivity {
                 TextView title = findViewById(R.id.textView3);
                 String titleName = book.getTitle();
                 title.setText(titleName);
+
+                TextView timeStamp = findViewById(R.id.listing_timestamp);
+                String time=book.getDate();
+                timeStamp.setText(time);
 
                 TextView isbn = findViewById(R.id.listing_page_isbn);
                 long newIsbn = book.getIsbn();
@@ -286,7 +289,7 @@ public class ListingPageActivity extends AppCompatActivity {
 
             }
         };
-        Database.getCurrentUser().addListenerForSingleValueEvent(listener);
+        Database.getRefCurrentUser().addListenerForSingleValueEvent(listener);
     }
 
 
@@ -312,7 +315,7 @@ public class ListingPageActivity extends AppCompatActivity {
 
             }
         };
-        Database.getCurrentUser().addListenerForSingleValueEvent(listener);
+        Database.getRefCurrentUser().addListenerForSingleValueEvent(listener);
     }
 
 
@@ -333,9 +336,9 @@ public class ListingPageActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.child("favourites").hasChild(bookId)) {
-                            Database.getCurrentUser().child("favourites").child(bookId).removeValue();
+                            Database.getRefCurrentUser().child("favourites").child(bookId).removeValue();
                         } else {
-                            Database.getCurrentUser().child("favourites").child(bookId).setValue(true);
+                            Database.getRefCurrentUser().child("favourites").child(bookId).setValue(true);
                         }
                         changeIcon(bookId, favourite);
 
@@ -346,7 +349,7 @@ public class ListingPageActivity extends AppCompatActivity {
 
                     }
                 };
-                Database.getCurrentUser().addListenerForSingleValueEvent(listener);
+                Database.getRefCurrentUser().addListenerForSingleValueEvent(listener);
             }
         };
     }
@@ -360,7 +363,7 @@ public class ListingPageActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Database.addChat(FirebaseAuth.getInstance().getCurrentUser().getUid(), sellerUid);
+                //Database.addChat(Database.getCurrentUser(), sellerUid);
                 Intent intent = new Intent(context, MessageListActivity.class);
                 intent.putExtra("sellerUid", sellerUid);
                 startActivity(intent);

@@ -1,8 +1,4 @@
-package com.example.amwe.Utilis;
-
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
+package com.example.amwe.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * A class that creates a file and stores it in the storageDir.
+ * Author: Elias Johansson
+ *
+ * A class that creates a file and stores it in the storageDir. This file is then used to store
+ * an image in.
  */
 public class ImageFile {
     private final File storageDir;
@@ -30,14 +29,11 @@ public class ImageFile {
      * @return File. A new file with a unique name that is stored on the internal hard drive.
      * @throws IOException because of accessing the hard drive of the device.
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
 
-
-        // Save a file: path for use with ACTION_VIEW intents
 
         return File.createTempFile(
                 imageFileName,  /* prefix */
