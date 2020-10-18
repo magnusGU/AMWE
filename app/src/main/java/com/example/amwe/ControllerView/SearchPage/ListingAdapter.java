@@ -27,7 +27,12 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.SplittableRandom;
 
-/* This class is intended to work as an adapter that will make it possible to show listings on the searchPage as a list*/
+/**
+ * This class is intended to work as an adapter that will make it possible to show listings on the
+ * searchPage as a list.
+ *
+ * @author Ali Alladin
+ */
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> {
     private final List<Item> bookListings;
     private SearchFunction search;

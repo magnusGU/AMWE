@@ -29,6 +29,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * Any change to the user's profile is made through this class and so is the log out functionality.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#activity_settings}.
+ *
+ * @author Ali Alladin
+ */
 public class Settings extends AppCompatActivity {
 
     private ImageView mProfilePicture;
@@ -39,7 +46,6 @@ public class Settings extends AppCompatActivity {
 
     private static final int PICK_IMAGE = 1;
     Uri imageUri;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

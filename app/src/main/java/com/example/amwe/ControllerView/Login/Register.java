@@ -27,6 +27,14 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * This class handles the creation of new users by registering them to Firebase Authentication
+ * and adding them to the Firebase Database.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#activity_register}.
+ *
+ * @author Ali Alladin
+ */
 public class Register extends AppCompatActivity {
 
     private ImageView mProfilePicture;

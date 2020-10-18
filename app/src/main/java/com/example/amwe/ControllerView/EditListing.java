@@ -3,21 +3,17 @@ package com.example.amwe.ControllerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,11 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Utilis.CameraInitializer;
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.R;
+import com.example.amwe.Utilis.CameraInitializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -40,6 +36,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * EditListing handles the editing of an existing listing in the database.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#activity_edit_listing}.
+ *
+ * @author Ali Alladin
+ */
 public class EditListing extends AppCompatActivity {
 
     private ImageButton cameraClick;
@@ -88,7 +91,6 @@ public class EditListing extends AppCompatActivity {
         edition.setText(bundle.getString("edition"));
 
 
-
         EditText isbn = findViewById(R.id.edit_ISBN);
         isbn.setText(String.valueOf(bundle.getLong("isbn")));
 
@@ -107,7 +109,7 @@ public class EditListing extends AppCompatActivity {
         description.setText(bundle.getString("description"));
 
 
-        switch ((bundle.getString("condition"))){
+        switch ((bundle.getString("condition"))) {
             case "Nyskick":
                 condition.setSelection(0);
                 break;
@@ -200,11 +202,11 @@ public class EditListing extends AppCompatActivity {
         String sIsbn = isbn.getText().toString();
         String sPrice = price.getText().toString();
 
-        if (sTitle.isEmpty()){
+        if (sTitle.isEmpty()) {
             title.setError("Titel är obligatorisk");
             return false;
         }
-        if (sAuthor.isEmpty()){
+        if (sAuthor.isEmpty()) {
             author.setError("Författare är obligatorisk");
             return false;
         }
@@ -212,19 +214,19 @@ public class EditListing extends AppCompatActivity {
             author.setError("Författare får endast innehålla bokstäver");
             return false;
         }
-        if (sEdition.isEmpty()){
+        if (sEdition.isEmpty()) {
             edition.setError("Upplaga är obligatorisk");
             return false;
         }
-        if (sIsbn.isEmpty()){
+        if (sIsbn.isEmpty()) {
             isbn.setError("ISBN är obligatoriskt");
             return false;
         }
-        if (sIsbn.length() != 13 && sIsbn.length() != 10){
+        if (sIsbn.length() != 13 && sIsbn.length() != 10) {
             isbn.setError("ISBN ej korrekt");
             return false;
         }
-        if (sPrice.isEmpty()){
+        if (sPrice.isEmpty()) {
             price.setError("Pris är obligatoriskt");
             return false;
         }

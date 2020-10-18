@@ -21,11 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.R;
-import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Utilis.CameraInitializer;
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
+import com.example.amwe.R;
+import com.example.amwe.Utilis.CameraInitializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,6 +36,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * AddListing handles creation and submission of a new listing to the database.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#activity_add_listing}.
+ *
+ * @author Ali Alladin
+ */
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
     private final int CAMERA_PIC_REQUEST = 2;
@@ -77,10 +84,11 @@ public class AddListing extends AppCompatActivity {
 
 
     /**
-     *This method is called automatically when the camera activity is done. It converts the file stored into a compressed and viewable image.
+     * This method is called automatically when the camera activity is done. It converts the file stored into a compressed and viewable image.
+     *
      * @param requestCode A code that differentiates between different possible actions taken when method is called.
      * @param resultCode  A code that shows the result of the operation.
-     * @param data Android functionality that transfers data between activities.
+     * @param data        Android functionality that transfers data between activities.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -93,34 +101,35 @@ public class AddListing extends AppCompatActivity {
 
                 Bitmap dstBmp;
                 //This is to handle if the camera app is closed before photo is taken
-                if (srcBmp!=null){
-                if (srcBmp.getWidth() >= srcBmp.getHeight()){
+                if (srcBmp != null) {
+                    if (srcBmp.getWidth() >= srcBmp.getHeight()) {
 
-                    dstBmp = Bitmap.createBitmap(
-                            srcBmp,
-                            srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
-                            0,
-                            srcBmp.getHeight(),
-                            srcBmp.getHeight()
-                    );
+                        dstBmp = Bitmap.createBitmap(
+                                srcBmp,
+                                srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
+                                0,
+                                srcBmp.getHeight(),
+                                srcBmp.getHeight()
+                        );
 
-                }else{
-                    dstBmp = Bitmap.createBitmap(
-                            srcBmp,
-                            0,
-                            srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
-                            srcBmp.getWidth(),
-                            srcBmp.getWidth()
-                    );
+                    } else {
+                        dstBmp = Bitmap.createBitmap(
+                                srcBmp,
+                                0,
+                                srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
+                                srcBmp.getWidth(),
+                                srcBmp.getWidth()
+                        );
+                    }
+
+                    //Cast because of return type Object
+                    //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                    cameraClick.setImageBitmap(dstBmp);
+                    ViewGroup.LayoutParams params = cameraClick.getLayoutParams();
+                    params.height = 1500;
+                    cameraClick.setLayoutParams(params);
                 }
-
-                //Cast because of return type Object
-                //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                cameraClick.setImageBitmap(dstBmp);
-                ViewGroup.LayoutParams params = cameraClick.getLayoutParams();
-                params.height = 1500;
-                cameraClick.setLayoutParams(params);
-            }}
+            }
         }
     }
 
@@ -217,7 +226,7 @@ public class AddListing extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                         return;
-                    } catch (NullPointerException e){
+                    } catch (NullPointerException e) {
                         Toast.makeText(getApplicationContext(), "Foto är obligatoriskt", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -242,18 +251,18 @@ public class AddListing extends AppCompatActivity {
         };
     }
 
-    private boolean conditions(EditText title, EditText author, EditText edition, EditText isbn, EditText price){
+    private boolean conditions(EditText title, EditText author, EditText edition, EditText isbn, EditText price) {
         String sTitle = title.getText().toString();
         String sAuthor = author.getText().toString();
         String sEdition = edition.getText().toString();
         String sIsbn = isbn.getText().toString();
         String sPrice = price.getText().toString();
 
-        if (sTitle.isEmpty()){
+        if (sTitle.isEmpty()) {
             title.setError("Titel är obligatorisk");
             return false;
         }
-        if (sAuthor.isEmpty()){
+        if (sAuthor.isEmpty()) {
             author.setError("Författare är obligatorisk");
             return false;
         }
@@ -261,19 +270,19 @@ public class AddListing extends AppCompatActivity {
             author.setError("Författare får endast innehålla bokstäver");
             return false;
         }
-        if (sEdition.isEmpty()){
+        if (sEdition.isEmpty()) {
             edition.setError("Upplaga är obligatorisk");
             return false;
         }
-        if (sIsbn.isEmpty()){
+        if (sIsbn.isEmpty()) {
             isbn.setError("ISBN är obligatoriskt");
             return false;
         }
-        if (sIsbn.length() != 13 && sIsbn.length() != 10){
+        if (sIsbn.length() != 13 && sIsbn.length() != 10) {
             isbn.setError("ISBN ej korrekt");
             return false;
         }
-        if (sPrice.isEmpty()){
+        if (sPrice.isEmpty()) {
             price.setError("Pris är obligatoriskt");
             return false;
         }

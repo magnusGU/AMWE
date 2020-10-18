@@ -8,6 +8,10 @@ import com.example.amwe.Model.User;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Book is a subclass and realization of Item with unique behaviour.
+ * @author
+ */
 public class Book extends Item {
 
     private String edition;

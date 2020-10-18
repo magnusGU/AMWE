@@ -26,6 +26,8 @@ import java.util.Map;
 
 /**
  * Static class for communicating with the firebase database
+ *
+ * @author Ali Alladin
  */
 public class Database {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();

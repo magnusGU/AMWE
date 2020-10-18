@@ -29,7 +29,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-
+/**
+ * This class mainly makes sure that the signed in user's own published listings and saved listings
+ * are presented in two lists on the Account Page. It's also a gateway to AddListing and Settings.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#fragment_account_page}.
+ *
+ * @author Ali Alladin
+ */
 public class AccountPage extends Fragment {
     RecyclerView myListings;
 
