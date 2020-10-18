@@ -20,18 +20,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.ControllerView.AddListing;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
+import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Item;
 import com.example.amwe.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Items.Item;
 
 import java.util.ArrayList;
 
-
+/**
+ * This class mainly makes sure that the signed in user's own published listings and saved listings
+ * are presented in two lists on the Account Page. It's also a gateway to AddListing and Settings.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#fragment_account_page}.
+ *
+ * @author Ali Alladin
+ */
 public class AccountPage extends Fragment {
     RecyclerView myListings;
+
     public AccountPage() {
         // Required empty public constructor
     }
@@ -64,6 +72,11 @@ public class AccountPage extends Fragment {
         return v;
     }
 
+    /**
+     * Starts the Settings activity.
+     *
+     * @return A View.OnClickListener that should be applied on the settings-button.
+     */
     private View.OnClickListener openSettings() {
         return new View.OnClickListener() {
             @Override
@@ -96,7 +109,6 @@ public class AccountPage extends Fragment {
      * @param v The view that should be Initialized.
      */
     private void initUI(final View v) {
-
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -108,7 +120,7 @@ public class AccountPage extends Fragment {
                     byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                     profilePicture.setImageBitmap(bitmap);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -119,8 +131,9 @@ public class AccountPage extends Fragment {
 
             }
         };
-
+      
         Database.getRefCurrentUser().addValueEventListener(valueEventListener);
+
     }
 
     @Override

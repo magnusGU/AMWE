@@ -18,8 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.amwe.ControllerView.MessagePage.MessageListActivity;
-import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Book;
 import com.example.amwe.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +27,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 
+/**
+ * ListingPageActivity has the responsibility to display all the information about the listing on
+ * the page and depending on whether the listing is the signed in user's or someone else's it
+ * provides the option to edit and delete the listing or to contact the seller.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#listing_page}.
+ *
+ * @author Ali Alladin
+ */
 public class ListingPageActivity extends AppCompatActivity {
     ValueEventListener valueEventListener;
     String sellerUid;
@@ -58,21 +67,21 @@ public class ListingPageActivity extends AppCompatActivity {
                     Bitmap srcBmp = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
                     Bitmap dstBmp;
-                    if (srcBmp.getWidth() >= srcBmp.getHeight()){
+                    if (srcBmp.getWidth() >= srcBmp.getHeight()) {
 
                         dstBmp = Bitmap.createBitmap(
                                 srcBmp,
-                                srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                                srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
                                 0,
                                 srcBmp.getHeight(),
                                 srcBmp.getHeight()
                         );
 
-                    }else{
+                    } else {
                         dstBmp = Bitmap.createBitmap(
                                 srcBmp,
                                 0,
-                                srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                                srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
                                 srcBmp.getWidth(),
                                 srcBmp.getWidth()
                         );
@@ -161,8 +170,8 @@ public class ListingPageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 TextView sellerName = findViewById(R.id.listing_page_seller);
 
-                for (DataSnapshot item : snapshot.getChildren()){
-                    if (item.child("listings").hasChild(bookId)){
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    if (item.child("listings").hasChild(bookId)) {
                         sellerName.setText((String) item.child("name").getValue());
                         sellerUid = item.getKey();
                         try {
@@ -170,7 +179,7 @@ public class ListingPageActivity extends AppCompatActivity {
                             byte[] decodedString = Base64.decode((String) item.child("userImage").getValue(), Base64.DEFAULT);
                             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                             sellerPicture.setImageBitmap(bitmap);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

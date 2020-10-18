@@ -14,11 +14,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.R;
 import com.example.amwe.Model.Items.Item;
+import com.example.amwe.R;
 
 import java.util.ArrayList;
 
+/**
+ * This page handles the SearchPage where all the listings are presented. The listings can be
+ * searched through and/or sorted in desired order. 
+ *
+ * Related to {@link com.example.amwe.R.layout#fragment_search_page}.
+ *
+ * @author Ali Alladin
+ */
 public class SearchPage extends Fragment {
 
     SearchView search;
@@ -81,6 +89,7 @@ public class SearchPage extends Fragment {
 
     /**
      * Sorts the listings based on the menuitem clicked
+     *
      * @return a new menuListener which will handle the menu clicked in the popupMeny
      */
     private PopupMenu.OnMenuItemClickListener popupMenuListener() {
@@ -143,19 +152,6 @@ public class SearchPage extends Fragment {
             }
         };
     }
-
-  /*
-    private View.OnClickListener openFilterSort() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), FilterSort.class);
-                startActivity(intent);
-            }
-        };
-    }
-    */
-
 
     /**
      * Searches among the listings based on the input to the search bar.

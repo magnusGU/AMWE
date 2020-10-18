@@ -9,9 +9,11 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,17 +21,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Utils.CameraInitializer;
+
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.R;
+import com.example.amwe.Utilis.CameraInitializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+/**
+ * EditListing handles the editing of an existing listing in the database.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#activity_edit_listing}.
+ *
+ * @author Ali Alladin
+ */
 public class EditListing extends AppCompatActivity {
 
     private ImageButton cameraClick;
@@ -76,17 +90,36 @@ public class EditListing extends AppCompatActivity {
         EditText edition = findViewById(R.id.edit_edition);
         edition.setText(bundle.getString("edition"));
 
+
         EditText isbn = findViewById(R.id.edit_ISBN);
         isbn.setText(String.valueOf(bundle.getLong("isbn")));
 
-        EditText condition = findViewById(R.id.edit_condition);
-        condition.setText(bundle.getString("condition"));
-
+        List<String> bookConditions = new ArrayList<>();
+        bookConditions.add("Nyskick");
+        bookConditions.add("Använd");
+        bookConditions.add("Sliten");
+        Spinner condition = findViewById(R.id.edit_condition);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bookConditions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        condition.setAdapter(adapter);
         EditText price = findViewById(R.id.edit_price);
         price.setText(String.valueOf(bundle.getDouble("price")));
 
         EditText description = findViewById(R.id.edit_description);
         description.setText(bundle.getString("description"));
+
+
+        switch ((bundle.getString("condition"))) {
+            case "Nyskick":
+                condition.setSelection(0);
+                break;
+            case "Använd":
+                condition.setSelection(1);
+                break;
+            case "Sliten":
+                condition.setSelection(2);
+                break;
+        }
 
         Button save = findViewById(R.id.save_changes);
         save.setOnClickListener(saveChanges(title, author, edition, isbn, condition, price, description, bookId, seller));
@@ -111,7 +144,7 @@ public class EditListing extends AppCompatActivity {
                                              final EditText author,
                                              final EditText edition,
                                              final EditText isbn,
-                                             final EditText condition,
+                                             final Spinner condition,
                                              final EditText price,
                                              final EditText description,
                                              final String bookId,
@@ -120,7 +153,7 @@ public class EditListing extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (conditions(title, author, edition, isbn, price, condition)) {
+                if (conditions(title, author, edition, isbn, price)) {
 
                     DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
                     String dateString = dateFormat.format(new Date());
@@ -151,33 +184,29 @@ public class EditListing extends AppCompatActivity {
                             base64Photo,
                             Double.parseDouble(price.getText().toString()),
                             seller,
-                            condition.getText().toString(),
+                            (String) condition.getSelectedItem(),
                             dateString
                     );
                     Database.updateListing(item);
+                    Toast.makeText(getApplicationContext(), "Annons uppdaterad", Toast.LENGTH_SHORT).show();
                     finish();
-
-                    Toast toast = new Toast(getApplicationContext());
-                    toast.setText("Annons uppdaterad");
-                    toast.show();
                 }
             }
         };
     }
 
-    private boolean conditions(EditText title, EditText author, EditText edition, EditText isbn, EditText price, EditText condition) {
+    private boolean conditions(EditText title, EditText author, EditText edition, EditText isbn, EditText price) {
         String sTitle = title.getText().toString();
         String sAuthor = author.getText().toString();
         String sEdition = edition.getText().toString();
         String sIsbn = isbn.getText().toString();
         String sPrice = price.getText().toString();
-        String sCondition = condition.getText().toString();
 
-        if (sTitle.isEmpty()){
+        if (sTitle.isEmpty()) {
             title.setError("Titel är obligatorisk");
             return false;
         }
-        if (sAuthor.isEmpty()){
+        if (sAuthor.isEmpty()) {
             author.setError("Författare är obligatorisk");
             return false;
         }
@@ -185,23 +214,19 @@ public class EditListing extends AppCompatActivity {
             author.setError("Författare får endast innehålla bokstäver");
             return false;
         }
-        if (sEdition.isEmpty()){
+        if (sEdition.isEmpty()) {
             edition.setError("Upplaga är obligatorisk");
             return false;
         }
-        if (sIsbn.isEmpty()){
+        if (sIsbn.isEmpty()) {
             isbn.setError("ISBN är obligatoriskt");
             return false;
         }
-        if (sIsbn.length() != 13 && sIsbn.length() != 10){
+        if (sIsbn.length() != 13 && sIsbn.length() != 10) {
             isbn.setError("ISBN ej korrekt");
             return false;
         }
-        if (sCondition.isEmpty()){
-            condition.setError("Skick är obligatorisk");
-            return false;
-        }
-        if (sPrice.isEmpty()){
+        if (sPrice.isEmpty()) {
             price.setError("Pris är obligatoriskt");
             return false;
         }

@@ -18,6 +18,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This class handles the login functionality of the application and signs in the user through
+ * Firebase Authentication.
+ * <p>
+ * Related to {@link com.example.amwe.R.layout#activity_login}.
+ *
+ * @author Ali Alladin
+ */
 public class Login extends AppCompatActivity {
 
     private EditText mEmail, mPassword;
@@ -26,7 +34,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_email_login);
+        setContentView(R.layout.activity_login);
 
         fAuth = FirebaseAuth.getInstance();
 
