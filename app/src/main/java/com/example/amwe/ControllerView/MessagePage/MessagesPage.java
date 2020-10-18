@@ -16,6 +16,11 @@ import com.google.firebase.database.DataSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author: Elias Johansson + ?
+ * Class that instantiates the GUI for the messagesPage among them the RecyclerView
+ * that will hold all the different conversations.
+ */
 public class MessagesPage extends Fragment {
     private  List<DataSnapshot> items = new ArrayList<>();
     //private String receiver;

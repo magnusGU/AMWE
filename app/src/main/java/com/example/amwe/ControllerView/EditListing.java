@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Utilis.CameraInitializer;
+import com.example.amwe.Utils.CameraInitializer;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.R;

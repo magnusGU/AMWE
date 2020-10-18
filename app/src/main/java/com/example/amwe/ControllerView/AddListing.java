@@ -3,10 +3,7 @@ package com.example.amwe.ControllerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -22,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amwe.R;
 import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Utilis.CameraInitializer;
+import com.example.amwe.Utils.CameraInitializer;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Items.Item;
 

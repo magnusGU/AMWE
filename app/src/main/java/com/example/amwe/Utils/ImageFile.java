@@ -1,4 +1,4 @@
-package com.example.amwe.Utilis;
+package com.example.amwe.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * A class that creates a file and stores it in the storageDir.
+ * Author: Elias Johansson
+ *
+ * A class that creates a file and stores it in the storageDir. This file is then used to store
+ * an image in.
  */
 public class ImageFile {
     private final File storageDir;
@@ -31,8 +34,6 @@ public class ImageFile {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
 
-
-        // Save a file: path for use with ACTION_VIEW intents
 
         return File.createTempFile(
                 imageFileName,  /* prefix */

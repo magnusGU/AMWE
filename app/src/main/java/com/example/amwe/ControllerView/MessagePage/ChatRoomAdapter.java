@@ -22,11 +22,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is intended as the adapter of the recycleview that will show recent messages by Author.
- * Sort of like Facebook Messenger
+ * Author: Elias Johansson
+ *
+ * This class is an adapter that will show recent messages by Author in the RecyclerView.
+ * It uses a List to hold all the conversations that pertains to the current user. It will then
+ * look through that list for the most recent message in a conversation and show it.
  */
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MessageViewHold> {
     private final List<DataSnapshot> itemList;
@@ -39,6 +43,9 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         Database.getChatRooms(messages, this);
     }
 
+    /**
+     * Class that holds all the information about a specific conversation and that is populating the RecyclerView.
+     */
     public static class MessageViewHold extends RecyclerView.ViewHolder {
         //private final TextView textViewTitle;
         private final TextView lastMessageText;
@@ -52,22 +59,29 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
 
         /**
-         * Constructor for ViewHold.
+         * Constructor for ViewHold with all the different GUI elements.
          *
-         * @param itemView
+         * @param itemView, Android class that assigns the MessageViewHold to the RecyclerView.
          */
-        public MessageViewHold(@NonNull View itemView) {
+        private MessageViewHold(@NonNull View itemView) {
             super(itemView);
             //textViewTitle = itemView.findViewById(R.id.messageContact);
-            lastMessageText=itemView.findViewById(R.id.lastMessageText);
-            messageContact=itemView.findViewById(R.id.messageContact);
-            messageProfile=itemView.findViewById(R.id.message_Profile);
-            messageTimeStamp=itemView.findViewById(R.id.message_timeStamp);
+            lastMessageText = itemView.findViewById(R.id.lastMessageText);
+            messageContact = itemView.findViewById(R.id.messageContact);
+            messageProfile = itemView.findViewById(R.id.message_Profile);
+            messageTimeStamp = itemView.findViewById(R.id.message_timeStamp);
 
         }
 
     }
 
+    /**
+     *This method creates a new MessageViewHold that will then be populated in onBindViewHolder.
+     *
+     * @param parent, Android class that is used to create a new card that holds the most recent
+     * @param viewType, not used but needed if there are conditions for different types of views. Needed because of override.
+     * @return a new MessageViewHold that then will be used to populate the recyclerview.
+     */
     @NonNull
     @Override
     public MessageViewHold onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -75,60 +89,73 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         return new MessageViewHold(v);
     }
 
+    /**
+     *This method looks at the messages in a conversation and sends the latest with all information to the
+     *MessageViewHold.
+     * @param holder, the object that will hold all the information about a conversation and then show it.
+     * @param position, an index to access the current DataSnapshot in itemList.
+     *
+     */
     @Override
     public void onBindViewHolder(@NonNull final MessageViewHold holder, int position) {
-        DataSnapshot item= (DataSnapshot) itemList.get(position);
-
-        for (DataSnapshot i:item.getChildren()) {
-
-            DatabaseReference databaseReference = Database.getDatabase().getReference();
-            String currentUserName = Database.getCurrentUser();
-            if (i.child("sender").getValue()!=null&&currentUserName!=null) {
-
+        DataSnapshot item = (DataSnapshot) itemList.get(position);
+        List<DataSnapshot> messages = new ArrayList<>();
+        for (DataSnapshot i : item.getChildren()) {
+            messages.add(i);
+        }
+        DataSnapshot lastChat = messages.get(messages.size() - 1);
 
 
-           if (i.child("sender").getValue().equals(currentUserName)){
-               contact = (String) i.child("reciever").getValue();
-               holder.isLastSenderCurrentUser=true;
-           }
-            else{
-               contact= (String) i.child("sender").getValue();
-               holder.isLastSenderCurrentUser=false;
-            }}
+        String currentUserName = Database.getCurrentUser();
+        if (lastChat.child("sender").getValue() != null && currentUserName != null) {
+
+
+            if (lastChat.child("sender").getValue().equals(currentUserName)) {
+                contact = (String) lastChat.child("reciever").getValue();
+                holder.isLastSenderCurrentUser = true;
+            } else {
+                contact = (String) lastChat.child("sender").getValue();
+                holder.isLastSenderCurrentUser = false;
+            }
+        }
 
         /*        if (i.child("reciever").getValue().equals(i.child("sender").getValue())){
                     throw new IllegalArgumentException("Database Error... Sender and reciever cant be the same person");
             }*/
 
-            holder.lastMessage= (CharSequence) i.child("message").getValue();
-            holder.timeStamp=(String) i.child("timeStamp").getValue();
-        }
-        holder.contact=contact;
+        holder.lastMessage = (CharSequence) lastChat.child("message").getValue();
+        holder.timeStamp = (String) lastChat.child("timeStamp").getValue();
+
+        holder.contact = contact;
         DatabaseReference reference = Database.getDatabaseReference();
         reference = reference.child("users").child(contact);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            /**
+             *This listener is called once to access the contacts user data, such as name and message.
+             *It is then showed by GUI with the help of the holder object.
+             * @param snapshot, the user who is the contact of the current user.
+             *
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String prefix;
-                if (holder.isLastSenderCurrentUser){
-                    prefix="Du: ";
-                }
-                else {
-                    prefix= (String)snapshot.child("name").getValue() + ":" + " ";
+                if (holder.isLastSenderCurrentUser) {
+                    prefix = "Du: ";
+                } else {
+                    prefix = (String) snapshot.child("name").getValue() + ":" + " ";
                 }
 
-                holder.lastMessageText.setText(prefix+holder.lastMessage);
-                holder.messageContact.setText((String)snapshot.child("name").getValue());
+                holder.lastMessageText.setText(prefix + holder.lastMessage);
+                holder.messageContact.setText((String) snapshot.child("name").getValue());
                 holder.messageTimeStamp.setText(holder.timeStamp);
 
-                if (snapshot.child("userImage").getValue()!=null) {
-                byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
+                if (snapshot.child("userImage").getValue() != null) {
+                    byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
 
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
                     holder.messageProfile.setImageBitmap(bitmap);
-                }
-                else{
+                } else {
                     Drawable d = context.getResources().getDrawable(R.drawable.ic_baseline_person_24);
                     holder.messageProfile.setImageDrawable(d);
                 }
@@ -143,11 +170,15 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
         //Message message = (Message) itemList.get(position);
         //holder.textViewTitle.setText(message.getMessage());
+        /**
+         * Listener that binds one conversation to open the specific chat room for that conversation.
+         * If clicked it will take the user to the common chat room of the contact and the current user.
+         */
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MessageListActivity.class);
-                intent.putExtra("sellerUid",holder.contact);
+                intent.putExtra("sellerUid", holder.contact);
 
                 context.startActivity(intent);
             }
@@ -155,6 +186,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
     }
 
+    /**
+     *
+     * @return, the size of the list that holds all chat rooms that pertains to the current user.
+     * It is used by background Android functionality to get the current index of the list.
+     */
     @Override
     public int getItemCount() {
         return itemList.size();
