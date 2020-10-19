@@ -167,10 +167,8 @@ public class EditListing extends AppCompatActivity {
 
                     } catch (IOException e) {
                         e.printStackTrace();
-                        return;
                     } catch (NullPointerException e) {
                         e.printStackTrace();
-                        return;
                     }
                     Item item = new Book(
                             bookId,
