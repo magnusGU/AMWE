@@ -3,7 +3,7 @@ package com.example.amwe.Model.Messaging;
 import java.math.BigInteger;
 
 /**
- * Author: William
+ * @author William Hugo
  *
  * Public key for cryptography, a data container containing the information needed for encryption.
  * Intended to always have a corresponding private key.

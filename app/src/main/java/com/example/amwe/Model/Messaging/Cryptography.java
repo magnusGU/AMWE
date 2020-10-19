@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Author: William
+ * @author William Hugo
  *
  * Class used for encryption and decryption according to RSA cryptography.
  * Objects of this class are created and used in code where cryptography needs to be used.
