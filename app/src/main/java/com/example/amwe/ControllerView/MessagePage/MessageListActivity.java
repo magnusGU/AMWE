@@ -55,6 +55,7 @@ public class MessageListActivity extends AppCompatActivity {
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
 
         nameText = findViewById(R.id.text_message_name);
+
         profileImage = findViewById(R.id.image_message_profile);
 
         mMessageRecycler.setHasFixedSize(true);
