@@ -11,8 +11,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reyclerview_message_list"
-        android:layout_width="411dp"
-        android:layout_height="530dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/colorCard"
         app:layout_constraintBottom_toTopOf="@+id/layout_chatbox"
         app:layout_constraintEnd_toEndOf="parent"
