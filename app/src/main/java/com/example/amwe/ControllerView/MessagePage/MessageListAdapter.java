@@ -101,12 +101,15 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
+
             //nameText = (TextView) itemView.findViewById(R.id.text_message_name);
             //profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
         }
 
         void bind(DataSnapshot message) {
             messageText.setText((String) message.child("message").getValue());
+            messageText.setText((String) message.child("message").getValue());
+            timeText.setText((String) message.child("timeStamp").getValue());
 
             // Format the stored timestamp into a readable String using method.
             //timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
