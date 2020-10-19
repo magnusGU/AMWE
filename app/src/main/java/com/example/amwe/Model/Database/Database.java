@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * Static class for communicating with the firebase database
  *
- * @author Ali Alladin, Elias, Magnus Andersson, William
+ * @author Ali Alladin, Elias, Magnus Andersson, William Hugo
  */
 public class Database {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();

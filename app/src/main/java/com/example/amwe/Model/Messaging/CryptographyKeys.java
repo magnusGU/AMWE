@@ -4,10 +4,10 @@ import java.math.BigInteger;
 import java.util.Random;
 
 /**
- * @author William Hugo
- *
  * A class which generates variables used in keys needed for RSA cryptography when created.
  * Used to create corresponding private & public keys to be used for encryption and decryption.
+ *
+ * @author William Hugo
  */
 public class CryptographyKeys {
 
