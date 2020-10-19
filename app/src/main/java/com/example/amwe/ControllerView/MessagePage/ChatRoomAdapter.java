@@ -111,7 +111,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
 
             if (lastChat.child("sender").getValue().equals(currentUserName)) {
-                contact = (String) lastChat.child("reciever").getValue();
+                contact = (String) lastChat.child("receiver").getValue();
                 holder.isLastSenderCurrentUser = true;
             } else {
                 contact = (String) lastChat.child("sender").getValue();
