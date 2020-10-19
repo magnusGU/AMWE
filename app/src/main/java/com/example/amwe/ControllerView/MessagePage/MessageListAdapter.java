@@ -85,6 +85,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         void bind(DataSnapshot message) {
             messageText.setText((String) message.child("message").getValue());
+            timeText.setText((String) message.child("timeStamp").getValue());
 
             // Format the stored timestamp into a readable String using method.
 
