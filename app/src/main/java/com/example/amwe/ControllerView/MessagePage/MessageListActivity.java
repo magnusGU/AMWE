@@ -117,6 +117,7 @@ public class MessageListActivity extends AppCompatActivity {
                 for (DataSnapshot item : snapshot.getChildren()){
                     messageList.add(item);
                 }
+                mMessageAdapter.notify();
             }
 
             @Override
