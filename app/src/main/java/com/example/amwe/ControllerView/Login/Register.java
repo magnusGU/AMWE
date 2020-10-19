@@ -109,9 +109,7 @@ public class Register extends AppCompatActivity {
             }
 
             mProfilePicture.setImageBitmap(dstBmp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -165,10 +163,7 @@ public class Register extends AppCompatActivity {
 
                         base64Photo = Base64.encodeToString(array, 0);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return;
-                    } catch (NullPointerException e) {
+                    } catch (IOException | NullPointerException e) {
                         e.printStackTrace();
                         return;
                     }
@@ -213,7 +208,7 @@ public class Register extends AppCompatActivity {
             mName.setError("Fullständigt namn är obligatoriskt");
             return false;
         }
-        if (!name.matches(("^[a-zA-ZåäöÅÄÖ\\s]*$"))) {
+        if (!name.matches("[a-zA-ZåäöÅÄÖ\\s]*")) {
             mName.setError("Namn får endast innehålla bokstäver");
             return false;
         }

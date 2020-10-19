@@ -31,7 +31,7 @@ import java.util.SplittableRandom;
  * This class is intended to work as an adapter that will make it possible to show listings on the
  * searchPage as a list.
  *
- * @author Ali Alladin
+ * @author Ali Alladin, Magnus Andersson
  */
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> {
     private final List<Item> bookListings;

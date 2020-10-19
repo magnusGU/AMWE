@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Elias Johansson
+ * @author Elias Johansson
  *
  * This class is an adapter that will show recent messages by Author in the RecyclerView.
  * It uses a List to hold all the conversations that pertains to the current user. It will then

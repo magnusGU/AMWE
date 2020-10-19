@@ -23,7 +23,6 @@ import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Utils.CameraInitializer;
 
 import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.R;
 
@@ -41,7 +40,7 @@ import java.util.Locale;
  * <p>
  * Related to {@link com.example.amwe.R.layout#activity_edit_listing}.
  *
- * @author Ali Alladin
+ * @author Ali Alladin, Magnus Andersson
  */
 public class EditListing extends AppCompatActivity {
 
@@ -209,7 +208,7 @@ public class EditListing extends AppCompatActivity {
             author.setError("Författare är obligatorisk");
             return false;
         }
-        if (!sAuthor.matches(("^[a-zA-Z\\s]*$"))) {
+        if (sAuthor.matches(".*\\d.*")) {
             author.setError("Författare får endast innehålla bokstäver");
             return false;
         }

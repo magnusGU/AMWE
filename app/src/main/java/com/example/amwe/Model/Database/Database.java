@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Ali, Elias, Magnus, William
+ *
  *
  * Static class for communicating with the firebase database
  *
- * @author Ali Alladin
+ * @author Ali Alladin, Elias, Magnus Andersson, William
  */
 public class Database {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();
