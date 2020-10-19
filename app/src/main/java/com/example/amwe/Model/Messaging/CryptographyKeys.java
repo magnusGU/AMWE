@@ -26,11 +26,11 @@ public class CryptographyKeys {
      */
     public CryptographyKeys() {
         random = new Random();
-        prime1 = BigInteger.probablePrime(1000,random);
-        prime2 = BigInteger.probablePrime(1000,random);
+        prime1 = BigInteger.probablePrime(256,random);
+        prime2 = BigInteger.probablePrime(256,random);
         primesMultiplied = prime1.multiply(prime2);
         phi = prime1.subtract(BigInteger.ONE).multiply(prime2.subtract(BigInteger.ONE));
-        encryptingBigInt = BigInteger.probablePrime(1000,random);
+        encryptingBigInt = BigInteger.probablePrime(256,random);
 
         while (phi.gcd(encryptingBigInt).compareTo(BigInteger.ONE) > 0 && encryptingBigInt.compareTo(phi) < 0) {
             encryptingBigInt.add(BigInteger.ONE);

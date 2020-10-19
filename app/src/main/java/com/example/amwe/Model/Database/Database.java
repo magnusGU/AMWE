@@ -8,6 +8,9 @@ import com.example.amwe.ControllerView.MessagePage.ChatRoomAdapter;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
+import com.example.amwe.Model.Messaging.CryptographyKeys;
+import com.example.amwe.Model.Messaging.PrivateKey;
+import com.example.amwe.Model.Messaging.PublicKey;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -152,6 +155,14 @@ public class Database {
     static public void addUser(String uid, String name, String base64Photo) {
         database.getReference().child("users").child(uid).setValue(name);
         database.getReference().child("users").child(uid).child("userImage").setValue(base64Photo);
+
+        CryptographyKeys createKey = new CryptographyKeys();
+        PublicKey publicKey = createKey.makePublicKey();
+        PrivateKey privateKey = createKey.makePrivateKey();
+        database.getReference().child("users").child(uid).child("public_key").child("n").setValue(publicKey.getN().toString());
+        database.getReference().child("users").child(uid).child("public_key").child("encryptingBigInt").setValue(publicKey.getEncryptingBigInt().toString());
+        database.getReference().child("users").child(uid).child("private_key").child("n").setValue(privateKey.getN().toString());
+        database.getReference().child("users").child(uid).child("private_key").child("decryptingBigInt").setValue(privateKey.getDecryptingBigInt().toString());
     }
 
     /**
@@ -303,13 +314,14 @@ public class Database {
 
         Map<String, Object> childUpdates = new HashMap<>();
 
-        childUpdates.put("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/" + key, map);
+        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, map);
+        childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, map);
 
         db.updateChildren(childUpdates);
     }
 
     static public void getChatRooms(final List<DataSnapshot> items, final ChatRoomAdapter chatRoomAdapter) {
-        DatabaseReference databaseReference =Database.getDatabase().getReference("/chat_room/");
+        DatabaseReference databaseReference = Database.getDatabase().getReference("/chat_room/");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -328,6 +340,14 @@ public class Database {
 
             }
         });
+    }
+
+    static public DatabaseReference getPrivateKeyReference() {
+        return Database.getDatabase().getReference("/users/").child(getCurrentUser()).child("/private_key/");
+    }
+
+    static public DatabaseReference getPublicKeyReference() {
+        return Database.getDatabase().getReference("/users/").child(getCurrentUser()).child("/public_key/");
     }
 
 }

@@ -20,7 +20,7 @@ public class Cryptography {
     public byte[] encrypt(String string, PublicKey key) {
 
         BigInteger stringAsBigInt = new BigInteger(string.getBytes());
-        return stringAsBigInt.modPow(key.encryptingBigInt,key.n).toByteArray();
+        return stringAsBigInt.modPow(key.getEncryptingBigInt(),key.getN()).toByteArray();
 
     }
 
@@ -32,7 +32,7 @@ public class Cryptography {
      */
     public String decrypt(byte[] encrypted, PrivateKey key) {
 
-        byte[] decrypted = (new BigInteger(encrypted)).modPow(key.decryptingBigInt,key.n).toByteArray();
+        byte[] decrypted = (new BigInteger(encrypted)).modPow(key.getDecryptingBigInt(),key.getN()).toByteArray();
         return new String(decrypted, StandardCharsets.UTF_8);
 
     }

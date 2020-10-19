@@ -9,16 +9,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Messaging.Cryptography;
+import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
     private List <DataSnapshot> messages;
     private static final int MESSAGE_SENT = 1;
     private static final int MESSAGE_RECEIVED = 2;
+    private Cryptography crypt;
+    private String n;
+    private String decryptingBigInt;
 
     public MessageListAdapter(List<DataSnapshot> messages){
         this.messages = messages;
@@ -84,7 +94,27 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
 
         void bind(DataSnapshot message) {
-            messageText.setText((String) message.child("message").getValue());
+            String encryptedMessage = (String) message.child("message").getValue();
+
+            DatabaseReference dbr = Database.getPrivateKeyReference();
+            dbr.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    n = (String) snapshot.child("/n/").getValue();
+                    decryptingBigInt = (String) snapshot.child("/decryptingBigInt/").getValue();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
+            BigInteger bigIntN = new BigInteger(n);
+            PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
+            String decryptedMessage = crypt.decrypt(encryptedMessage.getBytes(), pk);
+            messageText.setText(decryptedMessage);
             timeText.setText((String) message.child("timeStamp").getValue());
 
             // Format the stored timestamp into a readable String using method.

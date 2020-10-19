@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Messaging.Cryptography;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +39,7 @@ public class MessageListActivity extends AppCompatActivity {
     private String receiverUid;
     private ImageView contactImage;
     private TextView contactName;
+    private Cryptography crypt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class MessageListActivity extends AppCompatActivity {
         else {
             contact=Database.getDatabaseReference().child("users").child(senderUid);
         }
-        contactName=findViewById(R.id.text_message_name);
+        contactName = findViewById(R.id.text_message_name);
         contactImage = findViewById(R.id.image_message_profile);
 
         contact.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -105,11 +107,11 @@ public class MessageListActivity extends AppCompatActivity {
 
             }
         });
-        List<String> sortList= new ArrayList<>();
+        /*List<String> sortList= new ArrayList<>();
         sortList.add(senderUid);
         sortList.add(receiverUid);
-        Collections.sort(sortList);
-        DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/"+ "/" + sortList.get(0) + sortList.get(1) + "/");
+        Collections.sort(sortList);*/
+        DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/"+ "/" + senderUid + receiverUid + "/");
 
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override

@@ -11,8 +11,8 @@ import java.math.BigInteger;
  */
 public class PrivateKey {
 
-    BigInteger decryptingBigInt;
-    BigInteger n;
+    private BigInteger decryptingBigInt;
+    private BigInteger n;
 
     /**
      * Constructor
@@ -24,4 +24,11 @@ public class PrivateKey {
         this.n = n;
     }
 
+    public BigInteger getDecryptingBigInt() {
+        return decryptingBigInt;
+    }
+
+    public BigInteger getN() {
+        return n;
+    }
 }
