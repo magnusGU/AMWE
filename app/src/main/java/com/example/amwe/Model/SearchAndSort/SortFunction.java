@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * A class that sorts the items in different ways.
+ * @author William Hugo
+ *
+ * A class that sorts the items in a list in different ways.
  */
 public class SortFunction {
     final List<Item> list;
@@ -75,7 +77,6 @@ public class SortFunction {
 
     /**
      * Sorts the current list by date in ascending order.
-     *
      */
     public void sortDate() {
         Collections.sort(list, new Comparator<Item>() {
@@ -95,7 +96,6 @@ public class SortFunction {
     }
     /**
      * Sorts the current list by date in descending order.
-     *
      */
     public void sortDateReversed() {
         Collections.sort(list, new Comparator<Item>() {

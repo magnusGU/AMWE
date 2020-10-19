@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Elias Johansson
+ * @author Elias Johansson
  *
  * This class is an adapter that will show recent messages by Author in the RecyclerView.
  * It uses a List to hold all the conversations that pertains to the current user. It will then
@@ -111,7 +111,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
 
             if (lastChat.child("sender").getValue().equals(currentUserName)) {
-                contact = (String) lastChat.child("reciever").getValue();
+                contact = (String) lastChat.child("receiver").getValue();
                 holder.isLastSenderCurrentUser = true;
             } else {
                 contact = (String) lastChat.child("sender").getValue();

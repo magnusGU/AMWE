@@ -24,9 +24,7 @@ import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Utils.CameraInitializer;
 
 import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
-import com.example.amwe.R;
 
 
 import java.io.ByteArrayOutputStream;
@@ -43,7 +41,7 @@ import java.util.Locale;
  * <p>
  * Related to {@link com.example.amwe.R.layout#activity_add_listing}.
  *
- * @author Ali Alladin
+ * @author Ali Alladin, Magnus Andersson
  */
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
@@ -73,9 +71,6 @@ public class AddListing extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bookConditions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         condition.setAdapter(adapter);
-
-
-        //TODO: Some blanks to fill in: image, price, condition
 
         mSubmit.setOnClickListener(submit(title, author, edition, isbn, description, price, condition));
 
@@ -265,7 +260,7 @@ public class AddListing extends AppCompatActivity {
             author.setError("Författare är obligatorisk");
             return false;
         }
-        if (!sAuthor.matches(("^[a-zA-Z\\s]*$"))) {
+        if (sAuthor.matches(".*\\d.*")) {
             author.setError("Författare får endast innehålla bokstäver");
             return false;
         }

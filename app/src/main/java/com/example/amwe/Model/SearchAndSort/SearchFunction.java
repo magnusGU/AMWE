@@ -6,6 +6,11 @@ import com.example.amwe.Model.Items.Item;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author William Hugo
+ *
+ * Used for searching in a list of items, filters out things from the list that doesn't match the search.
+ */
 public class SearchFunction {
 
     private final List<Item> list;
@@ -25,7 +30,7 @@ public class SearchFunction {
 
     /**
      * @param charSequence, the sequence of chars that user puts into the searchbar.
-     *                      The method looks for the title of the item and tries to match the charsequence with
+     *                      The method looks for the item's title, and ISBN if the item is a book, and tries to match the charsequence with
      *                      it. An item has this sequence anywhere in its title, gets shown to the user.
      */
     public void performFiltering(CharSequence charSequence) {

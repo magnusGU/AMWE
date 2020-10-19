@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * <p>
  * Related to {@link com.example.amwe.R.layout#fragment_account_page}.
  *
- * @author Ali Alladin
+ * @author Ali Alladin, Magnus Andersson
  */
 public class AccountPage extends Fragment {
     RecyclerView myListings;

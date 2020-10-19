@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Ali, Elias, Magnus, William
+ *
  *
  * Static class for communicating with the firebase database
  *
- * @author Ali Alladin
+ * @author Ali Alladin, Elias, Magnus Andersson, William
  */
 public class Database {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -276,6 +276,14 @@ public class Database {
         });
     }*/
 
+    /**
+     * Method used for sending messages.
+     *
+     * @param text - Message that will be sent
+     * @param sender - The User ID of the sender
+     * @param receiver - The User ID of the receiver
+     * @param timeStamp - The time of when the message is being sent
+     */
     static public void useChat(String text, final String sender, final String receiver,String timeStamp) {
         List<String> sortList= new ArrayList<>();
         DatabaseReference db = getDatabaseReference();
@@ -286,21 +294,16 @@ public class Database {
         Map<String, String> map = new HashMap<>();
         map.put("message", text);
         map.put("sender", sender);
-        map.put("reciever", receiver);
+        map.put("receiver", receiver);
         map.put("timeStamp",timeStamp);
 
         sortList.add(sender);
         sortList.add(receiver);
         Collections.sort(sortList);
 
-
         Map<String, Object> childUpdates = new HashMap<>();
 
-
-
-
         childUpdates.put("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/" + key, map);
-
 
         db.updateChildren(childUpdates);
     }

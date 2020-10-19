@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Elias Johansson + ?
+ * @author Elias Johansson, Magnus Andersson
  * Class that instantiates the GUI for the messagesPage among them the RecyclerView
  * that will hold all the different conversations.
  */
