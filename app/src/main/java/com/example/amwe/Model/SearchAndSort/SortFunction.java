@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author William Hugo
- *
  * A class that sorts the items in a list in different ways.
+ *
+ * @author William Hugo, Magnus Andersson
  */
 public class SortFunction {
     final List<Item> list;
