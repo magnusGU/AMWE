@@ -8,6 +8,7 @@ import com.example.amwe.ControllerView.MessagePage.ChatRoomAdapter;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
+import com.example.amwe.Model.Messaging.Cryptography;
 import com.example.amwe.Model.Messaging.CryptographyKeys;
 import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.Model.Messaging.PublicKey;
@@ -295,27 +296,33 @@ public class Database {
      * @param receiver - The User ID of the receiver
      * @param timeStamp - The time of when the message is being sent
      */
-    static public void useChat(String text, final String sender, final String receiver,String timeStamp) {
-        List<String> sortList= new ArrayList<>();
+    static public void useChat(String text, final String sender, final String receiver, String timeStamp) {
         DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
         final String key = chats.push().getKey();
 
-        //Message message = new Message (text, sender);
-        Map<String, String> map = new HashMap<>();
-        map.put("message", text);
-        map.put("sender", sender);
-        map.put("receiver", receiver);
-        map.put("timeStamp",timeStamp);
+        //Skapa nycklar för sender & receiver
 
-        sortList.add(sender);
-        sortList.add(receiver);
-        Collections.sort(sortList);
+        Cryptography crypt = new Cryptography();
+        String senderMessage = new String(crypt.encrypt(text, /*sender nyckel*/));
+        String receiverMessage = new String(crypt.encrypt(text,/*receiver nyckel*/));
+
+        Map<String, String> senderMap = new HashMap<>();
+        senderMap.put("message", senderMessage);
+        senderMap.put("sender", sender);
+        senderMap.put("receiver", receiver);
+        senderMap.put("timeStamp",timeStamp);
+
+        Map<String, String> receiverMap = new HashMap<>();
+        receiverMap.put("message", receiverMessage);
+        receiverMap.put("sender", sender);
+        receiverMap.put("receiver", receiver);
+        receiverMap.put("timeStamp",timeStamp);
 
         Map<String, Object> childUpdates = new HashMap<>();
 
-        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, map);
-        childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, map);
+        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, senderMap);
+        childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, senderMap);
 
         db.updateChildren(childUpdates);
     }
