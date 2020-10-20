@@ -328,7 +328,8 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 items.clear();
                 for (DataSnapshot item:snapshot.getChildren()){
-                    if (item.toString().contains(FirebaseAuth.getInstance().getUid())){
+                    System.out.println(item.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                    if (item.getKey().startsWith(FirebaseAuth.getInstance().getUid())){
                         items.add(item);
                     }
                 }

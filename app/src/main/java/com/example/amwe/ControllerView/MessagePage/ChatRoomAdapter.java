@@ -16,12 +16,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Messaging.Cryptography;
+import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +40,14 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     private final List<DataSnapshot> itemList;
     private Context context;
     private String contact;
+    private String decryptingBigInt;
+    private String n;
+    private Cryptography crypt;
 
     public ChatRoomAdapter(List<DataSnapshot> messages, Context context) {
         this.itemList = messages;
         this.context = context;
+        this.crypt=new Cryptography();
         Database.getChatRooms(messages, this);
     }
 
@@ -106,7 +114,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         DataSnapshot lastChat = messages.get(messages.size() - 1);
 
 
-        String currentUserName = Database.getCurrentUser();
+         String currentUserName = Database.getCurrentUser();
         if (lastChat.child("sender").getValue() != null && currentUserName != null) {
 
 
@@ -128,6 +136,32 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
         holder.contact = contact;
         DatabaseReference reference = Database.getDatabaseReference();
+        DatabaseReference currentUserReference = Database.getPrivateKeyReference();
+        currentUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String prefix;
+                if (holder.isLastSenderCurrentUser) {
+                    prefix = "Du: ";
+                } else {
+                    prefix = (String) snapshot.child("name").getValue() + ":" + " ";
+                }
+                if (holder.isLastSenderCurrentUser){
+                System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                n = (String) snapshot.child("n").getValue();
+                decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
+                BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
+                BigInteger bigIntN = new BigInteger(n);
+                PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
+                String decryptedMessage = crypt.decrypt(holder.lastMessage.toString().getBytes(), pk);
+                holder.lastMessageText.setText(prefix + decryptedMessage);
+            }}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         reference = reference.child("users").child(contact);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             /**
@@ -138,14 +172,12 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
              */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String prefix;
-                if (holder.isLastSenderCurrentUser) {
-                    prefix = "Du: ";
-                } else {
-                    prefix = (String) snapshot.child("name").getValue() + ":" + " ";
+
+                if (contact.equals(FirebaseAuth.getInstance().getUid())){
+
                 }
 
-                holder.lastMessageText.setText(prefix + holder.lastMessage);
+
                 holder.messageContact.setText((String) snapshot.child("name").getValue());
                 holder.messageTimeStamp.setText(holder.timeStamp);
 
