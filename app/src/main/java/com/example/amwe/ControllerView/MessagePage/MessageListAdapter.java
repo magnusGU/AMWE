@@ -21,35 +21,40 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Timer;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
-    private List <DataSnapshot> messages;
+    private List<DataSnapshot> messages;
     private static final int MESSAGE_SENT = 1;
     private static final int MESSAGE_RECEIVED = 2;
     private Cryptography crypt;
     private String n;
     private String decryptingBigInt;
+    private String encryptedMessage;
 
-    public MessageListAdapter(List<DataSnapshot> messages){
+
+    public MessageListAdapter(List<DataSnapshot> messages) {
         this.messages = messages;
+        crypt = new Cryptography();
+
+
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
-        if(viewType==MESSAGE_SENT){
+        if (viewType == MESSAGE_SENT) {
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_sent_message, parent, false);
             return new SentMessageHolder(v);
-        }
-        else if (viewType==MESSAGE_RECEIVED){
+        } else if (viewType == MESSAGE_RECEIVED) {
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_received_message, parent, false);
             return new ReceivedMessageHolder(v);
         }
 
 
-    throw new IllegalArgumentException("ViewType is not defined. Message was not sent or received");
+        throw new IllegalArgumentException("ViewType is not defined. Message was not sent or received");
     }
 
 
@@ -72,15 +77,15 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return messages.size();
     }
+
     @Override
     public int getItemViewType(int position) {
-    /*If messages author is current user, place it to the right otherwise place it to the left
-    * */
-    DataSnapshot message = messages.get(position);
-    if((message.child("sender").getValue()).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-        return MESSAGE_SENT;
-    }
-    else return MESSAGE_RECEIVED;
+        /*If messages author is current user, place it to the right otherwise place it to the left
+         * */
+        DataSnapshot message = messages.get(position);
+        if ((message.child("sender").getValue()).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            return MESSAGE_SENT;
+        } else return MESSAGE_RECEIVED;
     }
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
@@ -94,15 +99,27 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
 
         void bind(DataSnapshot message) {
-            String encryptedMessage = (String) message.child("message").getValue();
+             encryptedMessage = (String) message.child("message").getValue();
 
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + decryptingBigInt);
             DatabaseReference dbr = Database.getPrivateKeyReference();
             dbr.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    n = (String) snapshot.child("/n/").getValue();
-                    decryptingBigInt = (String) snapshot.child("/decryptingBigInt/").getValue();
+                    System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                    n = (String) snapshot.child("n").getValue();
+                    decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
+                    BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
+                    BigInteger bigIntN = new BigInteger(n);
+                    PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
+                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + encryptedMessage);
+                    String decryptedMessage = crypt.decrypt(encryptedMessage.getBytes(), pk);
+                    messageText.setText(decryptedMessage);
+
+
+
                 }
+
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -110,12 +127,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
-            BigInteger bigIntN = new BigInteger(n);
-            PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-            String decryptedMessage = crypt.decrypt(encryptedMessage.getBytes(), pk);
-            messageText.setText(decryptedMessage);
             timeText.setText((String) message.child("timeStamp").getValue());
+
 
             // Format the stored timestamp into a readable String using method.
 

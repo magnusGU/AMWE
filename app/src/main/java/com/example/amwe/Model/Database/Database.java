@@ -343,7 +343,7 @@ public class Database {
     }
 
     static public DatabaseReference getPrivateKeyReference() {
-        return Database.getDatabase().getReference("/users/").child(getCurrentUser()).child("/private_key/");
+        return Database.getDatabase().getReference("users").child(getCurrentUser()).child("private_key");
     }
 
     static public DatabaseReference getPublicKeyReference() {
