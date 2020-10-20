@@ -308,10 +308,10 @@ public class Database {
         db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                BigInteger senderEncrypt = new BigInteger((String) snapshot.child(sender).child("private_key").child("decryptingBigInt").getValue());
-                BigInteger senderN = new BigInteger((String) snapshot.child(sender).child("private_key").child("n").getValue());
-                BigInteger receiverEncrypt = new BigInteger((String) snapshot.child(receiver).child("private_key").child("decryptingBigInt").getValue());
-                BigInteger receiverN = new BigInteger((String) snapshot.child(receiver).child("private_key").child("n").getValue());
+                BigInteger senderEncrypt = new BigInteger((String) snapshot.child(sender).child("public_key").child("encryptingBigInt").getValue());
+                BigInteger senderN = new BigInteger((String) snapshot.child(sender).child("public_key").child("n").getValue());
+                BigInteger receiverEncrypt = new BigInteger((String) snapshot.child(receiver).child("public_key").child("encryptingBigInt").getValue());
+                BigInteger receiverN = new BigInteger((String) snapshot.child(receiver).child("public_key").child("n").getValue());
                 PublicKey senderKey = new PublicKey(senderEncrypt,senderN);
                 PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
