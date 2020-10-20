@@ -15,6 +15,16 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.util.List;
 
+/**
+ * @author Elias Johansson, William Hugo.
+ *
+ * This class displays all the messages that exists inside a conversation between two users
+ * as a list. It is needed to use the Android RecyclerView, which it also inherits from.
+ * The messages look different depending on if it is sent or received by the current user.
+ * To do this it uses two inner classes: ReceivedMessageHolder and SentMessageHolder to differentiate between
+ * the two accordingly.
+ */
+
 public class MessageListAdapter extends RecyclerView.Adapter {
     private List <DataSnapshot> messages;
     private static final int MESSAGE_SENT = 1;

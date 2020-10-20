@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *
  * Related to {@link com.example.amwe.R.layout#fragment_search_page}.
  *
- * @author Ali Alladin, Magnus Andersson
+ * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */
 public class SearchPage extends Fragment {
 
