@@ -100,32 +100,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         void bind(DataSnapshot message) {
              encryptedMessage = (String) message.child("message").getValue();
-
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + decryptingBigInt);
-            DatabaseReference dbr = Database.getPrivateKeyReference();
-            dbr.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                    n = (String) snapshot.child("n").getValue();
-                    decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
-                    BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
-                    BigInteger bigIntN = new BigInteger(n);
-                    PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + encryptedMessage);
-                    String decryptedMessage = crypt.decrypt(encryptedMessage.getBytes(), pk);
-                    messageText.setText(decryptedMessage);
-
-
-
-                }
-
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+             decryptAndShowMessage(message,messageText);
 
             timeText.setText((String) message.child("timeStamp").getValue());
 
@@ -133,6 +108,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             // Format the stored timestamp into a readable String using method.
 
         }
+
     }
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
@@ -150,8 +126,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
 
         void bind(DataSnapshot message) {
-            messageText.setText((String) message.child("message").getValue());
-            messageText.setText((String) message.child("message").getValue());
+            decryptAndShowMessage(message,messageText);
             timeText.setText((String) message.child("timeStamp").getValue());
 
             // Format the stored timestamp into a readable String using method.
@@ -162,6 +137,33 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             // Insert the profile image from the URL into the ImageView.
             //  Utils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
         }
+    }
+
+    private void decryptAndShowMessage(DataSnapshot message, final TextView messageText){
+        encryptedMessage = (String) message.child("message").getValue();
+
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + decryptingBigInt);
+        DatabaseReference dbr = Database.getPrivateKeyReference();
+        dbr.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                n = (String) snapshot.child("n").getValue();
+                decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
+                BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
+                BigInteger bigIntN = new BigInteger(n);
+                PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + encryptedMessage);
+                String decryptedMessage = crypt.decrypt(encryptedMessage.getBytes(), pk);
+
+                messageText.setText(decryptedMessage);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
 

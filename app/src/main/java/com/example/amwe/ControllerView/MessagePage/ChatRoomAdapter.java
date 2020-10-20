@@ -146,7 +146,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                 } else {
                     prefix = (String) snapshot.child("name").getValue() + ":" + " ";
                 }
-                if (holder.isLastSenderCurrentUser){
+
                 System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 n = (String) snapshot.child("n").getValue();
                 decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
@@ -155,7 +155,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
                 String decryptedMessage = crypt.decrypt(holder.lastMessage.toString().getBytes(), pk);
                 holder.lastMessageText.setText(prefix + decryptedMessage);
-            }}
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
