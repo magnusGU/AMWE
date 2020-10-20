@@ -333,8 +333,8 @@ public class Database {
 
                 Map<String, Object> childUpdates = new HashMap<>();
 
-                childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, receiverMap);
-                childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, senderMap);
+                childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, senderMap);
+                childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, receiverMap);
 
                 db.updateChildren(childUpdates);
             }
