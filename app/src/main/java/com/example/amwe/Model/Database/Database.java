@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- *
  * Static class for communicating with the firebase database
  *
  * @author Ali Alladin, Elias, Magnus Andersson, William Hugo
@@ -78,6 +77,7 @@ public class Database {
     static public String getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
     /**
      * This method makes two updates in the database, one in the common listing dataset, and one
      * in the user-listings specific dataset, so all users can see the update to a listing, and so that
@@ -149,8 +149,9 @@ public class Database {
     /**
      * Add new user to the database, not creating an authorized user, but adding public information
      * to the database, like name
-     *  @param uid  user id, unique
-     * @param name of the user, matches displayName, not unique
+     *
+     * @param uid         user id, unique
+     * @param name        of the user, matches displayName, not unique
      * @param base64Photo
      */
     static public void addUser(String uid, String name, String base64Photo) {
@@ -257,8 +258,9 @@ public class Database {
         allListings.addValueEventListener(listener);
 
     }
+
     static private boolean uniqueListing(String itemID, List<Item> bookListings) {
-        for (Item i: bookListings) {
+        for (Item i : bookListings) {
             if (itemID.equals(i.getId())) {
                 return false;
             }
@@ -291,40 +293,57 @@ public class Database {
     /**
      * Method used for sending messages.
      *
-     * @param text - Message that will be sent
-     * @param sender - The User ID of the sender
-     * @param receiver - The User ID of the receiver
+     * @param text      - Message that will be sent
+     * @param sender    - The User ID of the sender
+     * @param receiver  - The User ID of the receiver
      * @param timeStamp - The time of when the message is being sent
      */
-    static public void useChat(String text, final String sender, final String receiver, String timeStamp) {
-        DatabaseReference db = getDatabaseReference();
+    static public void useChat(final String text, final String sender, final String receiver, final String timeStamp) {
+        final DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
         final String key = chats.push().getKey();
 
+
         //Skapa nycklar för sender & receiver
+        db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                BigInteger senderEncrypt = new BigInteger((String) snapshot.child(sender).child("private_key").child("decryptingBigInt").getValue());
+                BigInteger senderN = new BigInteger((String) snapshot.child(sender).child("private_key").child("n").getValue());
+                BigInteger receiverEncrypt = new BigInteger((String) snapshot.child(receiver).child("private_key").child("decryptingBigInt").getValue());
+                BigInteger receiverN = new BigInteger((String) snapshot.child(receiver).child("private_key").child("n").getValue());
+                PublicKey senderKey = new PublicKey(senderEncrypt,senderN);
+                PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
-        Cryptography crypt = new Cryptography();
-        String senderMessage = new String(crypt.encrypt(text, /*sender nyckel*/));
-        String receiverMessage = new String(crypt.encrypt(text,/*receiver nyckel*/));
+                Cryptography crypt = new Cryptography();
+                String senderMessage = new String(crypt.encrypt(text,senderKey));
+                String receiverMessage = new String(crypt.encrypt(text,receiverKey));
 
-        Map<String, String> senderMap = new HashMap<>();
-        senderMap.put("message", senderMessage);
-        senderMap.put("sender", sender);
-        senderMap.put("receiver", receiver);
-        senderMap.put("timeStamp",timeStamp);
+                Map<String, String> senderMap = new HashMap<>();
+                senderMap.put("message", senderMessage);
+                senderMap.put("sender", sender);
+                senderMap.put("receiver", receiver);
+                senderMap.put("timeStamp", timeStamp);
 
-        Map<String, String> receiverMap = new HashMap<>();
-        receiverMap.put("message", receiverMessage);
-        receiverMap.put("sender", sender);
-        receiverMap.put("receiver", receiver);
-        receiverMap.put("timeStamp",timeStamp);
+                Map<String, String> receiverMap = new HashMap<>();
+                receiverMap.put("message", receiverMessage);
+                receiverMap.put("sender", sender);
+                receiverMap.put("receiver", receiver);
+                receiverMap.put("timeStamp", timeStamp);
 
-        Map<String, Object> childUpdates = new HashMap<>();
+                Map<String, Object> childUpdates = new HashMap<>();
 
-        childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, senderMap);
-        childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, senderMap);
+                childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, senderMap);
+                childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, senderMap);
 
-        db.updateChildren(childUpdates);
+                db.updateChildren(childUpdates);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     static public void getChatRooms(final List<DataSnapshot> items, final ChatRoomAdapter chatRoomAdapter) {
@@ -334,9 +353,9 @@ public class Database {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 items.clear();
-                for (DataSnapshot item:snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()) {
                     System.out.println(item.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                    if (item.getKey().startsWith(FirebaseAuth.getInstance().getUid())){
+                    if (item.getKey().startsWith(FirebaseAuth.getInstance().getUid())) {
                         items.add(item);
                     }
                 }
