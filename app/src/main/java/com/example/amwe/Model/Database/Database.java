@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -316,8 +317,8 @@ public class Database {
                 PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
                 Cryptography crypt = new Cryptography();
-                String senderMessage = new String(crypt.encrypt(text,senderKey));
-                String receiverMessage = new String(crypt.encrypt(text,receiverKey));
+                String senderMessage = new String(crypt.encrypt(text,senderKey), StandardCharsets.UTF_8);
+                String receiverMessage = new String(crypt.encrypt(text,receiverKey), StandardCharsets.UTF_8);
 
                 Map<String, String> senderMap = new HashMap<>();
                 senderMap.put("message", senderMessage);

@@ -1,5 +1,7 @@
 package com.example.amwe.ControllerView.MessagePage;
 
+import android.os.Build;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.Model.Database.Database;
@@ -36,8 +39,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public MessageListAdapter(List<DataSnapshot> messages) {
         this.messages = messages;
         crypt = new Cryptography();
-
-
     }
 
     @Override
@@ -154,7 +155,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 BigInteger bigIntN = new BigInteger(n);
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
                 System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + encryptedMessage);
-                String decryptedMessage = crypt.decrypt(encryptedMessage.getBytes(), pk);
+                byte[] decode = Base64.decode(encryptedMessage, Base64.DEFAULT);
+                String decryptedMessage = crypt.decrypt(decode, pk);
 
                 messageText.setText(decryptedMessage);
             }
