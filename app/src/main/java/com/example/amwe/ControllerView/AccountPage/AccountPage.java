@@ -94,10 +94,10 @@ public class AccountPage extends Fragment {
      * @param listName     The String that decides which method in database is called.
      */
     private void createList(RecyclerView recyclerView, String listName) {
-        ArrayList<Item> myListings = new ArrayList<>();
+        ArrayList<Item> listings = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        ListingAdapter adapter = new ListingAdapter(myListings, listName);
+        ListingAdapter adapter = new ListingAdapter(listings, listName);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
