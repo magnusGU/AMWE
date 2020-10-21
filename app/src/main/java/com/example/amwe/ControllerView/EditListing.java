@@ -46,7 +46,6 @@ public class EditListing extends AppCompatActivity {
 
     private ImageButton cameraClick;
     private final int CAMERA_PIC_REQUEST = 2;
-    private String photoPath;
     private File photoFile;
     private Uri photoURI;
     private String base64Photo;
@@ -69,8 +68,6 @@ public class EditListing extends AppCompatActivity {
 
         Bitmap thumbnail = BitmapFactory.decodeByteArray(bundle.getByteArray("image"), 0, bundle.getByteArray("image").length);
 
-        //Cast because of return type Object
-        //  Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         cameraClick.setImageBitmap(thumbnail);
         ViewGroup.LayoutParams params = cameraClick.getLayoutParams();
         params.height = 1500;
@@ -150,7 +147,6 @@ public class EditListing extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (conditions(title, author, edition, isbn, price)) {
 
                     DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK);
@@ -165,9 +161,7 @@ public class EditListing extends AppCompatActivity {
                         base64Photo = Base64.encodeToString(array, 0);
 
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (NullPointerException e) {
+                    } catch (IOException | NullPointerException e) {
                         e.printStackTrace();
                     }
                     Item item = new Book(
