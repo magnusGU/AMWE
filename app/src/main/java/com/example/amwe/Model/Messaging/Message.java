@@ -8,7 +8,7 @@ import android.util.Base64;
  * simplify encryption and interactions with the database.
  */
 
-public class Message {
+public class Message implements IMessage{
     private String text;
     private String senderId;
     private String receiverId;
@@ -52,10 +52,15 @@ public class Message {
      * @return a Base64String, a string that will not destroy information about the encryption and at the same time
      * enables the database to handle it.
      */
+    @Override
     public String encodeMessage(PublicKey publicKey) {
         Cryptography crypt = new Cryptography();
         String base64Message = Base64.encodeToString(crypt.encrypt(this.text, publicKey), Base64.DEFAULT);
 
-        return base64Message;
+        return base64Message;    }
+
+    public void test(){
+        System.out.println("hej");
     }
+
 }
