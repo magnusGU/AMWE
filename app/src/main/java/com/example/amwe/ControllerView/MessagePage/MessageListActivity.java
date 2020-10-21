@@ -82,7 +82,7 @@ public class MessageListActivity extends AppCompatActivity {
         });
         DatabaseReference contact;
         if (senderUid.equals(FirebaseAuth.getInstance().getUid())){
-        contact=Database.getDatabaseReference().child("users").child(receiverUid);
+            contact=Database.getDatabaseReference().child("users").child(receiverUid);
         }
         else {
             contact=Database.getDatabaseReference().child("users").child(senderUid);
