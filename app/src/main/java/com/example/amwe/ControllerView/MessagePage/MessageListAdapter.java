@@ -64,7 +64,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             return new ReceivedMessageHolder(v);
         }
 
-
         throw new IllegalArgumentException("ViewType is not defined. Message was not sent or received");
     }
 
@@ -91,8 +90,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        /*If messages author is current user, place it to the right otherwise place it to the left
-         * */
         DataSnapshot message = messages.get(position);
         if ((message.child("sender").getValue()).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             return MESSAGE_SENT;
@@ -114,57 +111,38 @@ public class MessageListAdapter extends RecyclerView.Adapter {
              decryptAndShowMessage(message,messageText);
 
             timeText.setText((String) message.child("timeStamp").getValue());
-
-
-            // Format the stored timestamp into a readable String using method.
-
         }
 
     }
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText, nameText;
-        ImageView profileImage;
+        TextView messageText, timeText;
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);
 
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
-
-            //nameText = (TextView) itemView.findViewById(R.id.text_message_name);
-            //profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
         }
 
         void bind(DataSnapshot message) {
             decryptAndShowMessage(message,messageText);
             timeText.setText((String) message.child("timeStamp").getValue());
-
-            // Format the stored timestamp into a readable String using method.
-            //timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
-
-            //nameText.setText(message.getAuthorId());
-
-            // Insert the profile image from the URL into the ImageView.
-            //  Utils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
         }
     }
 
     private void decryptAndShowMessage(DataSnapshot message, final TextView messageText){
         encryptedMessage = (String) message.child("message").getValue();
 
-        //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + decryptingBigInt);
         DatabaseReference dbr = Database.getPrivateKeyReference();
         dbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 n = (String) snapshot.child("n").getValue();
                 decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
                 BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
                 BigInteger bigIntN = new BigInteger(n);
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + encryptedMessage);
                 byte[] decode = Base64.decode(encryptedMessage, Base64.DEFAULT);
                 String decryptedMessage = crypt.decrypt(decode, pk);
 

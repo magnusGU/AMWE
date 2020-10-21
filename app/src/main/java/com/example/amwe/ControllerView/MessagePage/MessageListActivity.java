@@ -38,14 +38,12 @@ import java.util.List;
  */
 public class MessageListActivity extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
-    private TextView nameText;
     ImageView profileImage;
     private MessageListAdapter mMessageAdapter;
     private String senderUid;
     private String receiverUid;
     private ImageView contactImage;
     private TextView contactName;
-    private Cryptography crypt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +55,6 @@ public class MessageListActivity extends AppCompatActivity {
 
         final List <DataSnapshot> messageList = new ArrayList<>();
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-
-        nameText = findViewById(R.id.text_message_name);
 
         profileImage = findViewById(R.id.image_message_profile);
 
@@ -109,10 +105,7 @@ public class MessageListActivity extends AppCompatActivity {
 
             }
         });
-        /*List<String> sortList= new ArrayList<>();
-        sortList.add(senderUid);
-        sortList.add(receiverUid);
-        Collections.sort(sortList);*/
+
         DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/"+ "/" + senderUid + receiverUid + "/");
 
         dbRef.addValueEventListener(new ValueEventListener() {
