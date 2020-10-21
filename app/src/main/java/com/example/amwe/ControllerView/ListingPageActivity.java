@@ -34,7 +34,7 @@ import java.text.DecimalFormat;
  * <p>
  * Related to {@link com.example.amwe.R.layout#listing_page}.
  *
- * @author Ali Alladin, Magnus Andersson
+ * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */
 public class ListingPageActivity extends AppCompatActivity {
     ValueEventListener valueEventListener;

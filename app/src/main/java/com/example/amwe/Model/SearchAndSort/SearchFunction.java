@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author William Hugo
- *
  * Used for searching in a list of items, filters out things from the list that doesn't match the search.
+ *
+ * @author William Hugo, Elias Johansson
  */
 public class SearchFunction {
 

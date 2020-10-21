@@ -3,11 +3,11 @@ package com.example.amwe.Model.Messaging;
 import java.math.BigInteger;
 
 /**
- * @author William Hugo
- *
  * Private key for cryptography; a data container containing the information needed for decryption.
  * Intended to always have a corresponding public key.
  * Private key should, as the name suggest, be private so only the receiver having the key can decrypt the messages encrypted for them.
+ *
+ * @author William Hugo
  */
 public class PrivateKey {
 

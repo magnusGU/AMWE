@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:background="@color/colorWhite"
         android:elevation="16dp"
@@ -23,13 +23,13 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@color/colorLightShade"
-            app:srcCompat="@drawable/ic_baseline_filter_list_24"
             android:tint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/searchBar"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/sort_function" />
+            app:menu="@menu/sort_function"
+            app:srcCompat="@drawable/ic_baseline_filter_list_24" />
 
         <SearchView
             android:id="@+id/searchBar"

@@ -15,6 +15,16 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.util.List;
 
+/**
+ * @author Elias Johansson, William Hugo.
+ *
+ * This class displays all the messages that exists inside a conversation between two users
+ * as a list. It is needed to use the Android RecyclerView, which it also inherits from.
+ * The messages look different depending on if it is sent or received by the current user.
+ * To do this it uses two inner classes: ReceivedMessageHolder and SentMessageHolder to differentiate between
+ * the two accordingly.
+ */
+
 public class MessageListAdapter extends RecyclerView.Adapter {
     private List <DataSnapshot> messages;
     private static final int MESSAGE_SENT = 1;
@@ -34,7 +44,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
         else if (viewType==MESSAGE_RECEIVED){
             v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_recieved_message, parent, false);
+                    .inflate(R.layout.item_received_message, parent, false);
             return new ReceivedMessageHolder(v);
         }
 
@@ -101,12 +111,15 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
+
             //nameText = (TextView) itemView.findViewById(R.id.text_message_name);
             //profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
         }
 
         void bind(DataSnapshot message) {
             messageText.setText((String) message.child("message").getValue());
+            messageText.setText((String) message.child("message").getValue());
+            timeText.setText((String) message.child("timeStamp").getValue());
 
             // Format the stored timestamp into a readable String using method.
             //timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
