@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ControllerView.AccountPage.Settings"></activity>
-        <activity android:name=".ControllerView.SearchPage.FilterSort" />
         <activity android:name=".ControllerView.EditListing" />
         <activity
             android:name=".ControllerView.AddListing"
