@@ -85,7 +85,6 @@ public class Database {
      */
     static public void updateListing(Item updatedListing) {
         DatabaseReference db = getDatabaseReference();
-        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Map<String, Object> updatedValues = updatedListing.toMap();
 
