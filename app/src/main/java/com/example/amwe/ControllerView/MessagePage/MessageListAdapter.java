@@ -143,18 +143,18 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private void decryptAndShowMessage(DataSnapshot message, final TextView messageText){
         encryptedMessage = (String) message.child("message").getValue();
 
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + decryptingBigInt);
+        //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + decryptingBigInt);
         DatabaseReference dbr = Database.getPrivateKeyReference();
         dbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                //System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 n = (String) snapshot.child("n").getValue();
                 decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
                 BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
                 BigInteger bigIntN = new BigInteger(n);
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + encryptedMessage);
+                //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + " " + encryptedMessage);
                 byte[] decode = Base64.decode(encryptedMessage, Base64.DEFAULT);
                 String decryptedMessage = crypt.decrypt(decode, pk);
 

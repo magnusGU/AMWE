@@ -1,5 +1,6 @@
 package com.example.amwe.Model.Database;
 
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,9 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -317,8 +315,8 @@ public class Database {
                 PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
                 Cryptography crypt = new Cryptography();
-                String senderMessage = new String(crypt.encrypt(text,senderKey), StandardCharsets.UTF_8);
-                String receiverMessage = new String(crypt.encrypt(text,receiverKey), StandardCharsets.UTF_8);
+                String senderMessage = Base64.encodeToString(crypt.encrypt(text,senderKey), Base64.DEFAULT);
+                String receiverMessage = Base64.encodeToString(crypt.encrypt(text,receiverKey), Base64.DEFAULT);
 
                 Map<String, String> senderMap = new HashMap<>();
                 senderMap.put("message", senderMessage);

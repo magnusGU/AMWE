@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Messaging.Cryptography;
 import com.example.amwe.Model.Messaging.PrivateKey;
+//import com.example.amwe.Model.Messaging.PublicKey;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -152,8 +154,13 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                 decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
                 BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
                 BigInteger bigIntN = new BigInteger(n);
+                //BigInteger bigIntEncrypt = new BigInteger("98291818617830726655213886170867930285450288924118166181019168790818859696687");
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                String decryptedMessage = crypt.decrypt(holder.lastMessage.toString().getBytes(), pk);
+                //PublicKey pubk = new PublicKey(bigIntEncrypt, bigIntN);
+                //String test = Base64.encodeToString(crypt.encrypt("Hej",pubk),Base64.DEFAULT);
+                //byte[] h = Base64.decode(test, Base64.DEFAULT);
+                //System.out.println("##########HELLO" + crypt.decrypt(h, pk));
+                String decryptedMessage = crypt.decrypt(Base64.decode(holder.lastMessage.toString(), Base64.DEFAULT), pk);
                 holder.lastMessageText.setText(prefix + decryptedMessage);
             }
 
