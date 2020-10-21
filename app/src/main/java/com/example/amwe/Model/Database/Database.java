@@ -154,7 +154,7 @@ public class Database {
      * @param base64Photo
      */
     static public void addUser(String uid, String name, String base64Photo) {
-        database.getReference().child("users").child(uid).setValue(name);
+        database.getReference().child("users").child(uid).child("name").setValue(name);
         database.getReference().child("users").child(uid).child("userImage").setValue(base64Photo);
 
         CryptographyKeys createKey = new CryptographyKeys();
