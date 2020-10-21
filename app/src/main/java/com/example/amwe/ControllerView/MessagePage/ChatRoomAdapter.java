@@ -137,12 +137,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         currentUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String prefix;
-                if (holder.isLastSenderCurrentUser) {
-                    prefix = "Du: ";
-                } else {
-                    prefix = (String) snapshot.child("name").getValue() + ":" + " ";
-                }
+
 
                 System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 n = (String) snapshot.child("n").getValue();
@@ -156,7 +151,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                 //byte[] h = Base64.decode(test, Base64.DEFAULT);
                 //System.out.println("##########HELLO" + crypt.decrypt(h, pk));
                 String decryptedMessage = crypt.decrypt(Base64.decode(holder.lastMessage.toString(), Base64.DEFAULT), pk);
-                holder.lastMessageText.setText(prefix + decryptedMessage);
+                holder.lastMessage= decryptedMessage;
             }
 
             @Override
@@ -174,6 +169,12 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
              */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String prefix;
+                if (holder.isLastSenderCurrentUser) {
+                    prefix = "Du: ";
+                } else {
+                    prefix = snapshot.child("name").getValue() + ":" + " ";
+                }
 
                 if (contact.equals(FirebaseAuth.getInstance().getUid())){
 
@@ -182,6 +183,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
                 holder.messageContact.setText((String) snapshot.child("name").getValue());
                 holder.messageTimeStamp.setText(holder.timeStamp);
+                holder.lastMessageText.setText(prefix+holder.lastMessage);
 
                 if (snapshot.child("userImage").getValue() != null) {
                     byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
