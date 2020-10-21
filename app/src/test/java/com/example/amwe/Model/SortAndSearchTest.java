@@ -3,7 +3,10 @@ package com.example.amwe.Model;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.Model.SearchAndSort.SearchFunction;
-import com.example.amwe.Model.SearchAndSort.SortFunction;
+import com.example.amwe.Model.SearchAndSort.SortAlphabetically;
+import com.example.amwe.Model.SearchAndSort.SortByDate;
+import com.example.amwe.Model.SearchAndSort.SortByPrice;
+import com.example.amwe.Model.SearchAndSort.SortStrategy;
 
 import org.junit.Test;
 
@@ -16,7 +19,6 @@ public class SortAndSearchTest {
     @Test
     public void isFilteredListCorrectSize()  {
         ArrayList<Item> listings = new ArrayList<>();
-
 
         Item listing1 = new Book("123ABC","a","b","c",3,"hej","1",200,"säljare","bra","3000");
         Item listing2 = new Book("123ABC","b","b","c",3,"hej","1",200,"säljare","bra","3000");
@@ -73,8 +75,8 @@ public class SortAndSearchTest {
         expected.add(listing1);
         expected.add(listing3);
 
-        SortFunction sort = new SortFunction(listings);
-        sort.sortPrice();
+        SortStrategy sort = new SortByPrice(listings);
+        sort.sort();
 
         assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
     }
@@ -97,8 +99,8 @@ public class SortAndSearchTest {
         expected.add(listing4);
         expected.add(listing2);
 
-        SortFunction sort = new SortFunction(listings);
-        sort.sortAlphabetically();
+        SortStrategy sort = new SortAlphabetically(listings);
+        sort.sort();
 
         assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
     }
@@ -121,8 +123,8 @@ public class SortAndSearchTest {
         expected.add(listing4);
         expected.add(listing2);
 
-        SortFunction sort = new SortFunction(listings);
-        sort.sortDate();
+        SortStrategy sort = new SortByDate(listings);
+        sort.sort();
 
         assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
     }
@@ -149,8 +151,8 @@ public class SortAndSearchTest {
         expected.add(listing5);
         expected.add(listing3);
 
-        SortFunction sort = new SortFunction(listings);
-        sort.sortPrice();
+        SortStrategy sort = new SortByPrice(listings);
+        sort.sort();
         SearchFunction searchFunction = new SearchFunction(listings);
         searchFunction.performFiltering("aa");
 
@@ -181,8 +183,8 @@ public class SortAndSearchTest {
 
         SearchFunction searchFunction = new SearchFunction(listings);
         searchFunction.performFiltering("aa");
-        SortFunction sort = new SortFunction(listings);
-        sort.sortPrice();
+        SortStrategy sort = new SortByPrice(listings);
+        sort.sort();
 
         assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
     }
@@ -205,9 +207,10 @@ public class SortAndSearchTest {
         expected.add(listing3);
         expected.add(listing1);
 
-        SortFunction sort = new SortFunction(listings);
-        sort.sortPrice();
-        sort.sortAlphabetically();
+        SortStrategy sort = new SortByPrice(listings);
+        sort.sort();
+        SortStrategy secondSort = new SortAlphabetically(listings);
+        secondSort.sort();
 
         assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
     }
@@ -226,13 +229,14 @@ public class SortAndSearchTest {
         listings.add(listing3);
         listings.add(listing4);
         expected.add(listing3);
-        expected.add(listing2);
         expected.add(listing1);
         expected.add(listing4);
+        expected.add(listing2);
 
-        SortFunction sort = new SortFunction(listings);
-        sort.sortPrice();
-        sort.sortAlphabetically();
+        SortStrategy sort = new SortAlphabetically(listings);
+        sort.sort();
+        SortStrategy secondSort = new SortByPrice(listings);
+        secondSort.sort();
 
         assertEquals(Arrays.toString(expected.toArray()),Arrays.toString(listings.toArray()));
     }
@@ -241,9 +245,10 @@ public class SortAndSearchTest {
     public void isSortedEmptyListStillEmpty() throws InterruptedException {
         ArrayList<Item> listings = new ArrayList<>();
 
-        SortFunction sort = new SortFunction(listings);
-        sort.sortPrice();
-        sort.sortAlphabetically();
+        SortStrategy sort = new SortByPrice(listings);
+        sort.sort();
+        SortStrategy secondSort = new SortAlphabetically(listings);
+        secondSort.sort();
         assertEquals(0,listings.size());
     }
 }
