@@ -1,22 +1,18 @@
 package com.example.amwe.ControllerView.MessagePage;
 
-import android.os.Build;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Messaging.Cryptography;
 import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * @author Elias Johansson, William Hugo.
@@ -43,7 +38,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private Cryptography crypt;
     private String n;
     private String decryptingBigInt;
-    private String encryptedMessage;
 
 
     public MessageListAdapter(List<DataSnapshot> messages) {
@@ -71,7 +65,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         DataSnapshot message = (DataSnapshot) messages.get(position);
-        message.child("message");
 
         switch (holder.getItemViewType()) {
             case MESSAGE_SENT:
@@ -91,7 +84,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         DataSnapshot message = messages.get(position);
-        if ((message.child("sender").getValue()).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+        if ((message.child("sender").getValue()).equals(Database.getCurrentUser())) {
             return MESSAGE_SENT;
         } else return MESSAGE_RECEIVED;
     }
@@ -107,7 +100,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         }
 
         void bind(DataSnapshot message) {
-             encryptedMessage = (String) message.child("message").getValue();
              decryptAndShowMessage(message,messageText);
 
             timeText.setText((String) message.child("timeStamp").getValue());
@@ -127,14 +119,15 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         void bind(DataSnapshot message) {
             decryptAndShowMessage(message,messageText);
+
             timeText.setText((String) message.child("timeStamp").getValue());
         }
     }
 
-    private void decryptAndShowMessage(DataSnapshot message, final TextView messageText){
-        encryptedMessage = (String) message.child("message").getValue();
+    private void decryptAndShowMessage(final DataSnapshot message, final TextView messageText){
 
         DatabaseReference dbr = Database.getPrivateKeyReference();
+
         dbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -143,7 +136,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
                 BigInteger bigIntN = new BigInteger(n);
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                byte[] decode = Base64.decode(encryptedMessage, Base64.DEFAULT);
+                byte[] decode = Base64.decode((String) message.child("message").getValue(), Base64.DEFAULT);
                 String decryptedMessage = crypt.decrypt(decode, pk);
 
                 messageText.setText(decryptedMessage);
