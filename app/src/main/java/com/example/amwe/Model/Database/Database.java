@@ -8,6 +8,10 @@ import com.example.amwe.ControllerView.MessagePage.ChatRoomAdapter;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
+import com.example.amwe.Model.Messaging.CryptographyKeysCreator;
+import com.example.amwe.Model.Messaging.Message;
+import com.example.amwe.Model.Messaging.PrivateKey;
+import com.example.amwe.Model.Messaging.PublicKey;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,15 +19,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- *
- *
  * Static class for communicating with the firebase database
  *
  * @author Ali Alladin, Elias, Magnus Andersson, William Hugo
@@ -74,6 +75,7 @@ public class Database {
     static public String getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
     /**
      * This method makes two updates in the database, one in the common listing dataset, and one
      * in the user-listings specific dataset, so all users can see the update to a listing, and so that
@@ -145,13 +147,22 @@ public class Database {
     /**
      * Add new user to the database, not creating an authorized user, but adding public information
      * to the database, like name
-     *  @param uid  user id, unique
-     * @param name of the user, matches displayName, not unique
+     *
+     * @param uid         user id, unique
+     * @param name        of the user, matches displayName, not unique
      * @param base64Photo
      */
     static public void addUser(String uid, String name, String base64Photo) {
-        database.getReference().child("users").child(uid).setValue(name);
+        database.getReference().child("users").child(uid).child("name").setValue(name);
         database.getReference().child("users").child(uid).child("userImage").setValue(base64Photo);
+
+        CryptographyKeysCreator createKey = new CryptographyKeysCreator();
+        PublicKey publicKey = createKey.makePublicKey();
+        PrivateKey privateKey = createKey.makePrivateKey();
+        database.getReference().child("users").child(uid).child("public_key").child("n").setValue(publicKey.getN().toString());
+        database.getReference().child("users").child(uid).child("public_key").child("encryptingBigInt").setValue(publicKey.getEncryptingBigInt().toString());
+        database.getReference().child("users").child(uid).child("private_key").child("n").setValue(privateKey.getN().toString());
+        database.getReference().child("users").child(uid).child("private_key").child("decryptingBigInt").setValue(privateKey.getDecryptingBigInt().toString());
     }
 
     /**
@@ -245,8 +256,9 @@ public class Database {
         allListings.addValueEventListener(listener);
 
     }
+
     static private boolean uniqueListing(String itemID, List<Item> bookListings) {
-        for (Item i: bookListings) {
+        for (Item i : bookListings) {
             if (itemID.equals(i.getId())) {
                 return false;
             }
@@ -279,44 +291,70 @@ public class Database {
     /**
      * Method used for sending messages.
      *
-     * @param text - Message that will be sent
-     * @param sender - The User ID of the sender
-     * @param receiver - The User ID of the receiver
+     * @param text      - Message that will be sent
+     * @param sender    - The User ID of the sender
+     * @param receiver  - The User ID of the receiver
      * @param timeStamp - The time of when the message is being sent
      */
-    static public void useChat(String text, final String sender, final String receiver,String timeStamp) {
-        List<String> sortList= new ArrayList<>();
-        DatabaseReference db = getDatabaseReference();
+    static public void useChat(final String text, final String sender, final String receiver, final String timeStamp) {
+        final DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
         final String key = chats.push().getKey();
 
-        //Message message = new Message (text, sender);
-        Map<String, String> map = new HashMap<>();
-        map.put("message", text);
-        map.put("sender", sender);
-        map.put("receiver", receiver);
-        map.put("timeStamp",timeStamp);
 
-        sortList.add(sender);
-        sortList.add(receiver);
-        Collections.sort(sortList);
+        //Skapa nycklar för sender & receiver
+        db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                BigInteger senderEncrypt = new BigInteger((String) snapshot.child(sender).child("public_key").child("encryptingBigInt").getValue());
+                BigInteger senderN = new BigInteger((String) snapshot.child(sender).child("public_key").child("n").getValue());
+                BigInteger receiverEncrypt = new BigInteger((String) snapshot.child(receiver).child("public_key").child("encryptingBigInt").getValue());
+                BigInteger receiverN = new BigInteger((String) snapshot.child(receiver).child("public_key").child("n").getValue());
+                PublicKey senderKey = new PublicKey(senderEncrypt,senderN);
+                PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
-        Map<String, Object> childUpdates = new HashMap<>();
+                Message senderMessage = new Message(text,sender,receiver,timeStamp);
+                Message receiverMessage = new Message(text,sender,receiver,timeStamp);
+                String base64SenderMessage = senderMessage.encodeMessage(senderKey);
+                String base64ReceiverMessage= receiverMessage.encodeMessage(receiverKey);
 
-        childUpdates.put("/chat_room/" + "/" + sortList.get(0) + sortList.get(1) + "/" + key, map);
+                Map<String, String> senderMap = new HashMap<>();
+                senderMap.put("message", base64SenderMessage);
+                senderMap.put("sender", sender);
+                senderMap.put("receiver", receiver);
+                senderMap.put("timeStamp", timeStamp);
 
-        db.updateChildren(childUpdates);
+                Map<String, String> receiverMap = new HashMap<>();
+                receiverMap.put("message", base64ReceiverMessage);
+                receiverMap.put("sender", sender);
+                receiverMap.put("receiver", receiver);
+                receiverMap.put("timeStamp", timeStamp);
+
+                Map<String, Object> childUpdates = new HashMap<>();
+
+                childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, senderMap);
+                childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, receiverMap);
+
+                db.updateChildren(childUpdates);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     static public void getChatRooms(final List<DataSnapshot> items, final ChatRoomAdapter chatRoomAdapter) {
-        DatabaseReference databaseReference =Database.getDatabase().getReference("/chat_room/");
+        DatabaseReference databaseReference = Database.getDatabase().getReference("/chat_room/");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 items.clear();
-                for (DataSnapshot item:snapshot.getChildren()){
-                    if (item.toString().contains(FirebaseAuth.getInstance().getUid())){
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    System.out.println(item.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                    if (item.getKey().startsWith(FirebaseAuth.getInstance().getUid())) {
                         items.add(item);
                     }
                 }
@@ -328,6 +366,14 @@ public class Database {
 
             }
         });
+    }
+
+    static public DatabaseReference getPrivateKeyReference() {
+        return Database.getDatabase().getReference("users").child(getCurrentUser()).child("private_key");
+    }
+
+    static public DatabaseReference getPublicKeyReference() {
+        return Database.getDatabase().getReference("/users/").child(getCurrentUser()).child("/public_key/");
     }
 
 }

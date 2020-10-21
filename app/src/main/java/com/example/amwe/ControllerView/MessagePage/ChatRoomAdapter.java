@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Messaging.Cryptography;
+import com.example.amwe.Model.Messaging.PrivateKey;
+//import com.example.amwe.Model.Messaging.PublicKey;
 import com.example.amwe.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +42,14 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     private final List<DataSnapshot> itemList;
     private Context context;
     private String contact;
+    private String decryptingBigInt;
+    private String n;
+    private Cryptography crypt;
 
     public ChatRoomAdapter(List<DataSnapshot> messages, Context context) {
         this.itemList = messages;
         this.context = context;
+        this.crypt=new Cryptography();
         Database.getChatRooms(messages, this);
     }
 
@@ -104,7 +114,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         DataSnapshot lastChat = messages.get(messages.size() - 1);
 
 
-        String currentUserName = Database.getCurrentUser();
+         String currentUserName = Database.getCurrentUser();
         if (lastChat.child("sender").getValue() != null && currentUserName != null) {
 
 
@@ -123,6 +133,32 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
 
         holder.contact = contact;
         DatabaseReference reference = Database.getDatabaseReference();
+        DatabaseReference currentUserReference = Database.getPrivateKeyReference();
+        currentUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                n = (String) snapshot.child("n").getValue();
+                decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
+                BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
+                BigInteger bigIntN = new BigInteger(n);
+                //BigInteger bigIntEncrypt = new BigInteger("98291818617830726655213886170867930285450288924118166181019168790818859696687");
+                PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
+                //PublicKey pubk = new PublicKey(bigIntEncrypt, bigIntN);
+                //String test = Base64.encodeToString(crypt.encrypt("Hej",pubk),Base64.DEFAULT);
+                //byte[] h = Base64.decode(test, Base64.DEFAULT);
+                //System.out.println("##########HELLO" + crypt.decrypt(h, pk));
+                String decryptedMessage = crypt.decrypt(Base64.decode(holder.lastMessage.toString(), Base64.DEFAULT), pk);
+                holder.lastMessage= decryptedMessage;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         reference = reference.child("users").child(contact);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             /**
@@ -137,12 +173,17 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                 if (holder.isLastSenderCurrentUser) {
                     prefix = "Du: ";
                 } else {
-                    prefix = (String) snapshot.child("name").getValue() + ":" + " ";
+                    prefix = snapshot.child("name").getValue() + ":" + " ";
                 }
 
-                holder.lastMessageText.setText(prefix + holder.lastMessage);
+                if (contact.equals(FirebaseAuth.getInstance().getUid())){
+
+                }
+
+
                 holder.messageContact.setText((String) snapshot.child("name").getValue());
                 holder.messageTimeStamp.setText(holder.timeStamp);
+                holder.lastMessageText.setText(prefix+holder.lastMessage);
 
                 if (snapshot.child("userImage").getValue() != null) {
                     byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);

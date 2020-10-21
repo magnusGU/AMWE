@@ -1,7 +1,7 @@
 package com.example.amwe.Model;
 
 import com.example.amwe.Model.Messaging.Cryptography;
-import com.example.amwe.Model.Messaging.CryptographyKeys;
+import com.example.amwe.Model.Messaging.CryptographyKeysCreator;
 import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.Model.Messaging.PublicKey;
 
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotEquals;
 public class CryptographyTest {
     @Test
     public void encryptingThenDecryptingWorks() {
-        CryptographyKeys cryptKeys = new CryptographyKeys();
+        CryptographyKeysCreator cryptKeys = new CryptographyKeysCreator();
         PublicKey publicKey = cryptKeys.makePublicKey();
         PrivateKey privateKey = cryptKeys.makePrivateKey();
 
@@ -28,10 +28,10 @@ public class CryptographyTest {
 
     @Test
     public void differentKeysToEncryptAndDecryptDoesNotWork() {
-        CryptographyKeys cryptKeys1 = new CryptographyKeys();
+        CryptographyKeysCreator cryptKeys1 = new CryptographyKeysCreator();
         PublicKey publicKey1 = cryptKeys1.makePublicKey();
 
-        CryptographyKeys cryptKeys2 = new CryptographyKeys();
+        CryptographyKeysCreator cryptKeys2 = new CryptographyKeysCreator();
         PrivateKey privateKey2 = cryptKeys2.makePrivateKey();
 
         Cryptography crypt = new Cryptography();

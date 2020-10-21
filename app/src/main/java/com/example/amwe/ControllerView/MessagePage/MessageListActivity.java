@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.Model.Database.Database;
+import com.example.amwe.Model.Messaging.Cryptography;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +38,6 @@ import java.util.List;
  */
 public class MessageListActivity extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
-    private TextView nameText;
     ImageView profileImage;
     private MessageListAdapter mMessageAdapter;
     private String senderUid;
@@ -55,8 +55,6 @@ public class MessageListActivity extends AppCompatActivity {
 
         final List <DataSnapshot> messageList = new ArrayList<>();
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-
-        nameText = findViewById(R.id.text_message_name);
 
         profileImage = findViewById(R.id.image_message_profile);
 
@@ -84,12 +82,12 @@ public class MessageListActivity extends AppCompatActivity {
         });
         DatabaseReference contact;
         if (senderUid.equals(FirebaseAuth.getInstance().getUid())){
-        contact=Database.getDatabaseReference().child("users").child(receiverUid);
+            contact=Database.getDatabaseReference().child("users").child(receiverUid);
         }
         else {
             contact=Database.getDatabaseReference().child("users").child(senderUid);
         }
-        contactName=findViewById(R.id.text_message_name);
+        contactName = findViewById(R.id.text_message_name);
         contactImage = findViewById(R.id.image_message_profile);
 
         contact.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -107,11 +105,8 @@ public class MessageListActivity extends AppCompatActivity {
 
             }
         });
-        List<String> sortList= new ArrayList<>();
-        sortList.add(senderUid);
-        sortList.add(receiverUid);
-        Collections.sort(sortList);
-        DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/"+ "/" + sortList.get(0) + sortList.get(1) + "/");
+
+        DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/"+ "/" + senderUid + receiverUid + "/");
 
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
