@@ -172,8 +172,6 @@ public class AddListing extends AppCompatActivity {
                                         final EditText price,
                                         final Spinner condition) {
 
-        System.out.println(condition.getSelectedItem());
-
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {

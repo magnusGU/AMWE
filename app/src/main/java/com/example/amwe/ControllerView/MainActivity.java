@@ -21,8 +21,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final SearchPage searchPage = new SearchPage();
+        final MessagesPage messagesPage = new MessagesPage();
+        final AccountPage accountPage = new AccountPage();
+
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
-        getSupportFragmentManager().beginTransaction().replace(R.id.pages, new SearchPage()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.pages, searchPage).commit();
 
         BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -30,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()){
                     case R.id.search_page:
-                        selectedFragment = new SearchPage();
+                        selectedFragment = searchPage;
                         break;
                     case R.id.message_page:
-                        selectedFragment = new MessagesPage();
+                        selectedFragment = messagesPage;
                         break;
                     case R.id.account_page:
-                        selectedFragment = new AccountPage();
+                        selectedFragment = accountPage;
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.pages, selectedFragment).commit();
