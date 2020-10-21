@@ -134,15 +134,15 @@ public class SearchPage extends Fragment {
                         alphabetically = true;
                         price = true;
                         if (date) {
-                            listingAdapter.getSort().sortDate();
-                            menuItem.setTitle("Datum ▼");
-                            listingAdapter.notifyDataSetChanged();
-                            date = false;
-                        } else {
                             listingAdapter.getSort().sortDateReversed();
                             menuItem.setTitle("Datum ▲");
                             listingAdapter.notifyDataSetChanged();
                             date = true;
+                        } else {
+                            listingAdapter.getSort().sortDate();
+                            menuItem.setTitle("Datum ▼");
+                            listingAdapter.notifyDataSetChanged();
+                            date = false;
                         }
                         break;
                     default:

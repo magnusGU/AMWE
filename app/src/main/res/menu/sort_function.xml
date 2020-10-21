@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/sort_date"
-        android:title="Datum"
+        android:title="Datum ▼"
         app:showAsAction="never" />
 
 </menu>
