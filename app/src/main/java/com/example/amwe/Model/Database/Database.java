@@ -1,6 +1,5 @@
 package com.example.amwe.Model.Database;
 
-import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,8 +8,7 @@ import com.example.amwe.ControllerView.MessagePage.ChatRoomAdapter;
 import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
-import com.example.amwe.Model.Messaging.Cryptography;
-import com.example.amwe.Model.Messaging.CryptographyKeys;
+import com.example.amwe.Model.Messaging.CryptographyKeysCreator;
 import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.Model.Messaging.PublicKey;
@@ -158,7 +156,7 @@ public class Database {
         database.getReference().child("users").child(uid).child("name").setValue(name);
         database.getReference().child("users").child(uid).child("userImage").setValue(base64Photo);
 
-        CryptographyKeys createKey = new CryptographyKeys();
+        CryptographyKeysCreator createKey = new CryptographyKeysCreator();
         PublicKey publicKey = createKey.makePublicKey();
         PrivateKey privateKey = createKey.makePrivateKey();
         database.getReference().child("users").child(uid).child("public_key").child("n").setValue(publicKey.getN().toString());

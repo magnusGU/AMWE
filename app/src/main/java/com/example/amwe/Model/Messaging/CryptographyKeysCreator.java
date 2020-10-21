@@ -9,7 +9,7 @@ import java.util.Random;
  *
  * @author William Hugo
  */
-public class CryptographyKeys {
+public class CryptographyKeysCreator {
 
     private Random random;
     private BigInteger prime1;
@@ -24,7 +24,7 @@ public class CryptographyKeys {
      * Randomizes variables needed for RSA cryptography,
      * These variables later get put into corresponding public & private keys for functional encryption & decryption.
      */
-    public CryptographyKeys() {
+    public CryptographyKeysCreator() {
         random = new Random();
         prime1 = BigInteger.probablePrime(256,random);
         prime2 = BigInteger.probablePrime(256,random);
@@ -33,7 +33,7 @@ public class CryptographyKeys {
         encryptingBigInt = BigInteger.probablePrime(256,random);
 
         while (phi.gcd(encryptingBigInt).compareTo(BigInteger.ONE) > 0 && encryptingBigInt.compareTo(phi) < 0) {
-            encryptingBigInt.add(BigInteger.ONE);
+            encryptingBigInt = encryptingBigInt.add(BigInteger.ONE);
         }
 
         decryptingBigInt = encryptingBigInt.modInverse(phi);
