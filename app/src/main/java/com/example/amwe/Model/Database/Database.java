@@ -11,6 +11,7 @@ import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.Model.Messaging.Cryptography;
 import com.example.amwe.Model.Messaging.CryptographyKeys;
+import com.example.amwe.Model.Messaging.Message;
 import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.Model.Messaging.PublicKey;
 import com.google.firebase.auth.FirebaseAuth;
@@ -314,18 +315,19 @@ public class Database {
                 PublicKey senderKey = new PublicKey(senderEncrypt,senderN);
                 PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
-                Cryptography crypt = new Cryptography();
-                String senderMessage = Base64.encodeToString(crypt.encrypt(text,senderKey), Base64.DEFAULT);
-                String receiverMessage = Base64.encodeToString(crypt.encrypt(text,receiverKey), Base64.DEFAULT);
+                Message senderMessage = new Message(text,sender,receiver,timeStamp);
+                Message receiverMessage = new Message(text,sender,receiver,timeStamp);
+                String base64SenderMessage = senderMessage.encodeMessage(senderKey);
+                String base64ReceiverMessage= receiverMessage.encodeMessage(receiverKey);
 
                 Map<String, String> senderMap = new HashMap<>();
-                senderMap.put("message", senderMessage);
+                senderMap.put("message", base64SenderMessage);
                 senderMap.put("sender", sender);
                 senderMap.put("receiver", receiver);
                 senderMap.put("timeStamp", timeStamp);
 
                 Map<String, String> receiverMap = new HashMap<>();
-                receiverMap.put("message", receiverMessage);
+                receiverMap.put("message", base64ReceiverMessage);
                 receiverMap.put("sender", sender);
                 receiverMap.put("receiver", receiver);
                 receiverMap.put("timeStamp", timeStamp);
