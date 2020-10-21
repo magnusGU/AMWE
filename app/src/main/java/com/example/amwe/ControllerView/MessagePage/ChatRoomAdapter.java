@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * @author Elias Johansson
- *
+ * <p>
  * This class is an adapter that will show recent messages by Author in the RecyclerView.
  * It uses a List to hold all the conversations that pertains to the current user. It will then
  * look through that list for the most recent message in a conversation and show it.
@@ -57,7 +57,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
      * Class that holds all the information about a specific conversation and that is populating the RecyclerView.
      */
     public static class MessageViewHold extends RecyclerView.ViewHolder {
-        //private final TextView textViewTitle;
         private final TextView lastMessageText;
         private final TextView messageContact;
         private final ImageView messageProfile;
@@ -75,7 +74,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
          */
         private MessageViewHold(@NonNull View itemView) {
             super(itemView);
-            //textViewTitle = itemView.findViewById(R.id.messageContact);
             lastMessageText = itemView.findViewById(R.id.lastMessageText);
             messageContact = itemView.findViewById(R.id.messageContact);
             messageProfile = itemView.findViewById(R.id.message_Profile);
@@ -86,9 +84,9 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     }
 
     /**
-     *This method creates a new MessageViewHold that will then be populated in onBindViewHolder.
+     * This method creates a new MessageViewHold that will then be populated in onBindViewHolder.
      *
-     * @param parent, Android class that is used to create a new card that holds the most recent
+     * @param parent,   Android class that is used to create a new card that holds the most recent
      * @param viewType, not used but needed if there are conditions for different types of views. Needed because of override.
      * @return a new MessageViewHold that then will be used to populate the recyclerview.
      */
@@ -100,11 +98,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     }
 
     /**
-     *This method looks at the messages in a conversation and sends the latest with all information to the
-     *MessageViewHold.
-     * @param holder, the object that will hold all the information about a conversation and then show it.
-     * @param position, an index to access the current DataSnapshot in itemList.
+     * This method looks at the messages in a conversation and sends the latest with all information to the
+     * MessageViewHold.
      *
+     * @param holder,   the object that will hold all the information about a conversation and then show it.
+     * @param position, an index to access the current DataSnapshot in itemList.
      */
     @Override
     public void onBindViewHolder(@NonNull final MessageViewHold holder, int position) {
@@ -129,9 +127,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             }
         }
 
-        /*        if (i.child("reciever").getValue().equals(i.child("sender").getValue())){
-                    throw new IllegalArgumentException("Database Error... Sender and reciever cant be the same person");
-            }*/
 
         holder.lastMessage = (CharSequence) lastChat.child("message").getValue();
         holder.timeStamp = (String) lastChat.child("timeStamp").getValue();
@@ -207,8 +202,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         });
 
 
-        //Message message = (Message) itemList.get(position);
-        //holder.textViewTitle.setText(message.getMessage());
         /**
          * Listener that binds one conversation to open the specific chat room for that conversation.
          * If clicked it will take the user to the common chat room of the contact and the current user.
@@ -226,7 +219,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     }
 
     /**
-     *
      * @return, the size of the list that holds all chat rooms that pertains to the current user.
      * It is used by background Android functionality to get the current index of the list.
      */

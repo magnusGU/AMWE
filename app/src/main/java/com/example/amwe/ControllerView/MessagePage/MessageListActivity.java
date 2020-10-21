@@ -30,6 +30,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Elias Johansson, William Hugo.
+ *
+ * This class handles the creating of the GUI for the chatroom between two users and the list
+ * of messages that their conversation holds.
+ */
 public class MessageListActivity extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
     private TextView nameText;
@@ -50,10 +56,6 @@ public class MessageListActivity extends AppCompatActivity {
         senderUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         final List <DataSnapshot> messageList = new ArrayList<>();
-        /*Message m1 = new Message("Hejsan", Database.getCurrentUser().toString());
-        Message m2 = new Message("Hallå där", "Kalle");
-        messageList.add(m1);
-        messageList.add(m2); */
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
 
         nameText = findViewById(R.id.text_message_name);

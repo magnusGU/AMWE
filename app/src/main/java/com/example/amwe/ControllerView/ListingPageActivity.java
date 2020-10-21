@@ -34,7 +34,7 @@ import java.text.DecimalFormat;
  * <p>
  * Related to {@link com.example.amwe.R.layout#listing_page}.
  *
- * @author Ali Alladin, Magnus Andersson
+ * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */
 public class ListingPageActivity extends AppCompatActivity {
     ValueEventListener valueEventListener;
@@ -96,41 +96,41 @@ public class ListingPageActivity extends AppCompatActivity {
 
 
                 TextView title = findViewById(R.id.textView3);
-                String titleName = book.getTitle();
-                title.setText(titleName);
+                String sTitle = book.getTitle();
+                title.setText(sTitle);
 
                 TextView timeStamp = findViewById(R.id.listing_timestamp);
-                String time=book.getDate();
-                timeStamp.setText(time);
+                String sTime = book.getDate();
+                timeStamp.setText(sTime);
 
                 TextView isbn = findViewById(R.id.listing_page_isbn);
-                long newIsbn = book.getIsbn();
-                isbn.setText(String.valueOf(newIsbn));
+                long lIsbn = book.getIsbn();
+                isbn.setText(String.valueOf(lIsbn));
 
                 TextView description = findViewById(R.id.listing_page_description);
-                String newDescription = book.getDescription();
-                description.setText(newDescription);
+                String sDescription = book.getDescription();
+                description.setText(sDescription);
 
                 TextView price = findViewById(R.id.listing_page_price);
-                double newPrice = book.getPrice();
+                double dPrice = book.getPrice();
                 DecimalFormat df = new DecimalFormat("0.##");
-                price.setText(df.format(newPrice) + " kr");
+                price.setText(df.format(dPrice) + " kr");
 
                 TextView author = findViewById(R.id.listing_page_author);
-                String newAuthor = book.getAuthor();
-                author.setText(newAuthor);
+                String sAuthor = book.getAuthor();
+                author.setText(sAuthor);
 
                 TextView edition = findViewById(R.id.listing_page_edition);
-                String newEdition = book.getEdition();
-                edition.setText(newEdition);
+                String sEdition = book.getEdition();
+                edition.setText(sEdition);
 
                 TextView seller = findViewById(R.id.listing_page_seller);
-                String newSeller = getIntent().getStringExtra("seller");
-                seller.setText(newSeller);
+                String sSeller = getIntent().getStringExtra("seller");
+                seller.setText(sSeller);
 
                 TextView condition = findViewById(R.id.listing_page_condition);
-                String newCondition = book.getCondition();
-                condition.setText(newCondition);
+                String sCondition = book.getCondition();
+                condition.setText(sCondition);
 
 
                 ImageButton favourite = findViewById(R.id.addToFavourites);
@@ -144,7 +144,7 @@ public class ListingPageActivity extends AppCompatActivity {
                 deleteButton.setOnClickListener(deleteListing(bookId));
 
                 Button editButton = findViewById(R.id.edit_button);
-                Bundle bundle = createBundle(titleName, newEdition, newIsbn, newDescription, newAuthor, newCondition, newPrice, bookId, newSeller, Base64.decode(getIntent().getStringExtra("Image"), Base64.DEFAULT));
+                Bundle bundle = createBundle(book);
                 editButton.setOnClickListener(editListing(bundle));
 
 
@@ -199,30 +199,23 @@ public class ListingPageActivity extends AppCompatActivity {
     /**
      * Creates a bundle with information about the listing.
      *
-     * @param title       The title of the listing.
-     * @param edition     The edition of the book.
-     * @param isbn        The ISBN of the book.
-     * @param description The description of the listing.
-     * @param author      The author of the book.
-     * @param condition   The condition of the book.
-     * @param price       The price of the listing.
-     * @param bookId      The id of the listing.
-     * @param seller      The seller.
-     * @param image       The image of the listing.
+     * @param book The book which's information should be in the bundle.
      * @return A bundle with all the information needed in EditListing activity.
      */
-    Bundle createBundle(String title, String edition, long isbn, String description, String author, String condition, double price, String bookId, String seller, byte[] image) {
+    Bundle createBundle(Book book) {
         Bundle bundle = new Bundle();
-        bundle.putString("title", title);
-        bundle.putString("edition", edition);
-        bundle.putLong("isbn", isbn);
-        bundle.putString("description", description);
-        bundle.putString("author", author);
-        bundle.putString("condition", condition);
-        bundle.putDouble("price", price);
-        bundle.putString("bookId", bookId);
-        bundle.putString("seller", seller);
-        bundle.putByteArray("image", image);
+
+        bundle.putString("title", book.getTitle());
+        bundle.putString("edition", book.getEdition());
+        bundle.putLong("isbn", book.getIsbn());
+        bundle.putString("description", book.getDescription());
+        bundle.putString("author", book.getAuthor());
+        bundle.putString("condition", book.getCondition());
+        bundle.putDouble("price", book.getPrice());
+        bundle.putString("bookId", book.getId());
+        bundle.putString("seller", book.getSeller());
+        bundle.putByteArray("image", Base64.decode(book.getBookImage(), Base64.DEFAULT));
+
         return bundle;
     }
 

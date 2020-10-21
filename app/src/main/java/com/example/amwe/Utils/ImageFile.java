@@ -6,8 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Author: Elias Johansson
- *
+ * @author Elias Johansson
  * A class that creates a file and stores it in the storageDir. This file is then used to store
  * an image in.
  */

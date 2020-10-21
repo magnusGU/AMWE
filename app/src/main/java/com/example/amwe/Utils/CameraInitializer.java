@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Author Elias Johansson
+ * @author Elias Johansson
  * This class handles the initialization of a file that will contain the image taken by the camera and
  * also return the file and its location.
  */
