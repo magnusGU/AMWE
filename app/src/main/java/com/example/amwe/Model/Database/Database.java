@@ -1,7 +1,5 @@
 package com.example.amwe.Model.Database;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.amwe.ControllerView.MessagePage.ChatRoomAdapter;
@@ -10,8 +8,6 @@ import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.Model.Messaging.CryptographyKeysCreator;
 import com.example.amwe.Model.Messaging.IMessage;
-import com.example.amwe.Model.Messaging.Message;
-import com.example.amwe.Model.Messaging.MessageFactory;
 import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.Model.Messaging.PublicKey;
 import com.google.firebase.auth.FirebaseAuth;
@@ -190,7 +186,7 @@ public class Database {
                 bookListings.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
                     final String bookId = item.getKey();
-                    final Book newListing = item.getValue(Book.class);
+                    final Item newListing = item.getValue(Book.class);
                     newListing.setId(bookId);
                     bookListings.add(newListing);
                 }
@@ -201,7 +197,6 @@ public class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("HERE", "onCancelled");
             }
         };
         listings.addValueEventListener(listener);
@@ -231,7 +226,7 @@ public class Database {
                             for (final DataSnapshot item2 : snapshot.getChildren()) {
                                 final String bookId = item.getKey();
                                 if (bookId.equals(item2.getKey()) && uniqueListing(bookId, bookListings)) {
-                                    final Book newListing = item.getValue(Book.class);
+                                    final Item newListing = item.getValue(Book.class);
                                     newListing.setId(bookId);
                                     bookListings.add(newListing);
                                 }
@@ -251,7 +246,6 @@ public class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("HERE", "onCancelled");
             }
         };
         allListings.addValueEventListener(listener);

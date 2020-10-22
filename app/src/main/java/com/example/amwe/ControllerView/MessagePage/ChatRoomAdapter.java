@@ -204,7 +204,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MessageListActivity.class);
+                Intent intent = new Intent(context, MessageList.class);
                 intent.putExtra("sellerUid", holder.contact);
 
                 context.startActivity(intent);
