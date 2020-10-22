@@ -1,4 +1,4 @@
-package com.amwe.bokbytarapp.Model;
+package com.amwe.bokbytarapp.Model.Messaging;
 
 import com.amwe.bokbytarapp.Model.Messaging.IMessage;
 import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;

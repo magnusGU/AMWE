@@ -1,7 +1,7 @@
-package com.amwe.bokbytarapp.Model;
+package com.amwe.bokbytarapp.Model.Items;
 
+import com.amwe.bokbytarapp.Model.Items.Book;
 import com.amwe.bokbytarapp.Model.Items.Item;
-import com.amwe.bokbytarapp.Model.Items.Notebook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,53 +10,59 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class NotebookTest {
+public class BookTest {
 
-    private Item notebookTest;
+    private Item bookTest;
     @Before
     public void beforeTests() {
-        notebookTest = new Notebook();
+        bookTest = new Book();
     }
 
     @Test
     public void testToString_returnsEmptyString() {
-        assertEquals(notebookTest.toString(),
-                "Listing{id=null, title='null', course='null', description='null', bookImage=null, price=0.0, condition=null, seller='null', date=null}"
-        );
+        assertEquals(bookTest.toString(),
+                "Listing{id=null, title='null', edition='null', author='null', isbn=0, description='null', bookImage=null, price=0.0, seller='null'}"
+                );
     }
 
     @Test
     public void toMap_OnEmptyClass() {
-        Map<String, Object> listingToMap = notebookTest.toMap();
+        Map<String, Object> listingToMap = bookTest.toMap();
 
+        assertTrue(listingToMap.containsKey("author"));
         assertTrue(listingToMap.containsKey("bookImage"));
         assertTrue(listingToMap.containsKey("condition"));
         assertTrue(listingToMap.containsKey("date"));
         assertTrue(listingToMap.containsKey("description"));
-        assertTrue(listingToMap.containsKey("course"));
+        assertTrue(listingToMap.containsKey("edition"));
+        assertTrue(listingToMap.containsKey("isbn"));
         assertTrue(listingToMap.containsKey("price"));
         assertTrue(listingToMap.containsKey("seller"));
         assertTrue(listingToMap.containsKey("title"));
     }
-
+    
     @Test
     public void toMap_OnFullClass() {
-        notebookTest = new Notebook("id",
+        bookTest = new Book("id",
                 "author",
-                "course",
+                "edition",
+                "author",
+                1,
                 "description",
                 "bookImage",
                 1,
                 "seller",
                 "condition",
                 "date");
-        Map<String, Object> listingToMap = notebookTest.toMap();
+        Map<String, Object> listingToMap = bookTest.toMap();
 
+        assertTrue(listingToMap.containsKey("author"));
         assertTrue(listingToMap.containsKey("bookImage"));
         assertTrue(listingToMap.containsKey("condition"));
         assertTrue(listingToMap.containsKey("date"));
         assertTrue(listingToMap.containsKey("description"));
-        assertTrue(listingToMap.containsKey("course"));
+        assertTrue(listingToMap.containsKey("edition"));
+        assertTrue(listingToMap.containsKey("isbn"));
         assertTrue(listingToMap.containsKey("price"));
         assertTrue(listingToMap.containsKey("seller"));
         assertTrue(listingToMap.containsKey("title"));
