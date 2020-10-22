@@ -111,38 +111,39 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        imageUri = data.getData();
-        try {
-            Bitmap srcBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+        if (imageUri != null) {
+            imageUri = data.getData();
+            try {
+                Bitmap srcBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
 
-            Bitmap dstBmp;
-            if (srcBmp.getWidth() >= srcBmp.getHeight()) {
+                Bitmap dstBmp;
+                if (srcBmp.getWidth() >= srcBmp.getHeight()) {
 
-                dstBmp = Bitmap.createBitmap(
-                        srcBmp,
-                        srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
-                        0,
-                        srcBmp.getHeight(),
-                        srcBmp.getHeight()
-                );
+                    dstBmp = Bitmap.createBitmap(
+                            srcBmp,
+                            srcBmp.getWidth() / 2 - srcBmp.getHeight() / 2,
+                            0,
+                            srcBmp.getHeight(),
+                            srcBmp.getHeight()
+                    );
 
-            } else {
-                dstBmp = Bitmap.createBitmap(
-                        srcBmp,
-                        0,
-                        srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
-                        srcBmp.getWidth(),
-                        srcBmp.getWidth()
-                );
+                } else {
+                    dstBmp = Bitmap.createBitmap(
+                            srcBmp,
+                            0,
+                            srcBmp.getHeight() / 2 - srcBmp.getWidth() / 2,
+                            srcBmp.getWidth(),
+                            srcBmp.getWidth()
+                    );
+                }
+                mProfilePicture.setImageBitmap(dstBmp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
-            mProfilePicture.setImageBitmap(dstBmp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
         }
     }
-
 
     /**
      * Saves the changes made to the profile.

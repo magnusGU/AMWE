@@ -9,7 +9,9 @@ import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.Model.Messaging.CryptographyKeysCreator;
+import com.example.amwe.Model.Messaging.IMessage;
 import com.example.amwe.Model.Messaging.Message;
+import com.example.amwe.Model.Messaging.MessageFactory;
 import com.example.amwe.Model.Messaging.PrivateKey;
 import com.example.amwe.Model.Messaging.PublicKey;
 import com.google.firebase.auth.FirebaseAuth;
@@ -85,7 +87,6 @@ public class Database {
      */
     static public void updateListing(Item updatedListing) {
         DatabaseReference db = getDatabaseReference();
-        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Map<String, Object> updatedValues = updatedListing.toMap();
 
@@ -313,8 +314,9 @@ public class Database {
                 PublicKey senderKey = new PublicKey(senderEncrypt,senderN);
                 PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
-                Message senderMessage = new Message(text,sender,receiver,timeStamp);
-                Message receiverMessage = new Message(text,sender,receiver,timeStamp);
+                MessageFactory messageFactory= new MessageFactory();
+                IMessage senderMessage = messageFactory.createMessage(text,sender,receiver,timeStamp);
+                IMessage receiverMessage = messageFactory.createMessage(text,sender,receiver,timeStamp);
                 String base64SenderMessage = senderMessage.encodeMessage(senderKey);
                 String base64ReceiverMessage= receiverMessage.encodeMessage(receiverKey);
 

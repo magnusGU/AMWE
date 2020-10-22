@@ -16,12 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.example.amwe.ControllerView.ListingPageActivity;
+import com.example.amwe.Model.SearchAndSort.SortAlphabetically;
+import com.example.amwe.Model.SearchAndSort.SortByDate;
+import com.example.amwe.Model.SearchAndSort.SortByPrice;
+import com.example.amwe.Model.SearchAndSort.SortStrategy;
 import com.example.amwe.R;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Items.Item;
 import com.example.amwe.Model.SearchAndSort.SearchFunction;
-import com.example.amwe.Model.SearchAndSort.SortFunction;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -36,8 +39,8 @@ import java.util.SplittableRandom;
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold> {
     private final List<Item> bookListings;
     private SearchFunction search;
-    private SortFunction sort;
     private Context context;
+    private SortStrategy sort;
 
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
@@ -160,11 +163,16 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         return search;
     }
 
-    public SortFunction getSort() {
-        if (sort == null) {
-            sort = new SortFunction(bookListings);
+    public SortStrategy sortMethod(int sortMethod) {
+        switch (sortMethod) {
+            case 1:
+                return new SortAlphabetically(bookListings);
+            case 2:
+                return new SortByPrice(bookListings);
+            case 3:
+                return new SortByDate(bookListings);
         }
-        return sort;
+        throw new IndexOutOfBoundsException();
     }
 
 }

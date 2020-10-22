@@ -85,6 +85,7 @@ public class Register extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         imageUri = data.getData();
+        if (imageUri!=null){
         try {
             Bitmap srcBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
             Bitmap dstBmp;
@@ -111,7 +112,7 @@ public class Register extends AppCompatActivity {
             mProfilePicture.setImageBitmap(dstBmp);
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
-        }
+        }}
     }
 
     /**

@@ -60,6 +60,7 @@ public class ListingPageActivity extends AppCompatActivity {
 
                 final String bookId = getIntent().getStringExtra("bookId");
                 Book book = snapshot.child(bookId).getValue(Book.class);
+                book.setId(bookId);
 
                 try {
                     ImageView bookImage = findViewById(R.id.listing_page_image);

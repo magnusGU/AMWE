@@ -104,12 +104,12 @@ public class SearchPage extends Fragment {
                         price = true;
                         date = true;
                         if (alphabetically) {
-                            listingAdapter.getSort().sortAlphabetically();
+                            listingAdapter.sortMethod(1).sort();
                             menuItem.setTitle("Namn ▼");
                             listingAdapter.notifyDataSetChanged();
                             alphabetically = false;
                         } else {
-                            listingAdapter.getSort().sortAlphabeticallyReversed();
+                            listingAdapter.sortMethod(1).sortReversed();
                             menuItem.setTitle("Namn ▲");
                             listingAdapter.notifyDataSetChanged();
                             alphabetically = true;
@@ -119,12 +119,12 @@ public class SearchPage extends Fragment {
                         alphabetically = true;
                         date = true;
                         if (price) {
-                            listingAdapter.getSort().sortPrice();
+                            listingAdapter.sortMethod(2).sort();
                             menuItem.setTitle("Pris ▼");
                             listingAdapter.notifyDataSetChanged();
                             price = false;
                         } else {
-                            listingAdapter.getSort().sortPriceReversed();
+                            listingAdapter.sortMethod(2).sortReversed();
                             menuItem.setTitle("Pris ▲");
                             listingAdapter.notifyDataSetChanged();
                             price = true;
@@ -134,12 +134,12 @@ public class SearchPage extends Fragment {
                         alphabetically = true;
                         price = true;
                         if (date) {
-                            listingAdapter.getSort().sortDateReversed();
+                            listingAdapter.sortMethod(3).sortReversed();
                             menuItem.setTitle("Datum ▲");
                             listingAdapter.notifyDataSetChanged();
                             date = true;
                         } else {
-                            listingAdapter.getSort().sortDate();
+                            listingAdapter.sortMethod(3).sort();
                             menuItem.setTitle("Datum ▼");
                             listingAdapter.notifyDataSetChanged();
                             date = false;
