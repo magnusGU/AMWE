@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.amwe.ControllerView.MessagePage.MessageListActivity;
+import com.example.amwe.ControllerView.MessagePage.MessageList;
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Items.Book;
 import com.example.amwe.R;
@@ -28,15 +28,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 
 /**
- * ListingPageActivity has the responsibility to display all the information about the listing on
+ * ListingPage has the responsibility to display all the information about the listing on
  * the page and depending on whether the listing is the signed in user's or someone else's it
  * provides the option to edit and delete the listing or to contact the seller.
  * <p>
- * Related to {@link com.example.amwe.R.layout#listing_page}.
+ * Related to {@link com.example.amwe.R.layout#activity_listing_page}.
  *
  * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */
-public class ListingPageActivity extends AppCompatActivity {
+public class ListingPage extends AppCompatActivity {
     ValueEventListener valueEventListener;
     String sellerUid;
     private Context context;
@@ -46,7 +46,7 @@ public class ListingPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.context = this;
 
-        setContentView(R.layout.listing_page);
+        setContentView(R.layout.activity_listing_page);
         initUI();
     }
 
@@ -229,7 +229,7 @@ public class ListingPageActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ListingPageActivity.this, EditListing.class);
+                Intent i = new Intent(ListingPage.this, EditListing.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -357,7 +357,7 @@ public class ListingPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Database.addChat(Database.getCurrentUser(), sellerUid);
-                Intent intent = new Intent(context, MessageListActivity.class);
+                Intent intent = new Intent(context, MessageList.class);
                 intent.putExtra("sellerUid", sellerUid);
                 startActivity(intent);
             }

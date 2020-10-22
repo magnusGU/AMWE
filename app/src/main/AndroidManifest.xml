@@ -27,8 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ControllerView.MainActivity" />
-        <activity android:name=".ControllerView.ListingPageActivity" />
-        <activity android:name=".ControllerView.MessagePage.MessageListActivity" />
+        <activity android:name=".ControllerView.ListingPage" />
+        <activity android:name=".ControllerView.MessagePage.MessageList" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -39,7 +39,7 @@ import java.util.List;
  * This class handles the creating of the GUI for the chatroom between two users and the list
  * of messages that their conversation holds.
  */
-public class MessageListActivity extends AppCompatActivity {
+public class MessageList extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
     ImageView profileImage;
     private MessageListAdapter mMessageAdapter;
