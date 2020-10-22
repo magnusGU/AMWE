@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Author: Magnus
+ * @author: Magnus Andersson
  *
  * This class represents lecture books, therefore authors, edition and isbn are needed extensions
  * of the superclass
