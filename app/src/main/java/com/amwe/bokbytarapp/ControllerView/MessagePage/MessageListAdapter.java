@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.MessagePage;
+package com.amwe.bokbytarapp.ControllerView.MessagePage;
 
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -9,10 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Messaging.Cryptography;
-import com.example.amwe.Model.Messaging.PrivateKey;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
+import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
+import com.amwe.bokbytarapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

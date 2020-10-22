@@ -1,4 +1,4 @@
-package com.example.amwe;
+package com.amwe.bokbytarapp;
 
 import org.junit.Test;
 

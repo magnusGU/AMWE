@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.amwe.bokbytarapp.ControllerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.amwe.ControllerView.MessagePage.MessageList;
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Items.Book;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.ControllerView.MessagePage.MessageListPage;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.Model.Items.Book;
+import com.amwe.bokbytarapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -32,7 +32,7 @@ import java.text.DecimalFormat;
  * the page and depending on whether the listing is the signed in user's or someone else's it
  * provides the option to edit and delete the listing or to contact the seller.
  * <p>
- * Related to {@link com.example.amwe.R.layout#activity_listing_page}.
+ * Related to {@link com.amwe.bokbytarapp.R.layout#activity_listing_page}.
  *
  * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */
@@ -357,7 +357,7 @@ public class ListingPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Database.addChat(Database.getCurrentUser(), sellerUid);
-                Intent intent = new Intent(context, MessageList.class);
+                Intent intent = new Intent(context, MessageListPage.class);
                 intent.putExtra("sellerUid", sellerUid);
                 startActivity(intent);
             }

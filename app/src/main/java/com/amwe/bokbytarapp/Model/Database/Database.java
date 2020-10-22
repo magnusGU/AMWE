@@ -1,15 +1,15 @@
-package com.example.amwe.Model.Database;
+package com.amwe.bokbytarapp.Model.Database;
 
 import androidx.annotation.NonNull;
 
-import com.example.amwe.ControllerView.MessagePage.ChatRoomAdapter;
-import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
-import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Model.Items.Item;
-import com.example.amwe.Model.Messaging.CryptographyKeysCreator;
-import com.example.amwe.Model.Messaging.IMessage;
-import com.example.amwe.Model.Messaging.PrivateKey;
-import com.example.amwe.Model.Messaging.PublicKey;
+import com.amwe.bokbytarapp.ControllerView.MessagePage.ChatRoomAdapter;
+import com.amwe.bokbytarapp.ControllerView.SearchPage.ListingAdapter;
+import com.amwe.bokbytarapp.Model.Items.Book;
+import com.amwe.bokbytarapp.Model.Items.Item;
+import com.amwe.bokbytarapp.Model.Messaging.CryptographyKeysCreator;
+import com.amwe.bokbytarapp.Model.Messaging.IMessage;
+import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
+import com.amwe.bokbytarapp.Model.Messaging.PublicKey;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -7,17 +7,17 @@
     tools:ignore="UnusedNavigation">
     <fragment
         android:id="@+id/searchPage"
-        android:name="com.example.amwe.ControllerView.SearchPage.SearchPage"
+        android:name="com.amwe.bokbytarapp.ControllerView.SearchPage.SearchPage"
         android:label="fragment_search_page"
         tools:layout="@layout/fragment_search_page" />
     <fragment
-        android:id="@+id/messagesPage"
-        android:name="com.example.amwe.ControllerView.MessagePage.MessagesPage"
+        android:id="@+id/chatRoomsPage"
+        android:name="com.amwe.bokbytarapp.ControllerView.MessagePage.ChatRoomsPage"
         android:label="fragment_messages_page"
         tools:layout="@layout/fragment_messages_page" />
     <fragment
         android:id="@+id/accountPage"
-        android:name="com.example.amwe.ControllerView.AccountPage.AccountPage"
+        android:name="com.amwe.bokbytarapp.ControllerView.AccountPage.AccountPage"
         android:label="fragment_account_page"
         tools:layout="@layout/fragment_account_page" />
 </navigation>

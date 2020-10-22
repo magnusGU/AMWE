@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.SearchPage;
+package com.amwe.bokbytarapp.ControllerView.SearchPage;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,16 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
-import com.example.amwe.ControllerView.ListingPage;
-import com.example.amwe.Model.SearchAndSort.SortAlphabetically;
-import com.example.amwe.Model.SearchAndSort.SortByDate;
-import com.example.amwe.Model.SearchAndSort.SortByPrice;
-import com.example.amwe.Model.SearchAndSort.SortStrategy;
-import com.example.amwe.R;
-import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Items.Item;
-import com.example.amwe.Model.SearchAndSort.SearchFunction;
+import com.amwe.bokbytarapp.ControllerView.ListingPage;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SortAlphabetically;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SortByDate;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SortByPrice;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SortStrategy;
+import com.amwe.bokbytarapp.R;
+import com.amwe.bokbytarapp.Model.Items.Book;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.Model.Items.Item;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SearchFunction;
 
 import java.text.DecimalFormat;
 import java.util.List;

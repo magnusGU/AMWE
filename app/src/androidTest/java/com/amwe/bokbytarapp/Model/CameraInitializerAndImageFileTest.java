@@ -1,11 +1,11 @@
-package com.example.amwe.Model;
+package com.amwe.bokbytarapp.Model;
 
 import android.content.Context;
 import android.provider.MediaStore;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.amwe.Utils.CameraInitializer;
+import com.amwe.bokbytarapp.Utils.CameraInitializer;
 
 import org.junit.Test;
 

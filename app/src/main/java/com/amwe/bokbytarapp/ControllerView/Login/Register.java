@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.Login;
+package com.amwe.bokbytarapp.ControllerView.Login;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,8 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,7 +31,7 @@ import java.io.IOException;
  * This class handles the creation of new users by registering them to Firebase Authentication
  * and adding them to the Firebase Database.
  * <p>
- * Related to {@link com.example.amwe.R.layout#activity_register}.
+ * Related to {@link com.amwe.bokbytarapp.R.layout#activity_register}.
  *
  * @author Ali Alladin
  */
@@ -178,7 +178,7 @@ public class Register extends AppCompatActivity {
                                         .Builder().setDisplayName(name);
                                 task.getResult().getUser().updateProfile(updateinfo.build());
                                 Database.addUser(fAuth.getCurrentUser().getUid(), name, base64Photo);
-                                startActivity(new Intent(Register.this, Login.class));
+                                finish();
                                 fAuth.signOut();
 
                                 Toast.makeText(getApplicationContext(), "Konto registrerat", Toast.LENGTH_SHORT).show();

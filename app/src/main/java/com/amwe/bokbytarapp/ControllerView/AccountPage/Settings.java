@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.AccountPage;
+package com.amwe.bokbytarapp.ControllerView.AccountPage;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,9 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.ControllerView.Login.Login;
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.ControllerView.Login.Login;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +32,7 @@ import java.io.IOException;
 /**
  * Any change to the user's profile is made through this class and so is the log out functionality.
  * <p>
- * Related to {@link com.example.amwe.R.layout#activity_settings}.
+ * Related to {@link com.amwe.bokbytarapp.R.layout#activity_settings}.
  *
  * @author Ali Alladin
  */

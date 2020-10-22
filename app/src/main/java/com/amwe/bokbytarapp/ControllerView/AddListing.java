@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView;
+package com.amwe.bokbytarapp.ControllerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,12 +19,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.R;
-import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Utils.CameraInitializer;
+import com.amwe.bokbytarapp.R;
+import com.amwe.bokbytarapp.Model.Items.Book;
+import com.amwe.bokbytarapp.Utils.CameraInitializer;
 
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Items.Item;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.Model.Items.Item;
 
 
 import java.io.ByteArrayOutputStream;
@@ -39,7 +39,7 @@ import java.util.Locale;
 /**
  * AddListing handles creation and submission of a new listing to the database.
  * <p>
- * Related to {@link com.example.amwe.R.layout#activity_add_listing}.
+ * Related to {@link com.amwe.bokbytarapp.R.layout#activity_add_listing}.
  *
  * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */

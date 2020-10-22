@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.MessagePage;
+package com.amwe.bokbytarapp.ControllerView.MessagePage;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,11 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Messaging.Cryptography;
-import com.example.amwe.Model.Messaging.PrivateKey;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
+import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
 //import com.example.amwe.Model.Messaging.PublicKey;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -204,7 +204,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MessageList.class);
+                Intent intent = new Intent(context, MessageListPage.class);
                 intent.putExtra("sellerUid", holder.contact);
 
                 context.startActivity(intent);

@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.MessagePage;
+package com.amwe.bokbytarapp.ControllerView.MessagePage;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.R;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
@@ -21,13 +21,13 @@ import java.util.List;
  * Class that instantiates the GUI for the messagesPage among them the RecyclerView
  * that will hold all the different conversations.
  */
-public class MessagesPage extends Fragment {
+public class ChatRoomsPage extends Fragment {
     private  List<DataSnapshot> items = new ArrayList<>();
     //private String receiver;
     //private String sender;
     //private String Message;
     private ChatRoomAdapter chatRoomAdapter;
-    public MessagesPage() {
+    public ChatRoomsPage() {
         // Required empty public constructor
     }
 

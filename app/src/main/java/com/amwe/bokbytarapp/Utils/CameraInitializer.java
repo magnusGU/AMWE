@@ -1,11 +1,11 @@
-package com.example.amwe.Utils;
+package com.amwe.bokbytarapp.Utils;
 
 import android.content.Context;
 import android.net.Uri;
 
 import androidx.core.content.FileProvider;
 
-import com.example.amwe.BuildConfig;
+import com.amwe.bokbytarapp.BuildConfig;
 
 import java.io.File;
 import java.io.IOException;

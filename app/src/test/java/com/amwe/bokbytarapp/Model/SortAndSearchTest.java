@@ -1,12 +1,12 @@
-package com.example.amwe.Model;
+package com.amwe.bokbytarapp.Model;
 
-import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Model.Items.Item;
-import com.example.amwe.Model.SearchAndSort.SearchFunction;
-import com.example.amwe.Model.SearchAndSort.SortAlphabetically;
-import com.example.amwe.Model.SearchAndSort.SortByDate;
-import com.example.amwe.Model.SearchAndSort.SortByPrice;
-import com.example.amwe.Model.SearchAndSort.SortStrategy;
+import com.amwe.bokbytarapp.Model.Items.Book;
+import com.amwe.bokbytarapp.Model.Items.Item;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SearchFunction;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SortAlphabetically;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SortByDate;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SortByPrice;
+import com.amwe.bokbytarapp.Model.SearchAndSort.SortStrategy;
 
 import org.junit.Test;
 

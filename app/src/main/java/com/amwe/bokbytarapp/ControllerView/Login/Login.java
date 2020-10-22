@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.Login;
+package com.amwe.bokbytarapp.ControllerView.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.amwe.ControllerView.MainActivity;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.ControllerView.MainActivity;
+import com.amwe.bokbytarapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * This class handles the login functionality of the application and signs in the user through
  * Firebase Authentication.
  * <p>
- * Related to {@link com.example.amwe.R.layout#activity_login}.
+ * Related to {@link com.amwe.bokbytarapp.R.layout#activity_login}.
  *
  * @author Ali Alladin
  */

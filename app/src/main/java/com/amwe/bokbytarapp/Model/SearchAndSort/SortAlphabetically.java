@@ -1,6 +1,6 @@
-package com.example.amwe.Model.SearchAndSort;
+package com.amwe.bokbytarapp.Model.SearchAndSort;
 
-import com.example.amwe.Model.Items.Item;
+import com.amwe.bokbytarapp.Model.Items.Item;
 
 import java.util.Collections;
 import java.util.Comparator;

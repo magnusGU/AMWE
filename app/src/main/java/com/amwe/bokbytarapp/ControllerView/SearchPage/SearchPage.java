@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.SearchPage;
+package com.amwe.bokbytarapp.ControllerView.SearchPage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.Model.Items.Item;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.Model.Items.Item;
+import com.amwe.bokbytarapp.R;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * This page handles the SearchPage where all the listings are presented. The listings can be
  * searched through and/or sorted in desired order. 
  *
- * Related to {@link com.example.amwe.R.layout#fragment_search_page}.
+ * Related to {@link com.amwe.bokbytarapp.R.layout#fragment_search_page}.
  *
  * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */

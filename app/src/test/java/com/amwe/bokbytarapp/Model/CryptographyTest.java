@@ -1,9 +1,9 @@
-package com.example.amwe.Model;
+package com.amwe.bokbytarapp.Model;
 
-import com.example.amwe.Model.Messaging.Cryptography;
-import com.example.amwe.Model.Messaging.CryptographyKeysCreator;
-import com.example.amwe.Model.Messaging.PrivateKey;
-import com.example.amwe.Model.Messaging.PublicKey;
+import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
+import com.amwe.bokbytarapp.Model.Messaging.CryptographyKeysCreator;
+import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
+import com.amwe.bokbytarapp.Model.Messaging.PublicKey;
 
 import org.junit.Test;
 

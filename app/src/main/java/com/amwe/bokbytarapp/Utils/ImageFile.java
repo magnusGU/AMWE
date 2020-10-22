@@ -1,4 +1,4 @@
-package com.example.amwe.Utils;
+package com.amwe.bokbytarapp.Utils;
 
 import java.io.File;
 import java.io.IOException;

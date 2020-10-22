@@ -1,8 +1,8 @@
-package com.example.amwe.Model;
+package com.amwe.bokbytarapp.Model;
 
 import android.content.Intent;
 
-import com.example.amwe.Model.Items.Item;
+import com.amwe.bokbytarapp.Model.Items.Item;
 
 import org.junit.Before;
 import org.junit.Test;

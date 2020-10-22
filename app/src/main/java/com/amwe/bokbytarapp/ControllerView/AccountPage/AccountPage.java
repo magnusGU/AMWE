@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.AccountPage;
+package com.amwe.bokbytarapp.ControllerView.AccountPage;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,11 +18,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.ControllerView.AddListing;
-import com.example.amwe.ControllerView.SearchPage.ListingAdapter;
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Items.Item;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.ControllerView.AddListing;
+import com.amwe.bokbytarapp.ControllerView.SearchPage.ListingAdapter;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.Model.Items.Item;
+import com.amwe.bokbytarapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * This class mainly makes sure that the signed in user's own published listings and saved listings
  * are presented in two lists on the Account Page. It's also a gateway to AddListing and Settings.
  * <p>
- * Related to {@link com.example.amwe.R.layout#fragment_account_page}.
+ * Related to {@link com.amwe.bokbytarapp.R.layout#fragment_account_page}.
  *
  * @author Ali Alladin, Magnus Andersson
  */

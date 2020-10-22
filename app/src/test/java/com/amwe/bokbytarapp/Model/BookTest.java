@@ -1,12 +1,11 @@
-package com.example.amwe.Model;
+package com.amwe.bokbytarapp.Model;
 
-import com.example.amwe.Model.Items.Book;
-import com.example.amwe.Model.Items.Item;
+import com.amwe.bokbytarapp.Model.Items.Book;
+import com.amwe.bokbytarapp.Model.Items.Item;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;

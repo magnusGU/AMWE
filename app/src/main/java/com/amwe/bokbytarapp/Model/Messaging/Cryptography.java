@@ -1,4 +1,4 @@
-package com.example.amwe.Model.Messaging;
+package com.amwe.bokbytarapp.Model.Messaging;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

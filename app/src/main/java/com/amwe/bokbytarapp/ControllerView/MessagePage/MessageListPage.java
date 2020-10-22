@@ -1,4 +1,4 @@
-package com.example.amwe.ControllerView.MessagePage;
+package com.amwe.bokbytarapp.ControllerView.MessagePage;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,12 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.amwe.Model.Database.Database;
-import com.example.amwe.Model.Messaging.Cryptography;
-import com.example.amwe.Model.Messaging.IMessage;
-import com.example.amwe.Model.Messaging.Message;
-import com.example.amwe.Model.Messaging.MessageFactory;
-import com.example.amwe.R;
+import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.Model.Messaging.IMessage;
+import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;
+import com.amwe.bokbytarapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +36,7 @@ import java.util.List;
  * This class handles the creating of the GUI for the chatroom between two users and the list
  * of messages that their conversation holds.
  */
-public class MessageList extends AppCompatActivity {
+public class MessageListPage extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
     ImageView profileImage;
     private MessageListAdapter mMessageAdapter;

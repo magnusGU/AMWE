@@ -1,4 +1,4 @@
-package com.example.amwe.Model.Items;
+package com.amwe.bokbytarapp.Model.Items;
 
 import android.content.Intent;
 

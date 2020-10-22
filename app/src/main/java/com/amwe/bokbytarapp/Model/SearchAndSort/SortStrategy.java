@@ -1,4 +1,4 @@
-package com.example.amwe.Model.SearchAndSort;
+package com.amwe.bokbytarapp.Model.SearchAndSort;
 
 /**
  * @author Magnus Andersson
