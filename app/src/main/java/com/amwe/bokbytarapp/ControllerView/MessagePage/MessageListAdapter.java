@@ -1,6 +1,5 @@
 package com.amwe.bokbytarapp.ControllerView.MessagePage;
 
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amwe.bokbytarapp.Model.Database.Database;
 import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
+import com.amwe.bokbytarapp.Model.Messaging.IMessage;
+import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;
 import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
 import com.amwe.bokbytarapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -164,10 +165,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     /**
      *
-     * @param message, message that will be decrypted and shown.
+     * @param messageDb, message that will be decrypted and shown.
      * @param messageText, the TextView that will show the message.
      */
-    private void decryptAndShowMessage(final DataSnapshot message, final TextView messageText){
+    private void decryptAndShowMessage(final DataSnapshot messageDb, final TextView messageText){
 
         DatabaseReference dbr = Database.getPrivateKeyReference();
 
@@ -179,8 +180,17 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
                 BigInteger bigIntN = new BigInteger(n);
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                byte[] decode = Base64.decode((String) message.child("message").getValue(), Base64.DEFAULT);
-                String decryptedMessage = crypt.decrypt(decode, pk);
+
+                String text = (String) messageDb.child("message").getValue();
+                String senderId= (String) messageDb.child("sender").getValue();
+                String receiverId= (String) messageDb.child("receiver").getValue();
+                String timeStamp = (String) messageDb.child("timeStamp").getValue();
+
+
+
+                IMessage message = MessageFactory.createMessage(text,senderId,receiverId,timeStamp);
+
+                String decryptedMessage = message.decryptMessage(pk);
 
                 messageText.setText(decryptedMessage);
             }
