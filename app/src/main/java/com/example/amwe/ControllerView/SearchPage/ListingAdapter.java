@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
-import com.example.amwe.ControllerView.ListingPageActivity;
+import com.example.amwe.ControllerView.ListingPage;
 import com.example.amwe.Model.SearchAndSort.SortAlphabetically;
 import com.example.amwe.Model.SearchAndSort.SortByDate;
 import com.example.amwe.Model.SearchAndSort.SortByPrice;
@@ -28,7 +28,6 @@ import com.example.amwe.Model.SearchAndSort.SearchFunction;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.SplittableRandom;
 
 /**
  * This class is intended to work as an adapter that will make it possible to show listings on the
@@ -139,7 +138,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ListingPageActivity.class);
+                Intent intent = new Intent(context, ListingPage.class);
                 currentListing.setIntent(intent);
                 context.startActivity(intent);
             }
