@@ -1,4 +1,4 @@
-package com.amwe.bokbytarapp.Model;
+package com.amwe.bokbytarapp.Model.Messaging;
 
 import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
 import com.amwe.bokbytarapp.Model.Messaging.CryptographyKeysCreator;

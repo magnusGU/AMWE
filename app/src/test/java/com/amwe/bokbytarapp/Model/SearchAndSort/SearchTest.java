@@ -1,4 +1,4 @@
-package com.amwe.bokbytarapp.Model;
+package com.amwe.bokbytarapp.Model.SearchAndSort;
 
 import com.amwe.bokbytarapp.Model.Items.Book;
 import com.amwe.bokbytarapp.Model.Items.Item;
