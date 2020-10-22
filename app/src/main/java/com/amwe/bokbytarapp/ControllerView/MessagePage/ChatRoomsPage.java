@@ -23,9 +23,6 @@ import java.util.List;
  */
 public class ChatRoomsPage extends Fragment {
     private  List<DataSnapshot> items = new ArrayList<>();
-    //private String receiver;
-    //private String sender;
-    //private String Message;
     private ChatRoomAdapter chatRoomAdapter;
     public ChatRoomsPage() {
         // Required empty public constructor

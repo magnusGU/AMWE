@@ -29,8 +29,8 @@ import java.util.ArrayList;
  */
 public class SearchPage extends Fragment {
 
-    SearchView search;
-    PopupMenu popupMenu;
+    private SearchView search;
+    private PopupMenu popupMenu;
     private static ListingAdapter listingAdapter;
     private boolean alphabetically = true;
     private boolean price = true;
@@ -71,8 +71,6 @@ public class SearchPage extends Fragment {
             }
         });
 
-        //ImageButton filterSort =v.findViewById(R.id.filter_sort);
-        //filterSort.setOnClickListener(openFilterSort());
 
         return v;
 

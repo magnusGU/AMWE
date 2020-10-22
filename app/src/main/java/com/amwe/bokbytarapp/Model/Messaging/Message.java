@@ -5,7 +5,7 @@ import android.util.Base64;
 /**
  * @author Elias Johansson
  * A class that represents the message stored in the database. It also has some behavoiur to
- * simplify encryption and interactions with the database.
+ * simplify encryption,decryption and interactions with the database.
  */
 
 public class Message implements IMessage {
