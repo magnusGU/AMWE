@@ -95,8 +95,9 @@ public class MessageListPage extends AppCompatActivity {
 
 
                 if (!messageText.equals("")) {
-                    MessageFactory messageFactory = new MessageFactory();
-                    IMessage message = messageFactory.createMessage(messageText, senderUid, receiverUid, dateString);
+
+                    IMessage message = MessageFactory.createMessage(messageText,senderUid,receiverUid,dateString);
+
                     Database.useChat(message);
                 }
                 editText.setText("");

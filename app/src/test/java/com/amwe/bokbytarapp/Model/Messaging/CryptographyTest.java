@@ -1,4 +1,4 @@
-package com.amwe.bokbytarapp.Model;
+package com.amwe.bokbytarapp.Model.Messaging;
 
 import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
 import com.amwe.bokbytarapp.Model.Messaging.CryptographyKeysCreator;
@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class CryptographyTest {
+
     @Test
     public void encryptingThenDecryptingWorks() {
         CryptographyKeysCreator cryptKeys = new CryptographyKeysCreator();
@@ -42,4 +43,5 @@ public class CryptographyTest {
 
         assertNotEquals(decryptedString, originalString);
     }
+
 }

@@ -115,17 +115,6 @@ public abstract class Item {
 
     protected abstract Map<String, Object> MoreToMap();
 
-    // public Bitmap imageStringToImage() {
-    //     Bitmap decodedByte = null;
-    //     try{
-    //         byte[] decodedString = Base64.decode(bookImage, Base64.DEFAULT);
-    //         decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     return decodedByte;
-    // }
-
     //Template method
     public void setIntent(Intent intent) {
 

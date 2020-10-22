@@ -23,10 +23,6 @@ import java.util.List;
  */
 public class ChatRoomsPage extends Fragment {
     private  List<DataSnapshot> items = new ArrayList<>();
-    //private String receiver;
-    //private String sender;
-    //private String Message;
-    private ChatRoomAdapter chatRoomAdapter;
     public ChatRoomsPage() {
         // Required empty public constructor
     }
@@ -41,7 +37,7 @@ public class ChatRoomsPage extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        chatRoomAdapter = new ChatRoomAdapter(items,getContext());
+        ChatRoomAdapter chatRoomAdapter = new ChatRoomAdapter(items, getContext());
         recyclerView.setAdapter(chatRoomAdapter);
         return v;
     }
