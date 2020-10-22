@@ -267,37 +267,12 @@ public class Database {
         return true;
     }
 
-    /*static public void addChat(String sender, String receiver) {
-        final List<String> sortList= new ArrayList<>();
-        final DatabaseReference chats = getDatabaseReference().child("chat_room");
-        sortList.add(sender);
-        sortList.add(receiver);
-        Collections.sort(sortList);
-
-        chats.orderByChild("/" + sortList.get(0) + sortList.get(1) + "/").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Log.d("TAG", "onDataChange: 1");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
-
     /**
      * Method used for sending messages.
      *
-     * @param text      - Message that will be sent
-     * @param sender    - The User ID of the sender
-     * @param receiver  - The User ID of the receiver
-     * @param timeStamp - The time of when the message is being sent
+     * @param message, the message being sent to the database.
      */
-    static public void useChat(final String text, final String sender, final String receiver, final String timeStamp) {
+    static public void useChat(final IMessage message) {
         final DatabaseReference db = getDatabaseReference();
         DatabaseReference chats = getDatabaseReference().child("chat_room");
         final String key = chats.push().getKey();
@@ -307,35 +282,33 @@ public class Database {
         db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                BigInteger senderEncrypt = new BigInteger((String) snapshot.child(sender).child("public_key").child("encryptingBigInt").getValue());
-                BigInteger senderN = new BigInteger((String) snapshot.child(sender).child("public_key").child("n").getValue());
-                BigInteger receiverEncrypt = new BigInteger((String) snapshot.child(receiver).child("public_key").child("encryptingBigInt").getValue());
-                BigInteger receiverN = new BigInteger((String) snapshot.child(receiver).child("public_key").child("n").getValue());
+                BigInteger senderEncrypt = new BigInteger((String) snapshot.child(message.getSenderId()).child("public_key").child("encryptingBigInt").getValue());
+                BigInteger senderN = new BigInteger((String) snapshot.child(message.getSenderId()).child("public_key").child("n").getValue());
+                BigInteger receiverEncrypt = new BigInteger((String) snapshot.child(message.getReceiverId()).child("public_key").child("encryptingBigInt").getValue());
+                BigInteger receiverN = new BigInteger((String) snapshot.child(message.getReceiverId()).child("public_key").child("n").getValue());
                 PublicKey senderKey = new PublicKey(senderEncrypt,senderN);
                 PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
-                MessageFactory messageFactory= new MessageFactory();
-                IMessage senderMessage = messageFactory.createMessage(text,sender,receiver,timeStamp);
-                IMessage receiverMessage = messageFactory.createMessage(text,sender,receiver,timeStamp);
-                String base64SenderMessage = senderMessage.encodeMessage(senderKey);
-                String base64ReceiverMessage= receiverMessage.encodeMessage(receiverKey);
+
+                String base64SenderMessage = message.encodeMessage(senderKey);
+                String base64ReceiverMessage= message.encodeMessage(receiverKey);
 
                 Map<String, String> senderMap = new HashMap<>();
                 senderMap.put("message", base64SenderMessage);
-                senderMap.put("sender", sender);
-                senderMap.put("receiver", receiver);
-                senderMap.put("timeStamp", timeStamp);
+                senderMap.put("sender", message.getSenderId());
+                senderMap.put("receiver", message.getReceiverId());
+                senderMap.put("timeStamp", message.getTimeStamp());
 
                 Map<String, String> receiverMap = new HashMap<>();
                 receiverMap.put("message", base64ReceiverMessage);
-                receiverMap.put("sender", sender);
-                receiverMap.put("receiver", receiver);
-                receiverMap.put("timeStamp", timeStamp);
+                receiverMap.put("sender", message.getSenderId());
+                receiverMap.put("receiver", message.getReceiverId());
+                receiverMap.put("timeStamp", message.getTimeStamp());
 
                 Map<String, Object> childUpdates = new HashMap<>();
 
-                childUpdates.put("/chat_room/" + "/" + sender + receiver + "/" + key, senderMap);
-                childUpdates.put("/chat_room/" + "/" + receiver + sender + "/" + key, receiverMap);
+                childUpdates.put("/chat_room/" + "/" + message.getSenderId() + message.getReceiverId() + "/" + key, senderMap);
+                childUpdates.put("/chat_room/" + "/" + message.getReceiverId() + message.getSenderId() + "/" + key, receiverMap);
 
                 db.updateChildren(childUpdates);
             }
