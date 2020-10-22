@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ControllerView.MessagePage.MessageList">
+    tools:context=".ControllerView.MessagePage.MessageListPage">
 
     <!-- A horizontal line between the chatbox and RecyclerView -->
 
