@@ -1,7 +1,5 @@
 package com.example.amwe.Model.Database;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.amwe.ControllerView.MessagePage.ChatRoomAdapter;
@@ -199,7 +197,6 @@ public class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("HERE", "onCancelled");
             }
         };
         listings.addValueEventListener(listener);
@@ -249,7 +246,6 @@ public class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("HERE", "onCancelled");
             }
         };
         allListings.addValueEventListener(listener);
@@ -326,7 +322,6 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 items.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    System.out.println(item.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                     if (item.getKey().startsWith(FirebaseAuth.getInstance().getUid())) {
                         items.add(item);
                     }
