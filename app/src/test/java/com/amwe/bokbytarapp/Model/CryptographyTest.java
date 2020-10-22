@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class CryptographyTest {
+
     @Test
     public void encryptingThenDecryptingWorks() {
         CryptographyKeysCreator cryptKeys = new CryptographyKeysCreator();
@@ -42,4 +43,5 @@ public class CryptographyTest {
 
         assertNotEquals(decryptedString, originalString);
     }
+
 }
