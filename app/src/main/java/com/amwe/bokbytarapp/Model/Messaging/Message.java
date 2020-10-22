@@ -54,14 +54,13 @@ public class Message implements IMessage {
     @Override
     public String encryptMessage(PublicKey publicKey) {
         Cryptography crypt = new Cryptography();
-        String base64Message = Base64.encodeToString(crypt.encrypt(this.text, publicKey), Base64.DEFAULT);
 
-        return base64Message;
+        return Base64.encodeToString(crypt.encrypt(this.text, publicKey), Base64.DEFAULT);
     }
 
     /**Decodes the message by calling using the Cryptography class.
      * @param privateKey, the public key of the user that will hold this message later on. Is used to decrypt.
-     * @return. a string that contains the decrypted text.
+     * @return a string that contains the decrypted text.
      */
     @Override
     public String decryptMessage(PrivateKey privateKey) {
