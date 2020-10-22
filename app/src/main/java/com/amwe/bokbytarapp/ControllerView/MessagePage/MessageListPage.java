@@ -31,13 +31,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Elias Johansson, William Hugo.
+ * @author Elias Johansson, William Hugo, Magnus Andersson.
  *
  * This class handles the creating of the GUI for the chatroom between two users and the list
  * of messages that their conversation holds.
  */
 public class MessageListPage extends AppCompatActivity {
-    private RecyclerView mMessageRecycler;
     ImageView profileImage;
     private MessageListAdapter mMessageAdapter;
     private String senderUid;
@@ -53,17 +52,39 @@ public class MessageListPage extends AppCompatActivity {
         receiverUid = intent.getStringExtra("sellerUid");
         senderUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        final List <DataSnapshot> messageList = new ArrayList<>();
-        mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-
-        profileImage = findViewById(R.id.image_message_profile);
+        final List<DataSnapshot> messageList = new ArrayList<>();
+        RecyclerView mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
 
         mMessageRecycler.setHasFixedSize(true);
         mMessageAdapter = new MessageListAdapter(messageList);
         mMessageRecycler.setAdapter(mMessageAdapter);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        findViewById(R.id.button_chatbox_send).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_chatbox_send).setOnClickListener(sendMessage());
+        DatabaseReference contact;
+
+        if (senderUid.equals(FirebaseAuth.getInstance().getUid())) {
+            contact = Database.getDatabaseReference().child("users").child(receiverUid);
+        } else {
+            contact = Database.getDatabaseReference().child("users").child(senderUid);
+        }
+
+        contactName = findViewById(R.id.text_message_name);
+        contactImage = findViewById(R.id.image_message_profile);
+
+        contact.addListenerForSingleValueEvent(getContactInfo());
+
+        DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/" + "/" + senderUid + receiverUid + "/");
+
+        dbRef.addValueEventListener(updateMessageList(messageList));
+    }
+
+    /**
+     *
+     * @return A onClicklistener which will send the written message when button is pressed
+     */
+    private View.OnClickListener sendMessage() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText editText = findViewById(R.id.edittext_chatbox);
@@ -73,29 +94,26 @@ public class MessageListPage extends AppCompatActivity {
                 String dateString = df.format(new Date());
 
 
-
                 if (!messageText.equals("")) {
                     MessageFactory messageFactory = new MessageFactory();
-                    IMessage message = messageFactory.createMessage(messageText,senderUid,receiverUid,dateString);
+                    IMessage message = messageFactory.createMessage(messageText, senderUid, receiverUid, dateString);
                     Database.useChat(message);
                 }
                 editText.setText("");
             }
-        });
-        DatabaseReference contact;
-        if (senderUid.equals(FirebaseAuth.getInstance().getUid())){
-            contact=Database.getDatabaseReference().child("users").child(receiverUid);
-        }
-        else {
-            contact=Database.getDatabaseReference().child("users").child(senderUid);
-        }
-        contactName = findViewById(R.id.text_message_name);
-        contactImage = findViewById(R.id.image_message_profile);
+        };
+    }
 
-        contact.addListenerForSingleValueEvent(new ValueEventListener() {
+    /**
+     *
+     * @return a ValueEventListener which will fetch and set name and user image
+     * of the person you are conversing with from the database
+     */
+    private ValueEventListener getContactInfo() {
+        return new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                contactName.setText((String)snapshot.child("name").getValue());
+            public void onDataChange (@NonNull DataSnapshot snapshot){
+                contactName.setText((String) snapshot.child("name").getValue());
                 byte[] decodedString = Base64.decode((String) snapshot.child("userImage").getValue(), Base64.DEFAULT);
 
                 Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -103,18 +121,24 @@ public class MessageListPage extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled (@NonNull DatabaseError error){
 
             }
-        });
+        };
+    }
 
-        DatabaseReference dbRef = Database.getDatabase().getReference("/chat_room/"+ "/" + senderUid + receiverUid + "/");
-
-        dbRef.addValueEventListener(new ValueEventListener() {
+    /**
+     *
+     * @param messageList The list of messages between the two parties to be updated
+     * @return a ValueEventListener that will listen to the database entry between
+     * the two parties and update the messageList as new messages are sent.
+     */
+    private ValueEventListener updateMessageList(final List<DataSnapshot> messageList) {
+        return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageList.clear();
-                for (DataSnapshot item : snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()) {
                     messageList.add(item);
                 }
                 mMessageAdapter.notifyDataSetChanged();
@@ -123,7 +147,6 @@ public class MessageListPage extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
-        });
+        };
     }
-
 }
