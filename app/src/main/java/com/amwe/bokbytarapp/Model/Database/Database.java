@@ -284,8 +284,8 @@ public class Database {
                 PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
 
-                String base64SenderMessage = message.encodeMessage(senderKey);
-                String base64ReceiverMessage= message.encodeMessage(receiverKey);
+                String base64SenderMessage = message.encryptMessage(senderKey);
+                String base64ReceiverMessage= message.encryptMessage(receiverKey);
 
                 Map<String, String> senderMap = new HashMap<>();
                 senderMap.put("message", base64SenderMessage);

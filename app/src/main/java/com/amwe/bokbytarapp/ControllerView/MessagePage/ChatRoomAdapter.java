@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amwe.bokbytarapp.Model.Database.Database;
 import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
+import com.amwe.bokbytarapp.Model.Messaging.IMessage;
+import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;
 import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
 //import com.example.amwe.Model.Messaging.PublicKey;
 import com.amwe.bokbytarapp.R;
@@ -62,7 +64,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         private final ImageView messageProfile;
         private final TextView messageTimeStamp;
         private String contact;
-        private CharSequence lastMessage;
+        private String lastMessage;
         private boolean isLastSenderCurrentUser;
         private String timeStamp;
 
@@ -128,7 +130,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         }
 
 
-        holder.lastMessage = (CharSequence) lastChat.child("message").getValue();
+        holder.lastMessage = (String) lastChat.child("message").getValue();
         holder.timeStamp = (String) lastChat.child("timeStamp").getValue();
 
         holder.contact = contact;
@@ -143,7 +145,19 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                 BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
                 BigInteger bigIntN = new BigInteger(n);
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                String decryptedMessage = crypt.decrypt(Base64.decode(holder.lastMessage.toString(), Base64.DEFAULT), pk);
+                String senderId;
+                String receiverId;
+                if (holder.isLastSenderCurrentUser){
+                    senderId=FirebaseAuth.getInstance().getUid();
+                    receiverId=holder.contact;
+                }
+                else {
+                    senderId=holder.contact;
+                    receiverId=FirebaseAuth.getInstance().getUid();
+                }
+
+                IMessage message = MessageFactory.createMessage(holder.lastMessage,senderId,receiverId,holder.timeStamp);
+                String decryptedMessage = message.decryptMessage(pk);
                 holder.lastMessage= decryptedMessage;
             }
 
