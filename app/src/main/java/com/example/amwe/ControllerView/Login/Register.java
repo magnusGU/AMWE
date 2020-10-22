@@ -68,7 +68,7 @@ public class Register extends AppCompatActivity {
      *
      * @return A View.OnClickListener that should be applied to the UploadImage-button.
      */
-    private View.OnClickListener uploadImage() {
+    private View.OnClickListener uploadImage()  {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {

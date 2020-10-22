@@ -205,7 +205,6 @@ public class ListingPageActivity extends AppCompatActivity {
      */
     Bundle createBundle(Book book) {
         Bundle bundle = new Bundle();
-
         bundle.putString("title", book.getTitle());
         bundle.putString("edition", book.getEdition());
         bundle.putLong("isbn", book.getIsbn());
