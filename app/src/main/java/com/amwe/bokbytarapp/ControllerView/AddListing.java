@@ -46,7 +46,6 @@ import java.util.Locale;
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
     private final int CAMERA_PIC_REQUEST = 2;
-    private String photoPath;
     private File photoFile;
     private Uri photoURI;
 
