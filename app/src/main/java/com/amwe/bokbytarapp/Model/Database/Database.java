@@ -36,7 +36,6 @@ public class Database {
      * Ensuring no one attempts to initialize class
      */
     private Database() {
-        //database = FirebaseDatabase.getInstance();
     }
 
     /**
@@ -103,7 +102,6 @@ public class Database {
     static public void insertNewListing(Item newEntry) {
 
         DatabaseReference db = getDatabaseReference();
-        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         String displayName = getName();
         newEntry.setSeller(displayName);
@@ -272,7 +270,7 @@ public class Database {
         final String key = chats.push().getKey();
 
 
-        //Skapa nycklar för sender & receiver
+        //Creates keys for sender & receiver
         db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -284,8 +282,8 @@ public class Database {
                 PublicKey receiverKey = new PublicKey(receiverEncrypt,receiverN);
 
 
-                String base64SenderMessage = message.encodeMessage(senderKey);
-                String base64ReceiverMessage= message.encodeMessage(receiverKey);
+                String base64SenderMessage = message.encryptMessage(senderKey);
+                String base64ReceiverMessage= message.encryptMessage(receiverKey);
 
                 Map<String, String> senderMap = new HashMap<>();
                 senderMap.put("message", base64SenderMessage);

@@ -5,7 +5,8 @@ package com.amwe.bokbytarapp.Model.Messaging;
  * An interface that is commmon for all messages in the program, some not yet implemented.
  */
 public interface IMessage {
-    String encodeMessage(PublicKey publicKey);
+    String encryptMessage(PublicKey publicKey);
+    String decryptMessage(PrivateKey privateKey);
     String getMessage();
     String getSenderId();
     String getReceiverId();

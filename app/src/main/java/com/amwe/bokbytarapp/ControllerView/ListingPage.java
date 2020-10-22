@@ -356,7 +356,6 @@ public class ListingPage extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Database.addChat(Database.getCurrentUser(), sellerUid);
                 Intent intent = new Intent(context, MessageListPage.class);
                 intent.putExtra("sellerUid", sellerUid);
                 startActivity(intent);

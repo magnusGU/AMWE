@@ -17,9 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amwe.bokbytarapp.Model.Database.Database;
-import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
+import com.amwe.bokbytarapp.Model.Messaging.IMessage;
+import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;
 import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
-//import com.example.amwe.Model.Messaging.PublicKey;
 import com.amwe.bokbytarapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -44,12 +44,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     private String contact;
     private String decryptingBigInt;
     private String n;
-    private Cryptography crypt;
 
     public ChatRoomAdapter(List<DataSnapshot> messages, Context context) {
         this.itemList = messages;
         this.context = context;
-        this.crypt=new Cryptography();
         Database.getChatRooms(messages, this);
     }
 
@@ -62,7 +60,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         private final ImageView messageProfile;
         private final TextView messageTimeStamp;
         private String contact;
-        private CharSequence lastMessage;
+        private String lastMessage;
         private boolean isLastSenderCurrentUser;
         private String timeStamp;
 
@@ -128,7 +126,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         }
 
 
-        holder.lastMessage = (CharSequence) lastChat.child("message").getValue();
+        holder.lastMessage = (String) lastChat.child("message").getValue();
         holder.timeStamp = (String) lastChat.child("timeStamp").getValue();
 
         holder.contact = contact;
@@ -143,8 +141,19 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                 BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
                 BigInteger bigIntN = new BigInteger(n);
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                String decryptedMessage = crypt.decrypt(Base64.decode(holder.lastMessage.toString(), Base64.DEFAULT), pk);
-                holder.lastMessage= decryptedMessage;
+                String senderId;
+                String receiverId;
+                if (holder.isLastSenderCurrentUser){
+                    senderId = FirebaseAuth.getInstance().getUid();
+                    receiverId = holder.contact;
+                }
+                else {
+                    senderId = holder.contact;
+                    receiverId = FirebaseAuth.getInstance().getUid();
+                }
+
+                IMessage message = MessageFactory.createMessage(holder.lastMessage,senderId,receiverId,holder.timeStamp);
+                holder.lastMessage = message.decryptMessage(pk);
             }
 
             @Override
@@ -168,11 +177,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                 } else {
                     prefix = snapshot.child("name").getValue() + ":" + " ";
                 }
-
-                if (contact.equals(FirebaseAuth.getInstance().getUid())){
-
-                }
-
 
                 holder.messageContact.setText((String) snapshot.child("name").getValue());
                 holder.messageTimeStamp.setText(holder.timeStamp);
@@ -214,7 +218,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     }
 
     /**
-     * @return, the size of the list that holds all chat rooms that pertains to the current user.
+     * @return the size of the list that holds all chat rooms that pertains to the current user.
      * It is used by background Android functionality to get the current index of the list.
      */
     @Override

@@ -43,8 +43,7 @@ public class CameraInitializer {
      * @return a file path to the stored file.
      */
     public Uri getURI() {
-        Uri photoURI;
-        return photoURI = FileProvider.getUriForFile(context,
+        return FileProvider.getUriForFile(context,
                 BuildConfig.APPLICATION_ID + ".provider",
                 photoFile);
 

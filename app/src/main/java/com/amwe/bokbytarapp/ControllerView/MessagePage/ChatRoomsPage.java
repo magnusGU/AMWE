@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class ChatRoomsPage extends Fragment {
     private  List<DataSnapshot> items = new ArrayList<>();
-
     public ChatRoomsPage() {
         // Required empty public constructor
     }

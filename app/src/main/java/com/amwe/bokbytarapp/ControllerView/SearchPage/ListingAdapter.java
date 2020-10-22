@@ -39,7 +39,6 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
     private final List<Item> bookListings;
     private SearchFunction search;
     private Context context;
-    private SortStrategy sort;
 
     public static class ViewHold extends ViewHolder {
         final private ImageView bookImage;
