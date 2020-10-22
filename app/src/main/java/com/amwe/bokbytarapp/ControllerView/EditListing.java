@@ -250,8 +250,6 @@ public class EditListing extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                //Uri outputFileUri = Uri.fromFile(new File(getExternalCacheDir().getPath(), "pickImageResult.jpeg"));
-                //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                 CameraInitializer initializer = new CameraInitializer(getApplicationContext(), getExternalFilesDir(MediaStore.Images.ImageColumns.RELATIVE_PATH));
                 try {
                     photoFile = initializer.createPhotoFile();
