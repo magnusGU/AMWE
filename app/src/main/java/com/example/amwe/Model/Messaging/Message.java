@@ -59,8 +59,5 @@ public class Message implements IMessage{
 
         return base64Message;    }
 
-    public void test(){
-        System.out.println("hej");
-    }
 
 }

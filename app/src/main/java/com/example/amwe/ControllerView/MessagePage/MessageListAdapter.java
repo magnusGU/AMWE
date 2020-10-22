@@ -39,12 +39,26 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     private String n;
     private String decryptingBigInt;
 
-
+    /**
+     * Constructor for the class.
+     * @param messages, a list of all the Strings that contain the messages of the current conversation.
+     * Cryptography is instantiated here to be able to be accessed in listeners.
+     *
+     */
     public MessageListAdapter(List<DataSnapshot> messages) {
         this.messages = messages;
         crypt = new Cryptography();
     }
 
+    /**
+     * Creates a new GUI entity to populate the recyclerview depending on if the message is sent or received by
+     * current user.
+     *
+     * @param parent Android class that is used to create a new card that holds the most recent message.
+     * @param viewType, is used to decide if the message is sent or received by sender.
+     * @return, either a view that represents a new received message or sent message.
+     * @throws IllegalArgumentException if viewType is not defined.
+     */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
@@ -61,7 +75,12 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         throw new IllegalArgumentException("ViewType is not defined. Message was not sent or received");
     }
 
-
+    /**
+     * Method to allocate message from the database to a matching ViewHolder.
+     *
+     * @param holder, the view that represents the message.
+     * @param position, the index of the list.
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         DataSnapshot message = (DataSnapshot) messages.get(position);
@@ -76,11 +95,23 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     }
 
+    /**
+     * Getter for the size of the list. Used in the background.
+     *
+     * @return the size of the list containing the messages.
+     */
     @Override
     public int getItemCount() {
         return messages.size();
     }
 
+    /**
+     * Compares the messages sender with current user. If they are equal, then the message has
+     * been sent by user. Otherwise by the contact.
+     *
+     * @param position, index of the list.
+     * @return, an int to represent if the message has been sent or received by the user.
+     */
     @Override
     public int getItemViewType(int position) {
         DataSnapshot message = messages.get(position);
@@ -88,6 +119,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             return MESSAGE_SENT;
         } else return MESSAGE_RECEIVED;
     }
+
+    /**
+     * Private class that holds data and behaviour if message is sent by user.
+     */
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
@@ -99,7 +134,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
-        void bind(DataSnapshot message) {
+       private void bind(DataSnapshot message) {
              decryptAndShowMessage(message,messageText);
 
             timeText.setText((String) message.child("timeStamp").getValue());
@@ -107,6 +142,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     }
 
+    /**
+     * Private class that holds data and behaviour if message is received by user.
+     */
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
 
@@ -117,13 +155,18 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
-        void bind(DataSnapshot message) {
+        private void bind(DataSnapshot message) {
             decryptAndShowMessage(message,messageText);
 
             timeText.setText((String) message.child("timeStamp").getValue());
         }
     }
 
+    /**
+     *
+     * @param message, message that will be decrypted and shown.
+     * @param messageText, the TextView that will show the message.
+     */
     private void decryptAndShowMessage(final DataSnapshot message, final TextView messageText){
 
         DatabaseReference dbr = Database.getPrivateKeyReference();
