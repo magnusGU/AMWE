@@ -29,7 +29,7 @@ public class SearchFunction {
     //filters listings by a given CharSequence
 
     /**
-     * @param charSequence, the sequence of chars that user puts into the searchbar.
+     * @param charSequence the sequence of chars that user puts into the searchbar.
      *                      The method looks for the item's title, and ISBN if the item is a book, and tries to match the charsequence with
      *                      it. An item has this sequence anywhere in its title, gets shown to the user.
      */

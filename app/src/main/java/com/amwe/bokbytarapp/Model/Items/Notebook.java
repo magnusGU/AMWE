@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Author: Magnus
+ * @author : Magnus Andersson
  *
  * This class represents handwritten notebooks by students,
  * so the only extension from the super class is which course the notebook was written for

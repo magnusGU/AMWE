@@ -68,7 +68,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
         /**
          * Constructor for ViewHold with all the different GUI elements.
          *
-         * @param itemView, Android class that assigns the MessageViewHold to the RecyclerView.
+         * @param itemView Android class that assigns the MessageViewHold to the RecyclerView.
          */
         private MessageViewHold(@NonNull View itemView) {
             super(itemView);
@@ -84,8 +84,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     /**
      * This method creates a new MessageViewHold that will then be populated in onBindViewHolder.
      *
-     * @param parent,   Android class that is used to create a new card that holds the most recent
-     * @param viewType, not used but needed if there are conditions for different types of views. Needed because of override.
+     * @param parent   Android class that is used to create a new card that holds the most recent
+     * @param viewType not used but needed if there are conditions for different types of views. Needed because of override.
      * @return a new MessageViewHold that then will be used to populate the recyclerview.
      */
     @NonNull
@@ -99,8 +99,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
      * This method looks at the messages in a conversation and sends the latest with all information to the
      * MessageViewHold.
      *
-     * @param holder,   the object that will hold all the information about a conversation and then show it.
-     * @param position, an index to access the current DataSnapshot in itemList.
+     * @param holder   the object that will hold all the information about a conversation and then show it.
+     * @param position an index to access the current DataSnapshot in itemList.
      */
     @Override
     public void onBindViewHolder(@NonNull final MessageViewHold holder, int position) {

@@ -42,7 +42,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     /**
      * Constructor for the class.
-     * @param messages, a list of all the Strings that contain the messages of the current conversation.
+     * @param messages a list of all the Strings that contain the messages of the current conversation.
      * Cryptography is instantiated here to be able to be accessed in listeners.
      *
      */
@@ -56,8 +56,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
      * current user.
      *
      * @param parent Android class that is used to create a new card that holds the most recent message.
-     * @param viewType, is used to decide if the message is sent or received by sender.
-     * @return, either a view that represents a new received message or sent message.
+     * @param viewType is used to decide if the message is sent or received by sender.
+     * @return either a view that represents a new received message or sent message.
      * @throws IllegalArgumentException if viewType is not defined.
      */
     @Override
@@ -111,7 +111,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
      * been sent by user. Otherwise by the contact.
      *
      * @param position, index of the list.
-     * @return, an int to represent if the message has been sent or received by the user.
+     * @return an int to represent if the message has been sent or received by the user.
      */
     @Override
     public int getItemViewType(int position) {
