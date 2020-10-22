@@ -111,7 +111,6 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (imageUri != null) {
             imageUri = data.getData();
             try {
                 Bitmap srcBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
@@ -143,7 +142,6 @@ public class Settings extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
 
     /**
      * Saves the changes made to the profile.
