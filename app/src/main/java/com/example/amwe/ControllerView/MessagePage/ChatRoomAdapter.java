@@ -138,18 +138,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
-                System.out.println("hämtar @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 n = (String) snapshot.child("n").getValue();
                 decryptingBigInt = (String) snapshot.child("decryptingBigInt").getValue();
                 BigInteger bigIntDecrypt = new BigInteger(decryptingBigInt);
                 BigInteger bigIntN = new BigInteger(n);
-                //BigInteger bigIntEncrypt = new BigInteger("98291818617830726655213886170867930285450288924118166181019168790818859696687");
                 PrivateKey pk = new PrivateKey(bigIntDecrypt, bigIntN);
-                //PublicKey pubk = new PublicKey(bigIntEncrypt, bigIntN);
-                //String test = Base64.encodeToString(crypt.encrypt("Hej",pubk),Base64.DEFAULT);
-                //byte[] h = Base64.decode(test, Base64.DEFAULT);
-                //System.out.println("##########HELLO" + crypt.decrypt(h, pk));
                 String decryptedMessage = crypt.decrypt(Base64.decode(holder.lastMessage.toString(), Base64.DEFAULT), pk);
                 holder.lastMessage= decryptedMessage;
             }

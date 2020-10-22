@@ -16,8 +16,8 @@ public class PrivateKey {
 
     /**
      * Constructor
-     * @param decryptingBigInt - a BigInteger used for decryption of what corresponding public key encrypted.
-     * @param n - a BigInteger that is the same as in the corresponding public key.
+     * @param decryptingBigInt  - A BigInteger used for decryption of what corresponding public key encrypted.
+     * @param n                 - A BigInteger that is the same as in the corresponding public key.
      */
     public PrivateKey(BigInteger decryptingBigInt, BigInteger n) {
         this.decryptingBigInt = decryptingBigInt;

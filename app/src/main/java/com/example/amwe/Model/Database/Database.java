@@ -267,28 +267,6 @@ public class Database {
         return true;
     }
 
-    /*static public void addChat(String sender, String receiver) {
-        final List<String> sortList= new ArrayList<>();
-        final DatabaseReference chats = getDatabaseReference().child("chat_room");
-        sortList.add(sender);
-        sortList.add(receiver);
-        Collections.sort(sortList);
-
-        chats.orderByChild("/" + sortList.get(0) + sortList.get(1) + "/").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Log.d("TAG", "onDataChange: 1");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
-
     /**
      * Method used for sending messages.
      *
@@ -347,6 +325,12 @@ public class Database {
         });
     }
 
+    /**
+     * Method used for getting chat rooms to be displayed in a list for the user
+     *
+     * @param items             - The list of chat rooms
+     * @param chatRoomAdapter   - The adapter which makes the list viewable & interactable
+     */
     static public void getChatRooms(final List<DataSnapshot> items, final ChatRoomAdapter chatRoomAdapter) {
         DatabaseReference databaseReference = Database.getDatabase().getReference("/chat_room/");
 
@@ -355,7 +339,6 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 items.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    System.out.println(item.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                     if (item.getKey().startsWith(FirebaseAuth.getInstance().getUid())) {
                         items.add(item);
                     }
