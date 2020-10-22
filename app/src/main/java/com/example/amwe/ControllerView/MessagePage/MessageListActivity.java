@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amwe.Model.Database.Database;
 import com.example.amwe.Model.Messaging.Cryptography;
+import com.example.amwe.Model.Messaging.IMessage;
+import com.example.amwe.Model.Messaging.Message;
+import com.example.amwe.Model.Messaging.MessageFactory;
 import com.example.amwe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -75,7 +78,9 @@ public class MessageListActivity extends AppCompatActivity {
 
 
                 if (!messageText.equals("")) {
-                    Database.useChat(messageText, senderUid, receiverUid,dateString);
+                    MessageFactory messageFactory = new MessageFactory();
+                    IMessage message = messageFactory.createMessage(messageText,senderUid,receiverUid,dateString);
+                    Database.useChat(message);
                 }
                 editText.setText("");
             }
