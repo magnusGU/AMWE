@@ -28,10 +28,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * This class handles the creation of new users by registering them to Firebase Authentication
+ * Responsibility:This class handles the creation of new users by registering them to Firebase Authentication
  * and adding them to the Firebase Database.
  * <p>
  * Related to {@link com.amwe.bokbytarapp.R.layout#activity_register}.
+ * Used by: Login.
+ * Uses: Database
  *
  * @author Ali Alladin
  */

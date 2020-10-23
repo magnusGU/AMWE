@@ -31,10 +31,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /**
- * This class mainly makes sure that the signed in user's own published listings and saved listings
+ * Responsibility:This class mainly makes sure that the signed in user's own published listings and saved listings
  * are presented in two lists on the Account Page. It's also a gateway to AddListing and Settings.
  * <p>
  * Related to {@link com.amwe.bokbytarapp.R.layout#fragment_account_page}.
+ * Used by: MainActivity.
+ * Uses:AddListing,ListingAdapter,Database,Item,Settings.
  *
  * @author Ali Alladin, Magnus Andersson
  */

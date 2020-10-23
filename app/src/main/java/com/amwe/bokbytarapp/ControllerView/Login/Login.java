@@ -19,10 +19,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * This class handles the login functionality of the application and signs in the user through
+ * Responsibility:This class handles the login functionality of the application and signs in the user through
  * Firebase Authentication.
  * <p>
  * Related to {@link com.amwe.bokbytarapp.R.layout#activity_login}.
+ * Used by: Settings.
+ * Uses: MainActivity, Register.
  *
  * @author Ali Alladin
  */
