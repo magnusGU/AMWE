@@ -17,7 +17,7 @@ public class IMessageFactory {
      * @return a new Message with the parameters above as parameters in it's constructor.
      */
     public static IMessage createIMessage(String text, String senderId, String receiverId, String timeStamp){
-        return new Message(text,senderId,receiverId,timeStamp);
+        return new TextMessage(text,senderId,receiverId,timeStamp);
 
     }
 }

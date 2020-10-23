@@ -14,7 +14,21 @@ import com.amwe.bokbytarapp.ControllerView.SearchPage.SearchPage;
 import com.amwe.bokbytarapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-
+/**
+ * Responsibilities:
+ * The activity you end up in after logging in.
+ * It has a navigation bar which let you navigate the three fragments search_page, messages_page, and account_page.
+ *
+ * Used by:
+ * Login.
+ *
+ * Uses:
+ * SearchPage, MessagesPage, AccountPage.
+ *
+ * Related to {@link com.amwe.bokbytarapp.R.layout#activity_main}.
+ *
+ * @author Ali Alladin
+ */
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

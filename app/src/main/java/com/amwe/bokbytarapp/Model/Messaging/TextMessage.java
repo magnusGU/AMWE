@@ -8,7 +8,7 @@ import android.util.Base64;
  * simplify encryption,decryption and interactions with the database.
  */
 
-public class Message implements IMessage {
+public class TextMessage implements IMessage {
     private String text;
     private String senderId;
     private String receiverId;
@@ -20,7 +20,7 @@ public class Message implements IMessage {
      * @param receiverId the unique id of the receiver.
      * @param timeStamp  the time the message was sent.
      */
-    public Message(String text, String senderId, String receiverId, String timeStamp) {
+    public TextMessage(String text, String senderId, String receiverId, String timeStamp) {
         this.text = text;
         this.senderId = senderId;
         this.receiverId = receiverId;

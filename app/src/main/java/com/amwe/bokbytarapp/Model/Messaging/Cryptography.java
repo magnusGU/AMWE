@@ -4,8 +4,15 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * Responsibilities:
  * Class used for encryption and decryption according to RSA cryptography.
  * Objects of this class are created and used in code where cryptography needs to be used.
+ *
+ * Used by:
+ * TextMessage, MessageListAdapter
+ *
+ * Uses:
+ * PublicKey, PrivateKey
  *
  * @author William Hugo
  */
