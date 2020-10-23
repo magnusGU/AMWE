@@ -2,7 +2,9 @@ package com.amwe.bokbytarapp.Model.Messaging;
 
 /**
  * @author Elias Johansson
- * An interface that is commmon for all messages in the program, some not yet implemented.
+ * responsiblity: An interface that is commmon for all messages in the program, some not yet implemented.
+ * used by: ChatroomAdapter,MessageList,AdapterMessageListPage.
+ * uses: PublicKey, PrivateKey
  */
 public interface IMessage {
     String encryptMessage(PublicKey publicKey);
