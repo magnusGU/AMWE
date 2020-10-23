@@ -18,8 +18,10 @@ import java.util.List;
 
 /**
  * @author Elias Johansson, Magnus Andersson
- * Class that instantiates the GUI for the messagesPage among them the RecyclerView
+ * Responsibility: Class that instantiates the GUI for the messagesPage among them the RecyclerView
  * that will hold all the different conversations.
+ * Used by: MainActivity
+ * Uses: ChatRoomAdapter.
  */
 public class ChatRoomsPage extends Fragment {
     private  List<DataSnapshot> items = new ArrayList<>();

@@ -25,11 +25,13 @@ import java.util.List;
 /**
  * @author Elias Johansson, William Hugo.
  *
- * This class displays all the messages that exists inside a conversation between two users
+ * Responsibilty: This class displays all the messages that exists inside a conversation between two users
  * as a list. It is needed to use the Android RecyclerView, which it also inherits from.
  * The messages look different depending on if it is sent or received by the current user.
  * To do this it uses two inner classes: ReceivedMessageHolder and SentMessageHolder to differentiate between
  * the two accordingly.
+ * Used by: MessageListPage.
+ * Uses: Database,Cryptography,IMessage,IMessageFactory,PrivateKey
  */
 
 public class MessageListAdapter extends RecyclerView.Adapter {
@@ -84,7 +86,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
      */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        DataSnapshot message = (DataSnapshot) messages.get(position);
+        DataSnapshot message = messages.get(position);
 
         switch (holder.getItemViewType()) {
             case MESSAGE_SENT:
@@ -131,8 +133,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         SentMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.text_message_body);
-            timeText = (TextView) itemView.findViewById(R.id.text_message_time);
+            messageText =  itemView.findViewById(R.id.text_message_body);
+            timeText =  itemView.findViewById(R.id.text_message_time);
         }
 
        private void bind(DataSnapshot message) {
@@ -152,8 +154,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         ReceivedMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.text_message_body);
-            timeText = (TextView) itemView.findViewById(R.id.text_message_time);
+            messageText =  itemView.findViewById(R.id.text_message_body);
+            timeText =  itemView.findViewById(R.id.text_message_time);
         }
 
         private void bind(DataSnapshot message) {

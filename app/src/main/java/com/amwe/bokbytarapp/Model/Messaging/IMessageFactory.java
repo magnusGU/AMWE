@@ -2,9 +2,9 @@ package com.amwe.bokbytarapp.Model.Messaging;
 
 /**
  * @author Elias Johansson
- *responsibility: Class that hides Message creation logic and works like a factory to some extent.
- * used by:ChatRoomAdapter,MessageListAdapter,MessageListPage
- * uses: Message
+ * Responsibility: Class that hides Message creation logic and works like a factory to some extent.
+ * Used by:ChatRoomAdapter,MessageListAdapter,MessageListPage
+ * Uses: Message
  */
 public class IMessageFactory {
     /**
