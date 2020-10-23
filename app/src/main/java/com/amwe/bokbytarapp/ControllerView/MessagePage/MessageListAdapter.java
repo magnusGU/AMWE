@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amwe.bokbytarapp.Model.Database.Database;
 import com.amwe.bokbytarapp.Model.Messaging.Cryptography;
 import com.amwe.bokbytarapp.Model.Messaging.IMessage;
-import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;
+import com.amwe.bokbytarapp.Model.Messaging.IMessageFactory;
 import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
 import com.amwe.bokbytarapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -188,7 +188,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
 
 
-                IMessage message = MessageFactory.createMessage(text,senderId,receiverId,timeStamp);
+                IMessage message = IMessageFactory.createIMessage(text,senderId,receiverId,timeStamp);
 
                 String decryptedMessage = message.decryptMessage(pk);
 

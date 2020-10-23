@@ -2,7 +2,7 @@ package com.amwe.bokbytarapp.Model;
 
 import com.amwe.bokbytarapp.Model.Messaging.CryptographyKeysCreator;
 import com.amwe.bokbytarapp.Model.Messaging.IMessage;
-import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;
+import com.amwe.bokbytarapp.Model.Messaging.IMessageFactory;
 import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
 import com.amwe.bokbytarapp.Model.Messaging.PublicKey;
 
@@ -18,14 +18,14 @@ public class MessageTest {
         String senderId="1";
         String receiverID="2";
         String timeStamp = "2020-10-22";
-        IMessage message= MessageFactory.createMessage(text,senderId,receiverID,timeStamp);
+        IMessage message= IMessageFactory.createIMessage(text,senderId,receiverID,timeStamp);
         CryptographyKeysCreator cryptKeys = new CryptographyKeysCreator();
         PublicKey publicKey = cryptKeys.makePublicKey();
         PrivateKey privateKey = cryptKeys.makePrivateKey();
 
         String encryptedText=message.encryptMessage(publicKey);
 
-        IMessage encryptedMessage = MessageFactory.createMessage(encryptedText,senderId,receiverID,timeStamp);
+        IMessage encryptedMessage = IMessageFactory.createIMessage(encryptedText,senderId,receiverID,timeStamp);
 
         String decryptedMessage=encryptedMessage.decryptMessage(privateKey);
 
