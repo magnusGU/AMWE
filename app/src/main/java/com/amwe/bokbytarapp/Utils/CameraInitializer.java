@@ -12,14 +12,15 @@ import java.io.IOException;
 
 /**
  * @author Elias Johansson
- * This class handles the initialization of a file that will contain the image taken by the camera and
+ * responsibility: This class handles the initialization of a file that will contain the image taken by the camera and
  * also return the file and its location.
+ * used by: AddListing.
+ * uses: ImageFile.
  */
 
 public class CameraInitializer {
     private final Context context;
     private final File storageDir;
-    private Uri photoURI;
     private File photoFile;
     public CameraInitializer(Context context, File storagedir){
         this.context=context;

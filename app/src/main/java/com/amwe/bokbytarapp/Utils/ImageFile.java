@@ -7,8 +7,11 @@ import java.util.Date;
 
 /**
  * @author Elias Johansson
- * A class that creates a file and stores it in the storageDir. This file is then used to store
+ * responsibility: A class that creates a file and stores it in the storageDir. This file is then used to store
  * an image in.
+ * used by: Camerainitializer
+ * uses:-
+ *
  */
 public class ImageFile {
     private final File storageDir;

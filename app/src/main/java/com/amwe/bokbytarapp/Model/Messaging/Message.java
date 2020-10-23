@@ -4,7 +4,7 @@ import android.util.Base64;
 
 /**
  * @author Elias Johansson
- * A class that represents the message stored in the database. It also has some behavoiur to
+ * A class that represents the message stored in the database. It also has some behaviour to
  * simplify encryption,decryption and interactions with the database.
  */
 

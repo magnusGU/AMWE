@@ -2,12 +2,13 @@ package com.amwe.bokbytarapp.Model.Messaging;
 
 /**
  * @author Elias Johansson
- *
- * Class that hides Message creation logic and works like a factory to some extent.
+ *responsibility: Class that hides Message creation logic and works like a factory to some extent.
+ * used by:ChatRoomAdapter,MessageListAdapter,MessageListPage
+ * uses: Message
  */
 public class IMessageFactory {
     /**
-     * Class that hides creation logic for Message.
+     * Static method that hides creation logic for Message and generalizes creation of IMessages.
      *
      * @param text the String that contains the message of the Message
      * @param senderId the id of the sender.
