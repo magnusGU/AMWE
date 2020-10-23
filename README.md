@@ -4,3 +4,7 @@ Bokbytarapp is an application made for buying and selling literature. The applic
 # Prerequisites:
 
 An android device or emulator that runs Android 7.0 or later.
+
+_________________
+# Installation guide:
+Download Android studio, then set up en emulator running api 24 or higher. Guide for emulator: https://developer.android.com/studio/run/emulator
