@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amwe.bokbytarapp.Model.Database.Database;
+
 import com.amwe.bokbytarapp.Model.Database.DatabaseSubject;
 import com.amwe.bokbytarapp.Model.Items.Item;
 import com.amwe.bokbytarapp.R;
@@ -22,11 +22,12 @@ import com.amwe.bokbytarapp.R;
 import java.util.ArrayList;
 
 /**
- * This page handles the SearchPage where all the listings are presented. The listings can be
+ * Responsibility:This page handles the SearchPage where all the listings are presented. The listings can be
  * searched through and/or sorted in desired order. 
  *
  * Related to {@link com.amwe.bokbytarapp.R.layout#fragment_search_page}.
- *
+ *Used by: MainActivity
+ * Uses: DatabaseSubject, Item,ListingAdapter
  * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */
 public class SearchPage extends Fragment {

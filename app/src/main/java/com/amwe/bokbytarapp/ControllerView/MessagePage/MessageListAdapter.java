@@ -31,7 +31,7 @@ import java.util.List;
  * To do this it uses two inner classes: ReceivedMessageHolder and SentMessageHolder to differentiate between
  * the two accordingly.
  * Used by: MessageListPage.
- * Uses: Database,Cryptography,IMessage,IMessageFactory,PrivateKey
+ * Uses: Database,Cryptography,IMessage,IMessageFactory,PrivateKey,SentMessageHolder,ReceivedMessageHolder
  */
 
 public class MessageListAdapter extends RecyclerView.Adapter {
