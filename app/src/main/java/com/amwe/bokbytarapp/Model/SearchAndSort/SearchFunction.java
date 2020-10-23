@@ -9,6 +9,12 @@ import java.util.List;
 /**
  * Used for searching in a list of items, filters out things from the list that doesn't match the search.
  *
+ * Used by:
+ * ListingAdapter.
+ *
+ * Uses:
+ * SortStrategy.
+ *
  * @author William Hugo, Elias Johansson
  */
 public class SearchFunction {
@@ -54,9 +60,7 @@ public class SearchFunction {
 
         publishResults(filteredList);
 
-
     }
-
 
     private void publishResults(List<Item> filtered) {
         list.clear();

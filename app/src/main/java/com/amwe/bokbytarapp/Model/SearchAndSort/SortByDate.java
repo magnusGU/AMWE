@@ -11,9 +11,16 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Magnus Andersson, William Hugo
  * Concrete strategy
- * Sort a list by Date
+ * Sort a list by Date.
+ *
+ * Used by:
+ * ListingAdapter.
+ *
+ * Uses:
+ * SortStrategy.
+ *
+ * @author Magnus Andersson, William Hugo
  */
 public class SortByDate implements SortStrategy {
 
