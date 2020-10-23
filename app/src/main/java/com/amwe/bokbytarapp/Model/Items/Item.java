@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author : Magnus Andersson
- *
- * This class is the abstract class that represent all the different items in the database.
+ * Responsibility: This class is the abstract class that represent all the different items in the database.
  * Setters are needed because the database can not use the constructor for some reason.
+ *
+ * Used by: AddListing, EditListing, AccountPage, ListingAdapter, SearchPage, Database
+ *
+ * @author Magnus Andersson
  */
 
 public abstract class Item {
