@@ -15,6 +15,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+/**
+ * Responsibility: This is the subject in the observer pattern. This will notify
+ * observers about related changes to the database
+ *
+ * Used by: AccountPage, ChatRoomPage, SearchPage
+ *
+ * Uses: ChatRoomAdapter, ListingAdapter
+ *
+ * @author Magnus Andersson
+ */
 public class DatabaseSubject {
     static private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
