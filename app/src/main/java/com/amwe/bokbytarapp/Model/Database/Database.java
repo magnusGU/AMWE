@@ -23,7 +23,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Static class for communicating with the firebase database
+ * Responsibility: Static class for communicating with the firebase database
+ *
+ * Used by: AddListing, EditListing, ListingPage, AccountPage, Settings, Register,
+ * ChatRoomAdapter, MessageListAdapter, MessageListPage, ListingAdapter
+ *
+ * Uses: ChatRoomAdapter, ListingAdapter, Book, Item, CryptographyKeysCreator, IMessage,
+ * PrivateKey, PublicKey
  *
  * @author Ali Alladin, Elias Johansson, Magnus Andersson, William Hugo
  */

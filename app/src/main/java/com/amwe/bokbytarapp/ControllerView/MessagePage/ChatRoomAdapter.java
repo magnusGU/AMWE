@@ -34,9 +34,11 @@ import java.util.List;
 /**
  * @author Elias Johansson
  * <p>
- * This class is an adapter that will show recent messages by Author in the RecyclerView.
+ * Responsibility:This class is an adapter that will show recent messages by Author in the RecyclerView.
  * It uses a List to hold all the conversations that pertains to the current user. It will then
  * look through that list for the most recent message in a conversation and show it.
+ * Used by: ChatRoomsPage, Database.
+ * Uses: MessageViewHold,Database,IMessage,IMessage,IMessageFactory,PrivateKey.
  */
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MessageViewHold> {
     private final List<DataSnapshot> itemList;
@@ -104,7 +106,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
      */
     @Override
     public void onBindViewHolder(@NonNull final MessageViewHold holder, int position) {
-        DataSnapshot item = (DataSnapshot) itemList.get(position);
+        DataSnapshot item = itemList.get(position);
         List<DataSnapshot> messages = new ArrayList<>();
         for (DataSnapshot i : item.getChildren()) {
             messages.add(i);

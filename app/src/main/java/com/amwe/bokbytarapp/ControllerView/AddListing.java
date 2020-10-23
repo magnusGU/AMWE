@@ -42,6 +42,7 @@ import java.util.Locale;
  * Related to {@link com.amwe.bokbytarapp.R.layout#activity_add_listing}.
  *
  * @author Ali Alladin, Magnus Andersson,Elias Johansson
+ *
  */
 public class AddListing extends AppCompatActivity {
     private ImageButton cameraClick;
