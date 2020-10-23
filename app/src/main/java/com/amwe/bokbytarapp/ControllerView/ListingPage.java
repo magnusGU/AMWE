@@ -31,6 +31,13 @@ import java.text.DecimalFormat;
  * ListingPage has the responsibility to display all the information about the listing on
  * the page and depending on whether the listing is the signed in user's or someone else's it
  * provides the option to edit and delete the listing or to contact the seller.
+ *
+ * Used by:
+ * ListingAdapter.
+ *
+ * Uses:
+ * Database, MessageListPage, Item, Book.
+ *
  * <p>
  * Related to {@link com.amwe.bokbytarapp.R.layout#activity_listing_page}.
  *

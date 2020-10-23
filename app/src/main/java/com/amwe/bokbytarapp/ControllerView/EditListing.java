@@ -40,6 +40,12 @@ import java.util.Locale;
  * <p>
  * Related to {@link com.amwe.bokbytarapp.R.layout#activity_edit_listing}.
  *
+ * Used by:
+ * ListingPage.
+ *
+ * Uses:
+ * Database, Item, Book, CameraInitializer.
+ *
  * @author Ali Alladin, Magnus Andersson
  */
 public class EditListing extends AppCompatActivity {
