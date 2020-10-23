@@ -21,7 +21,6 @@ import com.amwe.bokbytarapp.Model.SearchAndSort.SortByDate;
 import com.amwe.bokbytarapp.Model.SearchAndSort.SortByPrice;
 import com.amwe.bokbytarapp.Model.SearchAndSort.SortStrategy;
 import com.amwe.bokbytarapp.R;
-import com.amwe.bokbytarapp.Model.Items.Book;
 import com.amwe.bokbytarapp.Model.Items.Item;
 import com.amwe.bokbytarapp.Model.SearchAndSort.SearchFunction;
 
@@ -29,8 +28,10 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 /**
- * This class is intended to work as an adapter that will make it possible to show listings on the
+ * Responsibility:This class is intended to work as an adapter that will make it possible to show listings on the
  * searchPage as a list.
+ * Used by: SearchPage, AccountPage, DatabaseSubject.
+ * Uses: Item, SearchFunction,SortAlphabetically,SortByDate,SortByPrice,SortStrategy,ListingPage,ViewHold.
  *
  * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */
@@ -84,7 +85,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHold holder, final int position) {
-        final Book currentListing = (Book) bookListings.get(position);
+        final Item currentListing = bookListings.get(position);
 
         try {
             byte[] decodedString = Base64.decode(currentListing.getBookImage(), Base64.DEFAULT);
