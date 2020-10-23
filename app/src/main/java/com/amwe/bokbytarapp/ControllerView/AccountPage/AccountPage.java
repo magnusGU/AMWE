@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amwe.bokbytarapp.ControllerView.AddListing;
 import com.amwe.bokbytarapp.ControllerView.SearchPage.ListingAdapter;
 import com.amwe.bokbytarapp.Model.Database.Database;
+import com.amwe.bokbytarapp.Model.Database.DatabaseSubject;
 import com.amwe.bokbytarapp.Model.Items.Item;
 import com.amwe.bokbytarapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -97,7 +98,8 @@ public class AccountPage extends Fragment {
         ArrayList<Item> listings = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        ListingAdapter adapter = new ListingAdapter(listings, listName);
+        ListingAdapter adapter = new ListingAdapter(listings);
+        DatabaseSubject.addUserListener(listings, adapter, listName);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }

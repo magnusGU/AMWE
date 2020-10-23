@@ -22,7 +22,6 @@ import com.amwe.bokbytarapp.Model.SearchAndSort.SortByPrice;
 import com.amwe.bokbytarapp.Model.SearchAndSort.SortStrategy;
 import com.amwe.bokbytarapp.R;
 import com.amwe.bokbytarapp.Model.Items.Book;
-import com.amwe.bokbytarapp.Model.Database.Database;
 import com.amwe.bokbytarapp.Model.Items.Item;
 import com.amwe.bokbytarapp.Model.SearchAndSort.SearchFunction;
 
@@ -67,20 +66,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ViewHold
      * Constructor for ListingAdapter.
      *
      * @param bookListings The list to which item's should be added.
-     * @param listName     The String that decides which method in database is called.
      */
-    public ListingAdapter(final List<Item> bookListings, final String listName) {
+    public ListingAdapter(final List<Item> bookListings) {
         this.bookListings = bookListings;
-        //create database with listener that will update recyclerView
-        switch (listName) {
-            case "currentListings":
-                Database.addListingListener(bookListings, this);
-                break;
-            case "listings":
-            case "favourites":
-                Database.addUserListener(bookListings, this, listName);
-                break;
-        }
     }
 
 

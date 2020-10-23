@@ -50,7 +50,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
     public ChatRoomAdapter(List<DataSnapshot> messages, Context context) {
         this.itemList = messages;
         this.context = context;
-        Database.getChatRooms(messages, this);
     }
 
     /**
