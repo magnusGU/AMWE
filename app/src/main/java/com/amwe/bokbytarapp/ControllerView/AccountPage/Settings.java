@@ -30,10 +30,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * Any change to the user's profile is made through this class and so is the log out functionality.
+ * Responsibility:Any change to the user's profile is made through this class and so is the log out functionality.
  * <p>
  * Related to {@link com.amwe.bokbytarapp.R.layout#activity_settings}.
- *
+ *Used by: AccountPage.
+ * Uses:Login, Database.
  * @author Ali Alladin
  */
 public class Settings extends AppCompatActivity {
