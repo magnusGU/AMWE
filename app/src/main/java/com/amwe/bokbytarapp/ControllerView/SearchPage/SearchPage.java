@@ -58,7 +58,7 @@ public class SearchPage extends Fragment {
         setHasOptionsMenu(true);
 
         search = v.findViewById(R.id.searchBar);
-        search.setOnQueryTextListener(searchListner());
+        search.setOnQueryTextListener(searchListener());
         ImageButton sortButton = v.findViewById(R.id.filter_sort);
         popupMenu = new PopupMenu(getContext(), sortButton);
         popupMenu.getMenuInflater().inflate(R.menu.sort_function, popupMenu.getMenu());
@@ -156,7 +156,7 @@ public class SearchPage extends Fragment {
      *
      * @return A SearchView.OnQueryTextListener that should be applied to the search bar.
      */
-    private SearchView.OnQueryTextListener searchListner() {
+    private SearchView.OnQueryTextListener searchListener() {
         return new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) { //for updating the search after filling in text completely and submitting it in search bar, not used since we want it updated in real time
