@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amwe.bokbytarapp.Model.Database.Database;
 import com.amwe.bokbytarapp.Model.Messaging.IMessage;
-import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;
+import com.amwe.bokbytarapp.Model.Messaging.IMessageFactory;
 import com.amwe.bokbytarapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -96,7 +96,7 @@ public class MessageListPage extends AppCompatActivity {
 
                 if (!messageText.equals("")) {
 
-                    IMessage message = MessageFactory.createMessage(messageText,senderUid,receiverUid,dateString);
+                    IMessage message = IMessageFactory.createIMessage(messageText,senderUid,receiverUid,dateString);
 
                     Database.useChat(message);
                 }

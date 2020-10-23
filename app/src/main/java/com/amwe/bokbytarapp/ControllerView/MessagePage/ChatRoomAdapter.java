@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amwe.bokbytarapp.Model.Database.Database;
 import com.amwe.bokbytarapp.Model.Messaging.IMessage;
-import com.amwe.bokbytarapp.Model.Messaging.MessageFactory;
+import com.amwe.bokbytarapp.Model.Messaging.IMessageFactory;
 import com.amwe.bokbytarapp.Model.Messaging.PrivateKey;
 import com.amwe.bokbytarapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -152,7 +152,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.Messag
                     receiverId = FirebaseAuth.getInstance().getUid();
                 }
 
-                IMessage message = MessageFactory.createMessage(holder.lastMessage,senderId,receiverId,holder.timeStamp);
+                IMessage message = IMessageFactory.createIMessage(holder.lastMessage,senderId,receiverId,holder.timeStamp);
                 holder.lastMessage = message.decryptMessage(pk);
             }
 
