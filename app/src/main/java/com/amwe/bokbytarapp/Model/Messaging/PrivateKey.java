@@ -7,6 +7,9 @@ import java.math.BigInteger;
  * Intended to always have a corresponding public key.
  * Private key should, as the name suggest, be private so only the receiver having the key can decrypt the messages encrypted for them.
  *
+ * Used by:
+ * Database, CryptographyKeysCreator, Cryptography, IMessage, TextMessage, ChatRoomAdapter, MessageListAdapter.
+ *
  * @author William Hugo
  */
 public class PrivateKey {

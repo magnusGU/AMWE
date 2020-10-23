@@ -6,10 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author: Magnus Andersson
- *
- * This class represents lecture books, therefore authors, edition and isbn are needed extensions
+ * Responsibility: This class represents lecture books, therefore authors, edition and isbn are needed extensions
  * of the superclass
+ *
+ *  Used by: ListingPage, ListingAdapter, AddListing, EditListing, Database, SearchFunction
+ *
+ *  Uses: Item
+ *
+ * @author Magnus Andersson
  */
 public class Book extends Item {
 

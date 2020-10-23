@@ -33,11 +33,12 @@ import java.util.List;
 /**
  * @author Elias Johansson, William Hugo, Magnus Andersson.
  *
- * This class handles the creating of the GUI for the chatroom between two users and the list
+ * Resonsibility This class handles the creating of the GUI for the chatroom between two users and the list
  * of messages that their conversation holds.
+ * Used by: ListingPage, ChatRoomAdapter.
+ * Uses: Database, IMessage, ImessageFactory.
  */
 public class MessageListPage extends AppCompatActivity {
-    ImageView profileImage;
     private MessageListAdapter mMessageAdapter;
     private String senderUid;
     private String receiverUid;
@@ -53,7 +54,7 @@ public class MessageListPage extends AppCompatActivity {
         senderUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         final List<DataSnapshot> messageList = new ArrayList<>();
-        RecyclerView mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
+        RecyclerView mMessageRecycler = findViewById(R.id.reyclerview_message_list);
 
         mMessageRecycler.setHasFixedSize(true);
         mMessageAdapter = new MessageListAdapter(messageList);

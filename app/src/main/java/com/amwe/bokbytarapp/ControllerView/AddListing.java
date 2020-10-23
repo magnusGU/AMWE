@@ -38,6 +38,13 @@ import java.util.Locale;
 
 /**
  * AddListing handles creation and submission of a new listing to the database.
+ *
+ * Used by:
+ * AccountPage.
+ *
+ * Uses:
+ * Database, Item.
+ *
  * <p>
  * Related to {@link com.amwe.bokbytarapp.R.layout#activity_add_listing}.
  *

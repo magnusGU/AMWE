@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amwe.bokbytarapp.Model.Database.DatabaseSubject;
 import com.amwe.bokbytarapp.R;
 import com.google.firebase.database.DataSnapshot;
 
@@ -18,8 +19,10 @@ import java.util.List;
 
 /**
  * @author Elias Johansson, Magnus Andersson
- * Class that instantiates the GUI for the messagesPage among them the RecyclerView
+ * Responsibility: Class that instantiates the GUI for the messagesPage among them the RecyclerView
  * that will hold all the different conversations.
+ * Used by: MainActivity
+ * Uses: ChatRoomAdapter, DatabaseSubject.
  */
 public class ChatRoomsPage extends Fragment {
     private  List<DataSnapshot> items = new ArrayList<>();
@@ -38,6 +41,7 @@ public class ChatRoomsPage extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         ChatRoomAdapter chatRoomAdapter = new ChatRoomAdapter(items, getContext());
+        DatabaseSubject.getChatRooms(items, chatRoomAdapter);
         recyclerView.setAdapter(chatRoomAdapter);
         return v;
     }

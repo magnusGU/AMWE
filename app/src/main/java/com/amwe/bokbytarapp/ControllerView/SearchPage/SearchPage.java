@@ -14,24 +14,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.amwe.bokbytarapp.Model.Database.DatabaseSubject;
 import com.amwe.bokbytarapp.Model.Items.Item;
 import com.amwe.bokbytarapp.R;
 
 import java.util.ArrayList;
 
 /**
- * This page handles the SearchPage where all the listings are presented. The listings can be
+ * Responsibility:This page handles the SearchPage where all the listings are presented. The listings can be
  * searched through and/or sorted in desired order. 
  *
  * Related to {@link com.amwe.bokbytarapp.R.layout#fragment_search_page}.
- *
+ *Used by: MainActivity
+ * Uses: DatabaseSubject, Item,ListingAdapter
  * @author Ali Alladin, Magnus Andersson,Elias Johansson
  */
 public class SearchPage extends Fragment {
 
-    private SearchView search;
     private PopupMenu popupMenu;
-    private static ListingAdapter listingAdapter;
+    private ListingAdapter listingAdapter;
     private boolean alphabetically = true;
     private boolean price = true;
     private boolean date = true;
@@ -57,7 +59,7 @@ public class SearchPage extends Fragment {
 
         setHasOptionsMenu(true);
 
-        search = v.findViewById(R.id.searchBar);
+        SearchView search = v.findViewById(R.id.searchBar);
         search.setOnQueryTextListener(searchListener());
         ImageButton sortButton = v.findViewById(R.id.filter_sort);
         popupMenu = new PopupMenu(getContext(), sortButton);
@@ -183,7 +185,8 @@ public class SearchPage extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         //sketchy but we will have to discuss this
-        ListingAdapter adapter = new ListingAdapter(currentListings, "currentListings");
+        ListingAdapter adapter = new ListingAdapter(currentListings);
+        DatabaseSubject.addListingListener(currentListings, adapter);
         listingAdapter = adapter;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

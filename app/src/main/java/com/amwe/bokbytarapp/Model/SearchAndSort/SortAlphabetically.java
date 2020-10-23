@@ -7,9 +7,10 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author Magnus Andersson, William Hugo
  * Concrete strategy
- * Sort a list alphabetically
+ * Sort a list alphabetically.
+ *
+ * @author Magnus Andersson, William Hugo
  */
 public class SortAlphabetically implements SortStrategy {
     final private List<Item> list;

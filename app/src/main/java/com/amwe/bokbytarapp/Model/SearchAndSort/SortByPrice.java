@@ -7,9 +7,16 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author Magnus Andersson, William Hugo
  * Concrete strategy
- * Sort a list by Price
+ * Sort a list by Price.
+ *
+ * Used by:
+ * ListingAdapter.
+ *
+ * Uses:
+ * SortStrategy.
+ *
+ * @author Magnus Andersson, William Hugo
  */
 public class SortByPrice implements SortStrategy {
 
