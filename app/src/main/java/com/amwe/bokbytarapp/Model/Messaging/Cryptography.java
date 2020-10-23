@@ -9,10 +9,10 @@ import java.nio.charset.StandardCharsets;
  * Objects of this class are created and used in code where cryptography needs to be used.
  *
  * Used by:
- * TextMessage, MessageListAdapter
+ * TextMessage, MessageListAdapter.
  *
  * Uses:
- * PublicKey, PrivateKey
+ * PrivateKey, PublicKey.
  *
  * @author William Hugo
  */

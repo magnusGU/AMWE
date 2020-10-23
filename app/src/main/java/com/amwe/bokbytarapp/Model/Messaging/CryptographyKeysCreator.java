@@ -7,6 +7,12 @@ import java.util.Random;
  * A class which generates variables used in keys needed for RSA cryptography when created.
  * Used to create corresponding private & public keys to be used for encryption and decryption.
  *
+ * Used by:
+ * Database.
+ *
+ * Uses:
+ * PrivateKey, PublicKey.
+ *
  * @author William Hugo
  */
 public class CryptographyKeysCreator {
