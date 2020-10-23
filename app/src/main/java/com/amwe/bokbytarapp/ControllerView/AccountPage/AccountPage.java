@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * <p>
  * Related to {@link com.amwe.bokbytarapp.R.layout#fragment_account_page}.
  * Used by: MainActivity.
- * Uses:AddListing,ListingAdapter,Database,Item,Settings.
+ * Uses: AddListing,ListingAdapter,Database,Item,Settings.
  *
  * @author Ali Alladin, Magnus Andersson
  */
@@ -135,7 +135,7 @@ public class AccountPage extends Fragment {
 
             }
         };
-      
+
         Database.getRefCurrentUser().addValueEventListener(valueEventListener);
 
     }
